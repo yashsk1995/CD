@@ -1,0 +1,51 @@
+<main id="main">
+  <div class="inner-banner">
+    <div class="bg-cover">
+      <img src="/images/frontend/img26.jpg" alt="image description">
+    </div>
+    <div class="container text-center">
+      <h1>Static Videos</h1>
+      <p class="videos-subtitle"> Static Tagline of the videos will come here and you can see it now! We can have a video as background for this page also</p>
+    </div>
+  </div>
+
+  <div class="container video-cat-data-text">
+    <%-: videoData | getHtmlShortContents %>
+  </div>
+
+  <div class="container">
+    <div class="row">
+      <% _.each(videoCategories, function(vidCategory) { %>
+      <div class="col-md-4">
+        <div class="video-item">
+          <a href="/videos/category/<%= vidCategory.slug %>" nav-link>
+            <img class="video-category-bg" src="<%= vidCategory.previewImageUrl %>" alt="<%= vidCategory.previewImageAlt %>">
+            <p class="video-cat-text"> <%= vidCategory.name %> </p>
+          </a>
+        </div>
+      </div>
+      <% }) %>
+    </div>
+  </div>
+
+  <div class="recent-post-holder">
+    <div class="container">
+      <% include ./adminaccess/pagination.ejs %>
+    </div>
+  </div>
+
+</main>
+
+<script>
+
+  handlePageChange = function (event, pageNo) {
+    event.preventDefault();
+    console.log("Page Changed")
+    console.log(pageNo)
+    var newLocation = "/videos?";
+    newLocation += "page=" + pageNo;
+    window.location = newLocation;
+  }
+</script>
+
+

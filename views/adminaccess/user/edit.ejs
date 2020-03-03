@@ -1,0 +1,23 @@
+<form method="POST" class="form" id="createForm" action="/adminaccess/user/edit/<%= user.id %>">
+  <a href="/adminaccess/users" class="back-link">Back to All Users &raquo;</a>
+  <h1 class="page-title">Edit User</h1>
+  <div class="form-row">
+    <label for="post_title">Name</label>
+    <input type="text" id="post_title" name="name" value="<%= user.name || '' %>">
+    <p><%= error.name || '' %></p>
+  </div>
+  <div class="form-row">
+    <label for="email">Email</label>
+    <input type="email" id="email" name="email" value="<%= user.email || '' %>">
+    <p><%= error.email || '' %></p>
+  </div>
+  <div class="form-row">
+    <label for="password">Password</label>
+    <input type="password" id="password" name="password" value="<%= user.password || '' %>">
+    <p><%= error.name || '' %></p>
+  </div>
+  <input type="hidden" name="status" value="Active"/>
+  <div class="button-wrap">
+    <button type="submit" class="btn">Save</button>
+  </div>
+</form>

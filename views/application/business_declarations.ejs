@@ -1,0 +1,159 @@
+<div class="application-content">
+  <div class="application-header">
+    <h2>9. Business Declarations</h2>
+    <p>(It will take 3 minutes to complete)</p>
+  </div>
+  <form id="businessForm" action="/application/business-declarations" method="post" class="result-form">
+    <input type="hidden" value=true id="hiddenStatus" name="isSubmitted" />
+    <ul class="declare-list no-counter">
+      
+      <li>
+        <strong class="title">Neither my business, nor any principal of my business has declared bankruptcy in the last
+          4 years</strong>
+        <div class="check-wrap">
+          <span class="property-info">
+            <input type="radio" id="rad01" value="True"
+                   name="businessBankruptcyLast4Years" <%= application.businessBankruptcyLast4Years == 'True' ? 'checked' : '' %>
+                   required>
+            <label for="rad01">True</label>
+          </span>
+          <span class="property-info">
+            <input type="radio" id="rad02" value="False"
+                   name="businessBankruptcyLast4Years" <%= application.businessBankruptcyLast4Years == 'False' ? 'checked' : '' %>
+                   required>
+            <label for="rad02">False</label>
+          </span>
+          <span id="businessBankruptcyLast4YearsError"></span>
+        </div>
+      </li>
+      <li>
+        <strong class="title">Neither my business, nor any principle of my business is a party to any lawsuit.</strong>
+        <div class="check-wrap">
+         <span class="property-info">
+          <input type="radio" id="rad03" value="True"
+                 name="businessPartyToLawsuit" <%= application.businessPartyToLawsuit == 'True' ? 'checked' : '' %>
+                 required>
+           <label for="rad03">True</label>
+         </span>
+          <span class="property-info">
+           <input type="radio" id="rad04" value="False"
+                  name="businessPartyToLawsuit" <%= application.businessPartyToLawsuit == 'False' ? 'checked' : '' %>
+                  required>
+          <label for="rad04">False</label>
+          </span>
+          <span id="businessPartyToLawsuitError"></span>
+        </div>
+
+      </li>
+      <li>
+        <strong class="title">My business has never defaulted on any Federal debt including SBA loans.</strong>
+        <div class="check-wrap">
+          <span class="property-info">
+            <input type="radio" id="rad05" value="True"
+                   name="neverDefaultedOnDebt" <%= application.neverDefaultedOnDebt == 'True' ? 'checked' : '' %>
+                   required>
+            <label for="rad05">True</label>
+          </span>
+          <span class="property-info">
+            <input type="radio" id="rad06" value="False"
+                   name="neverDefaultedOnDebt" <%= application.neverDefaultedOnDebt == 'False' ? 'checked' : '' %>
+                   required>
+            <label for="rad06">False</label>
+          </span>
+          <span id="neverDefaultedOnDebtError"></span>
+        </div>
+      </li>
+      <li>
+        <strong class="title">No principle of my business has had a property foreclosed within the past 4 years</strong>
+        <div class="check-wrap">
+          <span class="property-info">
+            <input type="radio" id="rad07" value="True"
+                   name="noPropertyForeclosedLast4Years" <%= application.noPropertyForeclosedLast4Years == 'True' ? 'checked' : '' %>
+                   required>
+            <label for="rad07">True</label>
+          </span>
+          <span class="property-info">
+            <input type="radio" id="rad08" value="False"
+                   name="noPropertyForeclosedLast4Years" <%= application.noPropertyForeclosedLast4Years == 'False' ? 'checked' : '' %>
+                   required>
+            <label for="rad08">False</label>
+          </span>
+          <span id="noPropertyForeclosedLast4YearsError"></span>
+        </div>
+      </li>
+      <li>
+        <strong class="title">The business has neither been denied a license, certification or ability to conduct
+          business nor been suspended or administratively limited to its ability to conduct business.</strong>
+        <div class="check-wrap">
+          <span class="property-info">
+            <input type="radio" id="rad09" value="True"
+                   name="neverDeniedLicense" <%= application.neverDeniedLicense == 'True' ? 'checked' : '' %> required>
+            <label for="rad09">True</label>
+          </span>
+          <span class="property-info">
+            <input type="radio" id="rad10" value="False"
+                   name="neverDeniedLicense" <%= application.neverDeniedLicense == 'False' ? 'checked' : '' %> required>
+            <label for="rad10">False</label>
+          </span>
+          <span id="neverDeniedLicenseError"></span>
+        </div>
+      </li>
+    </ul>
+    <div class="form-group">
+      <label for="explain">Please explain any declaration with “false” response or provide documentation: </label>
+      <textarea id="explain" cols="30" rows="10" class="form-control"
+                name="explanation"><%= application.explanation || '' %></textarea>
+    </div>
+    <div class="recalculate-button">
+      <div class="row">
+        <div class="col-xs-12 col-sm-6">
+          <a href="/application/personal-declarations" class="btn btn-outline">Back</a>
+        </div>
+        <div class="col-xs-12 col-sm-6">
+          <input type="hidden" name="progress" value="<%= progress %>"/>
+          <button type="submit" class="btn btn-default">Save and Continue</button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<script>
+
+  window.onload = function (e) {
+
+    $("#businessForm").validate({
+      rules: {
+
+        explanation: {
+          required: function (element) {
+            var radioArray = $("input:radio:checked");
+            for (var i = 0; i < radioArray.length; i++) {
+              if (radioArray[i].value == "False") {
+                return true;
+              }
+            }
+            return false;
+          }
+        }
+      },
+      messages: {
+        explanation: ""
+      },
+
+      errorPlacement: function (error, element) {
+        if ($(element).is(':radio')) {
+          error.appendTo("#" + element.attr("name") + "Error");
+        }
+        else {
+          error.insertAfter(element);  // default placement for everything else
+        }
+      },
+      // Make sure the form is submitted to the destination defined
+      // in the "action" attribute of the form when valid
+      submitHandler: function (form) {
+        form.submit();
+        $("#pleasewait").css('display', 'block');
+      }
+    });
+  }
+</script>

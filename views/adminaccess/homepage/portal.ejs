@@ -1,0 +1,73 @@
+<h1 class="page-title">Homepage Portal</h1>
+<div class="" id="home_portal_section">
+    <div class="rate-adjustment-btn-container">
+        <span class="btn btn-outline" id="home_portal_add_btn">Add</span>
+    </div>
+    <div class="" id="home_portal_list">
+        <%
+        if(portals && portals.length != 0){
+            _.each(portals, function (portal) { 
+                %>
+                <div class="portal-item">
+                    <div class="portal-item-group">
+                        <div class="portal-item__title">Portal Title</div>
+                        <div class="portal-item__title_input">
+                            <input type="text" name="portal_title" value="<%=portal['title']%>">
+                        </div>
+                    </div>
+                    <div class="portal-item-group">
+                        <div class="portal-item__title">Portal Type</div>
+                        <select class="portal-item__type" name="portal_type">
+                            <option value="text" <%=portal['type']=="text"?'selected':'' %> >Text</option>
+                            <option value="file" <%=portal['type']=="file"?'selected':'' %> >File</option>
+                            <option value="link" <%=portal['type']=="link"?'selected':'' %> >Link</option>
+                        </select>
+                    </div>
+                    <div class="portal-item-group portal-item-group--value">
+                        <div class="portal-item__title">File Link</div>
+                        <input type="file" name="portal_file" accept=".pdf">
+                        <input type="text" name="portal_link" value="<%=portal['val']%>">
+                        <span class="btn btn-add" name="portal_file_upload_btn">Upload<span class="loader"></span></span>
+                        <span class="" name="portal_file_name"><%=portal['val']%></span>
+                    </div>
+                    <div class="portal-item-btn-wrap">
+                        <span class="portal-item-btn-delete">Delete</span>
+                    </div>
+                </div>
+                <%
+            })
+        }
+        %>
+    </div>
+    <div class="button-wrap">
+        <span class="btn btn-outline" id="home_portal_save_btn">Save</span>
+    </div>
+</div>
+<div id="home_portal_row_template" style="display: none">
+    <div class="portal-item">
+        <div class="portal-item-group">
+            <div class="portal-item__title">Portal Title</div>
+            <div class="portal-item__title_input">
+                <input type="text" name="portal_title">
+            </div>
+        </div>
+        <div class="portal-item-group">
+            <div class="portal-item__title">Portal Type</div>
+            <select class="portal-item__type" name="portal_type">
+                <option value="text">Text</option>
+                <option value="file">File</option>
+                <option value="link">Link</option>
+            </select>
+        </div>
+        <div class="portal-item-group portal-item-group--value">
+            <div class="portal-item__title">File Link</div>
+            <input type="file" name="portal_file" accept=".pdf">
+            <input type="text" name="portal_link">
+            <span class="btn btn-add" name="portal_file_upload_btn">Upload<span class="loader"></span></span>
+            <span class="" name="portal_file_name"></span>
+        </div>
+        <div class="portal-item-btn-wrap">
+            <span class="portal-item-btn-delete">Delete</span>
+        </div>
+    </div>
+</div>

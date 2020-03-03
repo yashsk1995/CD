@@ -1,0 +1,1731 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Commercial Direct</title>
+
+  <!-- Viewport mobile tag for sensible mobile support -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+  <!--
+      Stylesheets and Preprocessors
+      ==============================
+
+      You can always bring in CSS files manually with `<link>` tags, or asynchronously
+      using a solution like AMD (RequireJS).  Or, if you like, you can take advantage
+      of Sails' conventional asset pipeline (boilerplate Gruntfile).
+
+      By default, stylesheets from your `assets/styles` folder are included
+      here automatically (between STYLES and STYLES END). Both CSS (.css) and LESS (.less)
+      are supported. In production, your styles will be minified and concatenated into
+      a single file.
+
+      To customize any part of the built-in behavior, just edit `tasks/pipeline.js`.
+      For example, here are a few things you could do:
+
+          + Change the order of your CSS files
+          + Import stylesheets from other directories
+          + Use a different or additional preprocessor, like SASS, SCSS or Stylus
+  -->
+  <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:300,300i,400,400i,600,600i,700,700i,800,800i,900"
+        rel="stylesheet">
+
+  <link rel="stylesheet" href="/styles/frontend/bootstrap.min.css">
+  <link rel="stylesheet" href="/styles/frontend/main.css?x=1">
+  <script src="/js/jquery-1.11.2.min.js"></script>
+  <script src="/js/jquery-ui.min.js"></script>
+  <script src="/js/jquery.form.min.js"></script>
+  <script src="/js/frontend/jquery.main.js"></script>
+  <script src="/js/jquery.validate.min.js"></script>
+  <script src="/js/jquery-mask.js"></script>
+
+
+  <style>
+    .form-control {
+      min-height: 34px;
+      height: auto;
+    }
+
+    .application-content {
+      margin-top: 30px;
+    }
+
+    .application-header {
+      padding-bottom: 0;
+    }
+
+    .question {
+      margin-top: 20px;
+    }
+
+    .terms-container {
+      margin-top: 20px;
+    }
+
+    .btn-container {
+      margin-top: 19px;
+      padding: 29px 0 80px;
+
+    }
+
+    .btn-container .btn {
+      width: 100%;
+    }
+
+    .btn-container .btn-outline{
+      color: #50b649;
+      background: transparent;
+    }
+
+    .form-seperator {
+      width: 100%;
+    }
+
+  </style>
+</head>
+
+<body class="home">
+<div id="wrapper">
+
+  <% include ../header.ejs %>
+  <main id="main">
+    <div class="inner-banner">
+      <div class="bg-cover">
+        <img src="/images/frontend/img05.jpg" alt="image description">
+      </div>
+      <div class="container text-center">
+        <h1>Commercial Loan Application</h1>
+      </div>
+    </div>
+    <div class="container">
+      <div class="row">
+        <div class="container">
+          <div class="row">
+            <% if(app.personalBorrowerInfo) { %>
+            <% var personalInfo = app.personalBorrowerInfo %>
+            <div class="application-content">
+              <div class="application-header row">
+                <h2>1. Personal or Borrowing Entity Information </h2>
+              </div>
+              <% if(personalInfo.entityInformation == "Entity"){ %>
+
+              <div class="row flex-row" style="margin-top: 20px;">
+                <div class="col-xs-12">
+                  <div class="form-group">
+                    <label>Entity Information</label>
+                    <div class="form-control">
+                      <%= personalInfo.entityInformation %>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-sm-6 col-xs-12">
+                  <div class="form-group">
+                    <label>Borrowing entity is an</label>
+                    <div class="form-control">
+                      <%= personalInfo.entityIs %>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-6 col-xs-12">
+                  <div class="form-group">
+                    <label>Borrowing Entity Name</label>
+                    <div class="form-control">
+                      <%= personalInfo.borrowEntityName %>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-6 col-xs-12">
+                  <div class="form-group">
+                    <label>Date Formed</label>
+                    <div class="form-control">
+                      <%= personalInfo.dateFormed %>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-6 col-xs-12">
+                  <div class="form-group">
+                    <label>Tax ID</label>
+                    <div class="form-control">
+                      <%= personalInfo.taxId %>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xs-12">
+                  <div class="form-text-wrap">
+                    <p><strong>Any individual who owns 25% or more of the borrowing entity is required
+                        to be a guarantor of the loan.</strong> <br>Please list ALL additional owners below or
+                      attach
+                      organization chart.</p>
+                  </div>
+                </div>
+                <% if(personalInfo.individuals) { %>
+                <% _.each(personalInfo.individuals, function(individual) { %>
+                <div id="individual" class="col-xs-12">
+                  <div class="col-xs-12 col-sm-4">
+                    <div class="form-group">
+                      <label>Name</label>
+                      <div class="form-control">
+                        <%= individual.individualName || '' %>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-xs-12 col-sm-4">
+                    <div class="form-group">
+                      <label>Email</label>
+                      <div class="form-control">
+                        <%= individual.individualEmail || '' %>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-xs-6 col-sm-2">
+                    <div class="form-group">
+                      <label>Ownership</label>
+                      <div class="form-control">
+                        <%= individual.ownership || '' %>%
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-xs-6 col-sm-2">
+                    <div class="form-group">
+                      <label>On Title</label>
+                      <div class="form-control">
+                        <%= individual.onTitle || '' %>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <% }) %>
+                <% } %>
+
+                <div class="col-xs-12">
+                  <div class="form-text-wrap">
+                    <label>Is the structure of the entity changing as part of the loan
+                      transaction?</label> <%= personalInfo.isStructureChange || '' %>
+                  </div>
+                </div>
+
+                <div class="col-xs-12">
+                  <div class="form-group">
+                    <label>Explainnation</label>
+                    <div class="form-control">
+                      <%= personalInfo.structureChangeDescription || '' %>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <% } else { %>
+
+              <div class="row flex-row" style="margin-top: 20px;">
+                <div class="col-xs-12">
+                  <div class="form-group">
+                    <label>Entity Information</label>
+                    <div class="form-control">
+                      <%= 'Individual' %>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-sm-6 col-xs-12">
+                  <div class="form-group">
+                    <label>Borrower Name</label>
+                    <div class="form-control">
+                      <%= personalInfo.borrowerName %>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-6 col-xs-12">
+                  <div class="form-group">
+                    <label>Email Address</label>
+                    <div class="form-control">
+                      <%= personalInfo.emailAddress || '' %>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-sm-6 col-xs-12">
+                  <div class="form-group">
+                    <label>Date of Birth</label>
+                    <div class="form-control">
+                      <%= personalInfo.dateOfBirth || '' %>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-6 col-xs-12">
+                  <div class="form-group">
+                    <label>Marital Status</label>
+                    <div class="form-control">
+                      <%= personalInfo.maritalStatus || '' %>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-6 col-xs-12">
+                  <div class="form-group">
+                    <label>Address 1</label>
+                    <div class="form-control">
+                      <%= personalInfo.address1 || '' %>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-6 col-xs-12">
+                  <div class="form-group">
+                    <label>Address 2</label>
+                    <div class="form-control">
+                      <%= personalInfo.address2 || '' %>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-4 col-xs-12">
+                  <div class="form-group">
+                    <label>City</label>
+                    <div class="form-control">
+                      <%= personalInfo.city || '' %>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-2 col-xs-12">
+                  <div class="form-group">
+                    <label>State</label>
+                    <div class="form-control">
+                      <%= personalInfo.state || '' %>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-6 col-xs-12">
+                  <div class="form-group">
+                    <label>Zipcode</label>
+                    <div class="form-control">
+                      <%= personalInfo.zipCode || '' %>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-6 col-xs-12">
+                  <div class="form-group">
+                    <label>Phone Number</label>
+                    <div class="form-control">
+                      <%= personalInfo.phoneNumber || '' %>
+                    </div>
+                  </div>
+                </div>
+
+                <% if(personalInfo.coBorrowers) {
+                  var coBorrowerCount = 1;
+                %>
+                <% _.each(personalInfo.coBorrowers, function(coBorrower) { %>
+                <div class="form-seperator">
+                  <div class="col-xs-12">
+                    <h3>Co Borrower <%= coBorrowerCount %></h3>
+                  </div>
+                  <div class="col-sm-6 col-xs-12">
+                    <div class="form-group">
+                      <label>Co Borrower Name</label>
+                      <div class="form-control">
+                        <%= coBorrower.coBorrowerName || '' %>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-6 col-xs-12">
+                    <div class="form-group">
+                      <label>Co Borrower Email</label>
+                      <div class="form-control">
+                        <%= coBorrower.coBorrowerEmail || '' %>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-6 col-xs-12">
+                    <div class="form-group">
+                      <label>Address 1</label>
+                      <div class="form-control">
+                        <%= coBorrower.coBorrowerAddress || '' %>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-4 col-xs-12">
+                    <div class="form-group">
+                      <label>City</label>
+                      <div class="form-control">
+                        <%= coBorrower.coBorrowerCity || '' %>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-2 col-xs-12">
+                    <div class="form-group">
+                      <label>State</label>
+                      <div class="form-control">
+                        <%= coBorrower.coBorrowerState || '' %>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+                <% coBorrowerCount++; %>
+                <% }) %>
+                <% } %>
+
+              </div>
+              <% } %>
+            </div>
+            <% } %>
+          </div>
+
+          <div class="row" style="page-break-before: always; ">
+            <% if(app.loanRequest) { %>
+            <% var loanRequest = app.loanRequest %>
+            <div class="application-content">
+              <div class="application-header row">
+                <h2>2. Loan Request</h2>
+              </div>
+
+              <div class="row flex-row" style="margin-top: 20px;">
+                <div class="col-xs-12">
+                  <div class="form-group">
+                    <label>Commercial Mortgage Type Applied For</label>
+                    <div class="form-control">
+                      <%= loanRequest.mortgageType || '' %>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-xs-12 col-sm-6">
+                  <div class="form-group">
+                    <label>Loan Purpose</label>
+                    <div class="form-control">
+                      <%= loanRequest.loanPurpose || '' %>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xs-12 col-sm-6">
+                  <div class="form-group">
+                    <label>Amortization</label>
+                    <div class="form-control">
+                      <%= loanRequest.amortization || '' %>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xs-12 col-sm-6">
+                  <div class="form-group">
+                    <label>Requested Loan Amount</label>
+                    <div class="form-control">
+                      <%= loanRequest.loanAmount || '' %>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-xs-12 col-sm-6">
+                  <div class="form-group">
+                    <label>Fixed Rate Period</label>
+                    <div class="form-control">
+                      <%= loanRequest.loanProgram || '' %> Year(s)
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xs-12 col-sm-6">
+                  <div class="form-group">
+                    <label>Prepayment Type</label>
+                    <div class="form-control">
+                      <%= loanRequest.prepaymentType || '' %>
+                    </div>
+                  </div>
+                </div>
+                <% if(loanRequest.loanPurpose == 'Purchase' ) { %>
+
+                <div class="form-seperator">
+                  <div class="col-xs-12">
+                    <h3>Purchase </h3>
+                  </div>
+                  <div class="col-xs-12 col-sm-6">
+                    <div class="form-group">
+                      <label>Purchase Contract Expires</label>
+                      <div class="form-control">
+                        <%= loanRequest.purchaseContract %>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-xs-12 col-sm-6">
+                    <div class="form-group">
+                      <label>Purchase Price</label>
+                      <div class="form-control">
+                        <%= loanRequest.purchasePrice %>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-xs-12 col-sm-6">
+                    <div class="form-group">
+                      <label>Amount of Down Payment</label>
+                      <div class="form-control">
+                        <%= loanRequest.downPayment %>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <% } else if(loanRequest.loanPurpose && loanRequest.loanPurpose.indexOf('Refinance') !== -1 ) { %>
+                <div class="form-seperator">
+                  <div class="col-xs-12">
+                    <h3>Refinance </h3>
+                  </div>
+
+                  <div class="col-xs-12">
+                    <div class="form-text-wrap">
+                      <label>Does the property currently have a mortage?</label> <%= loanRequest.isMortage || '' %>
+                    </div>
+                  </div>
+
+                  <div class="col-xs-12 col-sm-6">
+                    <div class="form-group">
+                      <label>Original Purchase Date</label>
+                      <div class="form-control">
+                        <%= loanRequest.originalPurchaseDate || '' %>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-xs-12 col-sm-6">
+                    <div class="form-group">
+                      <label>Original Purchase Price</label>
+                      <div class="form-control">
+                        <%= loanRequest.originalPurchasePrice || '' %>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-xs-12 col-sm-6">
+                    <div class="form-group">
+                      <label>Cost of Improvements Made*</label>
+                      <div class="form-control">
+                        <%= loanRequest.improvementCost || '' %>
+                      </div>
+                    </div>
+                  </div>
+                  <% if(loanRequest.improvementCost == "0"){ %>
+                  <div class="col-xs-12 col-sm-6">
+                    <div class="form-group">
+                      <label>Explanation (if Improvement cost is 0)</label>
+                      <div class="form-control">
+                        <%= loanRequest.improvementCostExplanation || '' %>
+                      </div>
+                    </div>
+                  </div>
+                  <% } %>
+                  <div class="col-xs-12 col-sm-6">
+                    <div class="form-group">
+                      <label>Current Lender</label>
+                      <div class="form-control">
+                        <%= loanRequest.currentLender || '' %>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-xs-12 col-sm-6">
+                    <div class="form-group">
+                      <label>Interest Rate</label>
+                      <div class="form-control">
+                        <%= loanRequest.interestRate || '' %>%
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-xs-12 col-sm-6">
+                    <div class="form-group">
+                      <label>Monthly Payment</label>
+                      <div class="form-control">
+                        <%= loanRequest.monthlyPayment || '' %>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-xs-12 col-sm-6">
+                    <div class="form-group">
+                      <label>Pay-Off Mortgage 1</label>
+                      <div class="form-control">
+                        <%= loanRequest.payoffMortgage || '' %>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-xs-12 col-sm-6">
+                    <div class="form-group">
+                      <label>Pay-Off Mortgage 2</label>
+                      <div class="form-control">
+                        <%= loanRequest.payoffMortgage2 || '' %>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-xs-12 col-sm-6">
+                    <div class="form-group">
+                      <label>Pay-Off Outstanding Taxes/Others</label>
+                      <div class="form-control">
+                        <%= loanRequest.payoffOut || '' %>
+                      </div>
+                    </div>
+                  </div>
+
+                  <% if(loanRequest.loanPurpose == 'Cash Out Refinance' ) { %>
+
+                  <div class="col-xs-12 col-sm-6">
+                    <div class="form-group">
+                      <label>Cash Out</label>
+                      <div class="form-control">
+                        <%= loanRequest.cashOut || '' %>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-xs-12 col-sm-6">
+                    <div class="form-group">
+                      <label>Cash Out Description</label>
+                      <div class="form-control">
+                        <%= loanRequest.cashOutDescription || '' %>
+                      </div>
+                    </div>
+                  </div>
+                  <% } %>
+
+                  <div class="col-xs-12">
+                    <div class="form-group">
+                      <label>Is the property subject to any additional liens, encumbrances or restrictions?</label>
+                      <div class="form-control">
+                        <%= loanRequest.additionalLiens || '' %>
+                      </div>
+                    </div>
+                  </div>
+                  <% if(loanRequest.additionalLiens == 'yes' ) { %>
+                  <div class="col-xs-12">
+                    <div class="form-group">
+                      <label>If yes, please explain: </label>
+                      <div class="form-control">
+                        <%= loanRequest.additionalLiensDescription || '' %>
+                      </div>
+                    </div>
+                  </div>
+                  <% } %>
+                </div>
+                <% } %>
+              </div>
+            </div>
+            <% } %>
+          </div>
+
+
+          <div class="row" style="page-break-before: always; ">
+            <% if(app.propertyInfo) { %>
+            <% var propertyInfo = app.propertyInfo %>
+            <div class="application-content">
+              <div class="application-header row">
+                <h2>3. Subject Property Information</h2>
+              </div>
+
+              <div class="row flex-row">
+                <div class="col-xs-12">
+                  <div class="form-group">
+                    <label>Subject Property Address</label>
+                    <div class="form-control">
+                      <%= propertyInfo.propertyAddress || '' %>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-xs-12 col-sm-6">
+                  <div class="form-group">
+                    <label>City</label>
+                    <div class="form-control">
+                      <%= propertyInfo.propertyCity || '' %>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xs-12 col-sm-2">
+                  <div class="form-group">
+                    <label>State</label>
+                    <div class="form-control">
+                      <%= propertyInfo.propertyState || '' %>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xs-12 col-sm-4">
+                  <div class="form-group">
+                    <label>Zipcode</label>
+                    <div class="form-control">
+                      <%= propertyInfo.propertyZipCode || '' %>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xs-12 col-sm-6">
+                  <div class="form-group">
+                    <label>Year Built</label>
+                    <div class="form-control">
+                      <%= propertyInfo.yearBuild || '' %>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xs-12">
+                  <div class="form-group">
+                    <label>Description of Subject Property (attach description if necessary)</label>
+                    <div class="form-control">
+                      <%= propertyInfo.propertyDescription || '' %>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xs-12">
+                  <div class="form-group col-xs-6 row">
+                    <label>Attached file</label>
+                    <img class="img-responsive" src="<%= propertyInfo.propertyFileUrl || '' %>" alt="Header Image">
+                  </div>
+                </div>
+                <div class="form-seperator">
+                  <div class="col-xs-12 col-sm-6">
+                    <div class="form-group">
+                      <label>Commercial Property Type</label>
+                      <div class="form-control">
+                        <%= propertyInfo.commercialType || '' %>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-xs-12 col-sm-6">
+                    <div class="form-group">
+                      <label>Does the property have?</label>
+                      <div class="form-control">
+                        <%= propertyInfo.doesHave || '' %>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-xs-12 col-sm-6">
+                    <div class="form-group">
+                      <label>Estimated Value of Real Estate</label>
+                      <div class="form-control">
+                        <%= propertyInfo.estimatedValue || '' %>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-xs-12 col-sm-6">
+                    <div class="form-group">
+                      <label>Source of Value Estimate</label>
+                      <div class="form-control">
+                        <%= propertyInfo.estimateSource || '' %>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-xs-12 col-sm-6">
+                    <div class="form-group">
+                      <label>Owner Occupied</label>
+                      <div class="form-control">
+                        <%= propertyInfo.ownerOccupied || '' %>
+                      </div>
+                    </div>
+                  </div>
+                  <% if(propertyInfo.ownerOccupied == 'Yes') { %>
+                  <div class="col-xs-12 col-sm-6">
+                    <div class="form-group">
+                      <label>Owner Occupancy</label>
+                      <div class="form-control">
+                        <%= propertyInfo.ownerPercentage || '' %>%
+                      </div>
+                    </div>
+                  </div>
+                  <% } %>
+                  <div class="col-xs-12  col-sm-6">
+                    <div class="form-group">
+                      <label>Yrs. of Investor Experience</label>
+                      <div class="form-control">
+                        <%= propertyInfo.yrsExperience || '' %>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-xs-12 col-sm-6">
+                    <div class="form-group">
+                      <label>Number of Units</label>
+                      <div class="form-control">
+                        <%= propertyInfo.numOfUnits || '' %>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-xs-12 col-sm-6">
+                    <div class="form-group">
+                      <label>Number of Units Occupied</label>
+                      <div class="form-control">
+                        <%= propertyInfo.numOfUnitsOccupied || '' %>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-xs-12 col-sm-6">
+                    <div class="form-group">
+                      <label>Number of Buildings</label>
+                      <div class="form-control">
+                        <%= propertyInfo.numOfBuildings %>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-xs-12 col-sm-6">
+                    <div class="form-group">
+                      <label>Building Sq. Footage</label>
+                      <div class="form-control">
+                        <%= propertyInfo.buildSquareFeet || '' %>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-xs-12 col-sm-6">
+                    <div class="form-group">
+                      <label>Land Sq. Footage</label>
+                      <div class="form-control">
+                        <%= propertyInfo.landSquareFeet || '' %>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+            <% } %>
+          </div>
+
+          <div class="row" style="page-break-before: always; ">
+            <% if(app.businessInfo) { %>
+            <% var businessInfo = app.businessInfo %>
+            <div class="application-content">
+              <div class="application-header row">
+                <h2>4. Business Information</h2>
+              </div>
+
+              <div class="row flex-row">
+                <div class="col-xs-12 col-sm-6">
+                  <div class="form-group">
+                    <label>Business Name</label>
+                    <div class="form-control">
+                      <%= businessInfo.businessName || '' %>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-xs-12 col-sm-6">
+                  <div class="form-group">
+                    <label>Address</label>
+                    <div class="form-control">
+                      <%= businessInfo.address || '' %>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-xs-12 col-sm-6">
+                  <div class="form-group">
+                    <label>City</label>
+                    <div class="form-control">
+                      <%= businessInfo.city || '' %>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xs-12 col-sm-2">
+                  <div class="form-group">
+                    <label>State</label>
+                    <div class="form-control">
+                      <%= businessInfo.state || '' %>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xs-12 col-sm-4">
+                  <div class="form-group">
+                    <label>Zipcode</label>
+                    <div class="form-control">
+                      <%= businessInfo.zipCode || '' %>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xs-12 col-sm-6">
+                  <div class="form-group">
+                    <label>Years as Business Owner</label>
+                    <div class="form-control">
+                      <%= businessInfo.yearsAsOwner || '' %>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xs-12 col-sm-6">
+                  <div class="form-group">
+                    <label>Will this business occupy the subject property?</label>
+                    <div class="form-control">
+                      <%= businessInfo.businessOccupy || '' %>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xs-12 col-sm-6">
+                  <div class="form-group">
+                    <label>Type of Business</label>
+                    <div class="form-control">
+                      <%= businessInfo.businessType || '' %>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-seperator">
+                  <div class="col-xs-12">
+                    <div class="tax-info">
+                      <p>Tax Year 1 <b><%= businessInfo.taxYear1 || '' %></b> Business Income</p>
+                    </div>
+                  </div>
+
+                  <div class="col-xs-12 col-sm-6">
+                    <div class="form-group">
+                      <label>Annual Revenues</label>
+                      <div class="form-control">
+                        <%= businessInfo.taxYear1Revenue || '' %>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-xs-12 col-sm-6">
+                    <div class="form-group">
+                      <label>Annual Expenses</label>
+                      <div class="form-control">
+                        <%= businessInfo.taxYear1Expenses || '' %>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-xs-12 col-sm-6">
+                    <div class="form-group">
+                      <label>Net Operating Income (A-B)</label>
+                      <div class="form-control">
+                        <%= businessInfo.taxYear1NetIncome || '' %>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+                <div class="form-seperator">
+                  <div class="col-xs-12">
+                    <div class="tax-info">
+                      <p>Tax Year 2 <b><%= businessInfo.taxYear2 || '' %></b> Business Income</p>
+                    </div>
+                  </div>
+                  <div class="col-xs-12 col-sm-6">
+                    <div class="form-group">
+                      <label>Annual Revenues</label>
+                      <div class="form-control">
+                        <%= businessInfo.taxYear2Revenue || '' %>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-xs-12 col-sm-6">
+                    <div class="form-group">
+                      <label>Annual Expenses</label>
+                      <div class="form-control">
+                        <%= businessInfo.taxYear2Expenses || '' %>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-xs-12 col-sm-6">
+                    <div class="form-group">
+                      <label>Net Operating Income (A-B)</label>
+                      <div class="form-control">
+                        <%= businessInfo.taxYear2NetIncome || '' %>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <% } %>
+          </div>
+
+          <div class="row" style="page-break-before: always;">
+            <% if(app.employmentInfo) { %>
+            <% var employmentInfo = app.employmentInfo %>
+            <div class="application-content">
+              <div class="application-header row">
+                <h2>5. Employment Information</h2>
+              </div>
+              <div class="row flex-row">
+                <div class="col-xs-12">
+                  <h3>Borrower</h3>
+                </div>
+                <div class="col-xs-12  col-sm-6">
+                  <div class="form-group">
+                    <label>Self Employed</label>
+                    <div class="form-control">
+                      <%= employmentInfo.selfEmployed || '' %>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-xs-12 col-sm-6">
+                  <div class="form-group">
+                    <label>Years on the Job:</label>
+                    <div class="form-control">
+                      <%= employmentInfo.yearsOnJob || '' %>
+                    </div>
+                  </div>
+                </div>
+
+                <% if(app.noOfCoBorrowers && app.noOfCoBorrowers > 0 ){ %>
+                <% for (var i = 1; i <= app.noOfCoBorrowers; i++){ %>
+                <div class="form-seperator">
+                  <div class="col-xs-12">
+                    <h3>Co Borrower <%= i > 1 ? i : '' %></h3>
+                  </div>
+                  <div class="col-xs-12 col-sm-6">
+                    <div class="form-group">
+                      <label>Self Employed</label>
+                      <div class="form-control">
+                        <%= employmentInfo['coBorrower' + i + 'SelfEmployed'] || '' %>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-xs-12 col-sm-6">
+                    <div class="form-group">
+                      <label>Years on the Job:</label>
+                      <div class="form-control">
+                        <%= employmentInfo['coBorrower' + i + 'YearsOnJob'] || '' %>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <% } %>
+                <% } %>
+
+              </div>
+            </div>
+            <% } %>
+          </div>
+
+          <div class="row" style="page-break-before: always;">
+            <% if(app.incomeExpenseInfo) { %>
+            <% var incomeExpenseInfo = app.incomeExpenseInfo %>
+            <div class="application-content">
+              <div class="application-header row">
+                <h2>6. Annual Income And Combined Housing Expense Information</h2>
+              </div>
+              <div class="row flex-row">
+                <div class="col-xs-12">
+                  <h3>Borrower</h3>
+                </div>
+                <div class="col-xs-12 col-sm-6">
+                  <div class="form-group">
+                    <label>Total Income</label>
+                    <div class="form-control">
+                      $<%= incomeExpenseInfo.borrowerTotalIncome || '' %>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-xs-12 col-sm-6">
+                  <div class="form-group">
+                    <label>Total Monthly Housing</label>
+                    <div class="form-control">
+                      $<%= incomeExpenseInfo.borrowerTotalMonthlyHousing || '' %>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <% if(app.noOfCoBorrowers && app.noOfCoBorrowers > 0 ){ %>
+              <% for (var i = 1; i <= app.noOfCoBorrowers; i++){ %>
+
+              <div class="row flex-row">
+                <div class="col-xs-12">
+                  <h3>Co Borrower <%= i > 1 ? i : '' %></h3>
+                </div>
+                <div class="col-xs-12 col-sm-6">
+                  <div class="form-group">
+                    <label>Total Income</label>
+                    <div class="form-control">
+                      $<%= incomeExpenseInfo['coBorrower' + i + 'TotalIncome'] || '' %>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-xs-12 col-sm-6">
+                  <div class="form-group">
+                    <label>Total Monthly Housing</label>
+                    <div class="form-control">
+                      $<%= incomeExpenseInfo['coBorrower' + i + 'TotalMonthlyHousing'] || '' %>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <% } %>
+              <% } %>
+
+            </div>
+            <% } %>
+          </div>
+
+          <div class="row" style="page-break-before: always; ">
+            <% if(app.assetsLiabilities) { %>
+            <% var assetsLiabilities = app.assetsLiabilities %>
+            <div class="application-content">
+              <div class="application-header row">
+                <h2>7. Assets And Liabilities</h2>
+              </div>
+              <div class="row flex-row">
+                <div class="col-xs-12">
+                  <h3>Borrower</h3>
+                </div>
+                <div class="col-xs-12 col-sm-6">
+                  <div class="form-group">
+                    <label>Total Assets</label>
+                    <div class="form-control">
+                      $<%= assetsLiabilities.borrowerTotalAssets || '' %>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-xs-12 col-sm-6">
+                  <div class="form-group">
+                    <label>Total Cash Available</label>
+                    <div class="form-control">
+                      $<%= assetsLiabilities.borrowerTotalCashAvailable || '' %>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-xs-12 col-sm-6">
+                  <div class="form-group">
+                    <label>Total Liabilities</label>
+                    <div class="form-control">
+                      $<%= assetsLiabilities.borrowerTotalLiabilities || '' %>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-xs-12 col-sm-6">
+                  <div class="form-group">
+                    <label>Net Worth</label>
+                    <div class="form-control">
+                      $<%= assetsLiabilities.borrowerNetWorth || '' %>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <% if(app.noOfCoBorrowers && app.noOfCoBorrowers > 0 ){ %>
+              <% for (var i = 1; i <= app.noOfCoBorrowers; i++){ %>
+              <div class="form-seperator">
+                <div class="row flex-row">
+                  <div class="col-xs-12">
+                    <h3>Co Borrower <%= i > 1 ? i : '' %></h3>
+                  </div>
+                  <div class="col-xs-12 col-sm-6">
+                    <div class="form-group">
+                      <label>Total Assets</label>
+                      <div class="form-control">
+                        $<%= assetsLiabilities.borrowerTotalAssets || '' %>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-xs-12 col-sm-6">
+                    <div class="form-group">
+                      <label>Total Cash Available</label>
+                      <div class="form-control">
+                        $<%= assetsLiabilities.borrowerTotalCashAvailable || '' %>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-xs-12 col-sm-6">
+                    <div class="form-group">
+                      <label>Total Liabilities</label>
+                      <div class="form-control">
+                        $<%= assetsLiabilities.borrowerTotalLiabilities || '' %>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-xs-12 col-sm-6">
+                    <div class="form-group">
+                      <label>Net Worth</label>
+                      <div class="form-control">
+                        $<%= assetsLiabilities.borrowerNetWorth || '' %>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <% } %>
+              <% } %>
+
+            </div>
+            <% } %>
+          </div>
+
+          <div class="row" style="page-break-before: always;">
+            <% if(app.personalDeclarations) { %>
+            <% var personalDeclarations = app.personalDeclarations %>
+            <div class="application-content">
+              <div class="application-header row">
+                <h2>8. Personal Declarations</h2>
+                <p>If you answer “Yes” to any questions A through F, please provide a separate explanation.</p>
+              </div>
+              <div class="row flex-row">
+                <div class="col-xs-12 question">
+                  <h4>A. Are there any outstanding judgments against you?</h4>
+                  <div class="row">
+                    <div class="col-xs-6 col-sm-3">
+                      <b>Borrower:</b>&nbsp; <%= personalDeclarations.anyOutstandingJudgment || '' %>
+                    </div>
+                    <% if(app.noOfCoBorrowers && app.noOfCoBorrowers > 0 ){ %>
+                    <% for (var i = 1; i <= app.noOfCoBorrowers; i++){ %>
+                    <div class="col-xs-6 col-sm-3">
+                      <b>CoBorrower <%= i > 1 ? i : '' %>
+                        :</b>&nbsp; <%= personalDeclarations['coBorrower' + i + 'AnyOutstandingJudgment'] || '' %>
+                    </div>
+                    <% } %>
+                    <% } %>
+                  </div>
+                </div>
+
+                <div class="col-xs-12 question">
+                  <h4>B. Have you declared bankruptcy within the last 4 years?</h4>
+                  <div class="row">
+                    <div class="col-xs-6 col-sm-3">
+                      <b>Borrower:</b>&nbsp; <%= personalDeclarations.bankruptcyLast4years || '' %>
+                    </div>
+                    <% if(app.noOfCoBorrowers && app.noOfCoBorrowers > 0 ){ %>
+                    <% for (var i = 1; i <= app.noOfCoBorrowers; i++){ %>
+                    <div class="col-xs-6 col-sm-3">
+                      <b>CoBorrower <%= i > 1 ? i : '' %>
+                        :</b>&nbsp; <%= personalDeclarations['coBorrower' + i + 'BankruptcyLast4years'] || '' %>
+                    </div>
+                    <% } %>
+                    <% } %>
+                  </div>
+                </div>
+
+                <div class="col-xs-12 question">
+                  <h4>C. Have you had property foreclosed upon or given title in lieu thereof in the last 4
+                    years?</h4>
+                  <div class="row">
+                    <div class="col-xs-6 col-sm-3">
+                      <b>Borrower:</b>&nbsp; <%= personalDeclarations.propertyForeclosed || '' %>
+                    </div>
+                    <% if(app.noOfCoBorrowers && app.noOfCoBorrowers > 0 ){ %>
+                    <% for (var i = 1; i <= app.noOfCoBorrowers; i++){ %>
+                    <div class="col-xs-6 col-sm-3">
+                      <b>CoBorrower <%= i > 1 ? i : '' %>
+                        :</b>&nbsp; <%= personalDeclarations['coBorrower' + i + 'PropertyForeclosed'] || '' %>
+                    </div>
+                    <% } %>
+                    <% } %>
+                  </div>
+                </div>
+
+                <div class="col-xs-12 question">
+                  <h4>D. Are you party to a lawsuit?</h4>
+                  <div class="row">
+                    <div class="col-xs-6 col-sm-3">
+                      <b>Borrower:</b>&nbsp; <%= personalDeclarations.partyToLawsuit || '' %>
+                    </div>
+                    <% if(app.noOfCoBorrowers && app.noOfCoBorrowers > 0 ){ %>
+                    <% for (var i = 1; i <= app.noOfCoBorrowers; i++){ %>
+                    <div class="col-xs-6 col-sm-3">
+                      <b>CoBorrower <%= i > 1 ? i : '' %>
+                        :</b>&nbsp; <%= personalDeclarations['coBorrower' + i + 'PartyToLawsuit'] || '' %>
+                    </div>
+                    <% } %>
+                    <% } %>
+                  </div>
+                </div>
+
+                <div class="col-xs-12 question">
+                  <h4>E. Have you directly or indirectly been obligated on any loan which resulted in foreclosure,
+                    transfer
+                    of title in lieu of foreclosure or judgment in the last 4 years?</h4>
+                  <div class="row">
+                    <div class="col-xs-6 col-sm-3">
+                      <b>Borrower:</b>&nbsp; <%= personalDeclarations.obligatedAnyLoan || '' %>
+                    </div>
+                    <% if(app.noOfCoBorrowers && app.noOfCoBorrowers > 0 ){ %>
+                    <% for (var i = 1; i <= app.noOfCoBorrowers; i++){ %>
+                    <div class="col-xs-6 col-sm-3">
+                      <b>CoBorrower <%= i > 1 ? i : '' %>
+                        :</b>&nbsp; <%= personalDeclarations['coBorrower' + i + 'ObligatedAnyLoan'] || '' %>
+                    </div>
+                    <% } %>
+                    <% } %>
+                  </div>
+                </div>
+
+                <div class="col-xs-12 question">
+                  <h4>F. Are you presently delinquent or in default on any Federal debt or any other loan, mortgage,
+                    financial obligation or loan guarantee?</h4>
+                  <div class="row">
+                    <div class="col-xs-6 col-sm-3">
+                      <b>Borrower:</b>&nbsp; <%= personalDeclarations.delinquentOnAnyLoan || '' %>
+                    </div>
+                    <% if(app.noOfCoBorrowers && app.noOfCoBorrowers > 0 ){ %>
+                    <% for (var i = 1; i <= app.noOfCoBorrowers; i++){ %>
+                    <div class="col-xs-6 col-sm-3">
+                      <b>CoBorrower <%= i > 1 ? i : '' %>
+                        :</b>&nbsp; <%= personalDeclarations['coBorrower' + i + 'DelinquentOnAnyLoan'] || '' %>
+                    </div>
+                    <% } %>
+                    <% } %>
+                  </div>
+                </div>
+
+                <div class="col-xs-12 question">
+                  <h4>G. Are you obligated to pay alimony, child support or separate maintenance?</h4>
+                  <div class="row">
+                    <div class="col-xs-6 col-sm-3">
+                      <b>Borrower:</b>&nbsp; <%= personalDeclarations.obligatedToPay || '' %>
+                    </div>
+                    <% if(app.noOfCoBorrowers && app.noOfCoBorrowers > 0 ){ %>
+                    <% for (var i = 1; i <= app.noOfCoBorrowers; i++){ %>
+                    <div class="col-xs-6 col-sm-3">
+                      <b>CoBorrower <%= i > 1 ? i : '' %>
+                        :</b>&nbsp; <%= personalDeclarations['coBorrower' + i + 'ObligatedToPay'] || '' %>
+                    </div>
+                    <% } %>
+                    <% } %>
+                  </div>
+                </div>
+
+                <div class="col-xs-12 question">
+                  <h4>H. If applicable, do you intend to occupy the property as your primary housing residence?</h4>
+                  <div class="row">
+                    <div class="col-xs-6  col-sm-3">
+                      <b>Borrower:</b>&nbsp; <%= personalDeclarations.occupyPropertyAsHouse || '' %>
+                    </div>
+
+                    <% if(app.noOfCoBorrowers && app.noOfCoBorrowers > 0 ){ %>
+                    <% for (var i = 1; i <= app.noOfCoBorrowers; i++){ %>
+                    <div class="col-xs-6 col-sm-3">
+                      <b>CoBorrower <%= i > 1 ? i : '' %>
+                        :</b>&nbsp; <%= personalDeclarations['coBorrower' + i + 'OccupyPropertyAsHouse'] || '' %>
+                    </div>
+                    <% } %>
+                    <% } %>
+                  </div>
+                </div>
+
+                <div class="col-xs-12 question">
+                  <h4>I. Have you been convicted of a felony within the past 10 years?</h4>
+                  <div class="row">
+                    <div class="col-xs-6 col-sm-3">
+                      <b>Borrower:</b>&nbsp; <%= personalDeclarations.convictedLast10Years || '' %>
+                    </div>
+
+                    <% if(app.noOfCoBorrowers && app.noOfCoBorrowers > 0 ){ %>
+                    <% for (var i = 1; i <= app.noOfCoBorrowers; i++){ %>
+                    <div class="col-xs-6 col-sm-3">
+                      <b>CoBorrower <%= i > 1 ? i : '' %>
+                        :</b>&nbsp; <%= personalDeclarations['coBorrower' + i + 'ConvictedLast10Years'] || '' %>
+                    </div>
+                    <% } %>
+                    <% } %>
+                  </div>
+                </div>
+
+                <div class="col-xs-12 question">
+                  <h4>J. Are you a U.S. citizen?</h4>
+                  <div class="row">
+                    <div class="col-xs-5 col-sm-3">
+                      <b>Borrower:</b>&nbsp; <%= personalDeclarations.isUSCitizen || '' %>
+                    </div>
+
+                    <% if(app.noOfCoBorrowers && app.noOfCoBorrowers > 0 ){ %>
+                    <% for (var i = 1; i <= app.noOfCoBorrowers; i++){ %>
+                    <div class="col-xs-6 col-sm-3">
+                      <b>CoBorrower <%= i > 1 ? i : '' %>
+                        :</b>&nbsp; <%= personalDeclarations['coBorrower' + i + 'USCitizen'] || '' %>
+                    </div>
+                    <% } %>
+                    <% } %>
+
+                  </div>
+                </div>
+
+                <div class="col-xs-12 question">
+                  <h4>K. Are you a permanent resident alien?</h4>
+                  <div class="row">
+                    <div class="col-xs-6 col-sm-3">
+                      <b>Borrower:</b>&nbsp; <%= personalDeclarations.isPermanentResident || '' %>
+                    </div>
+
+                    <% if(app.noOfCoBorrowers && app.noOfCoBorrowers > 0 ){ %>
+                    <% for (var i = 1; i <= app.noOfCoBorrowers; i++){ %>
+                    <div class="col-xs-6 col-sm-3">
+                      <b>CoBorrower <%= i > 1 ? i : '' %>
+                        :</b>&nbsp; <%= personalDeclarations['coBorrower' + i + 'PermanentResident'] || '' %>
+                    </div>
+                    <% } %>
+                    <% } %>
+                  </div>
+                </div>
+
+                <div class="col-xs-6 question">
+                  <div class="form-group">
+                    <label>Borrower Visa Status</label>
+                    <div class="form-control">
+                      <%= personalDeclarations.borrowerVisaStatus || '' %>
+                    </div>
+                  </div>
+                </div>
+
+                <% if(app.noOfCoBorrowers && app.noOfCoBorrowers > 0 ){ %>
+                <% for (var i = 1; i <= app.noOfCoBorrowers; i++){ %>
+                <div class="col-xs-6 <%= i == 1 ? 'question' : '' %> ">
+                  <div class="form-group">
+                    <label>CoBorrower <%= i > 1 ? i : '' %> Visa Status</label>
+                    <div class="form-control">
+                      <%= personalDeclarations['coBorrower' + i + 'VisaStatus'] || '' %>
+                    </div>
+                  </div>
+                </div>
+
+                <% } %>
+                <% } %>
+
+              </div>
+            </div>
+            <% } %>
+          </div>
+
+          <div class="row" style="page-break-before: always; ">
+            <% if(app.businessDeclarations) { %>
+            <% var businessDeclarations = app.businessDeclarations %>
+            <div class="application-content">
+              <div class="application-header row">
+                <h2>9. Business Declarations</h2>
+              </div>
+              <div class="row flex-row">
+                <div class="col-xs-12 question">
+                  <h4>Neither my business, nor any principal of my business has declared bankruptcy in the last 4
+                    years</h4>
+                  <div>
+                    <b>Answer:</b> <%= businessDeclarations.businessBankruptcyLast4Years || '' %>
+                  </div>
+                </div>
+
+
+                <div class="col-xs-12 question">
+                  <h4>Neither my business, nor any principle of my business is a party to any lawsuit.</h4>
+                  <div>
+                    <b>Answer:</b> <%= businessDeclarations.businessPartyToLawsuit || '' %>
+                  </div>
+                </div>
+
+                <div class="col-xs-12 question">
+                  <h4>My business has never defaulted on any Federal debt including SBA loans.</h4>
+                  <div>
+                    <b>Answer:</b> <%= businessDeclarations.neverDefaultedOnDebt || '' %>
+                  </div>
+                </div>
+
+                <div class="col-xs-12 question">
+                  <h4>No principle of my business has had a property foreclosed within the past 4 years</h4>
+                  <div>
+                    <b>Answer:</b> <%= businessDeclarations.noPropertyForeclosedLast4Years || '' %>
+                  </div>
+                </div>
+
+                <div class="col-xs-12 question">
+                  <h4>The business has neither been denied a license, certification or ability to conduct business
+                    nor been
+                    suspended or administratively limited to its ability to conduct business.</h4>
+                  <div>
+                    <b>Answer:</b> <%= businessDeclarations.neverDeniedLicense || '' %>
+                  </div>
+                </div>
+
+                <div class="col-xs-12 question">
+                  <div class="form-group">
+                    <label>Please explain any declaration with “false” response or provide documentation:</label>
+                    <div class="form-control">
+                      <%= businessDeclarations.explanation || '' %>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+            <% } %>
+          </div>
+
+          <!--<div class="row" style="page-break-before: always;">-->
+            <!--<% if(app.generalAuthorization) { %>-->
+            <!--<% var generalAuth = app.generalAuthorization %>-->
+            <!--<div class="application-content">-->
+              <!--<div class="application-header row">-->
+                <!--<h2>10. General Authorization</h2>-->
+                <!--<p>I hereby authorize silver hill funding, llc, a division of bayview loan servicing, llc., to-->
+                  <!--verify any-->
+                  <!--and all Information provided or requested with this application, including but not limited to my-->
+                  <!--past and-->
+                  <!--present Employment, earning records, bank accounts, stock holdings and any other asset balances-->
+                  <!--needed to-->
+                  <!--Process my loan application.-->
+                  <!--I authorize silver hill funding, llc to make all inquiries necessary that verify the accuracy of-->
+                  <!--the-->
+                  <!--Statements made herein and to determine my creditworthiness. I understand that false information-->
+                  <!--and-->
+                  <!--Statements may result in possible prosecution under federal and state laws. Further, I understand-->
+                  <!--that my-->
+                  <!--Information will be scrubbed against the ofac, sdn lists, exclusionary and other lists to confirm-->
+                  <!--compliance With the us patriot act, counter-terrorism regulations and bsa/aml regulations.-->
+                  <!--I certify by signing below that this is not an approval or commitment to lend and that I may by-->
+                  <!--denied at-->
+                  <!--any Time during the process for reasons including but not limited to credit worthiness such as;-->
+                  <!--collateral-->
+                  <!--Issues, business practices or unstable government/political climate within a country.</p>-->
+              <!--</div>-->
+
+
+              <!--<div class="row flex-row">-->
+                <!--<div class="col-xs-12">-->
+                  <!--<div class="col-xs-12 col-sm-6">-->
+                    <!--<div class="form-group row">-->
+                      <!--<label>Signature</label>-->
+                      <!--<img class="img-responsive" src="<%= generalAuth.applicant1SignatureUrl || '' %>"-->
+                           <!--alt="Header Image">-->
+                    <!--</div>-->
+                  <!--</div>-->
+                  <!--<div class="col-xs-12 col-sm-3">-->
+                    <!--<div class="form-group">-->
+                      <!--<label>Social Sec. #</label>-->
+                      <!--<div class="form-control">-->
+                        <!--<%= generalAuth.applicant1SocialSecurity || '' %>-->
+                      <!--</div>-->
+                    <!--</div>-->
+                  <!--</div>-->
+                  <!--<div class="col-xs-12 col-sm-3">-->
+                    <!--<div class="form-group">-->
+                      <!--<label>Date</label>-->
+                      <!--<div class="form-control">-->
+                        <!--<%= generalAuth.applicant1Date || '' %>-->
+                      <!--</div>-->
+                    <!--</div>-->
+                  <!--</div>-->
+                <!--</div>-->
+                <!--<div class="col-xs-12">-->
+                  <!--<div class="col-xs-12 col-sm-6">-->
+                    <!--<div class="form-group row">-->
+                      <!--<label>Signature</label>-->
+                      <!--<img class="img-responsive" src="<%= generalAuth.applicant2SignatureUrl || '' %>"-->
+                           <!--alt="Header Image">-->
+                    <!--</div>-->
+                  <!--</div>-->
+                  <!--<div class="col-xs-12 col-sm-3">-->
+                    <!--<div class="form-group">-->
+                      <!--<label>Social Sec. #</label>-->
+                      <!--<div class="form-control">-->
+                        <!--<%= generalAuth.applicant2SocialSecurity || '' %>-->
+                      <!--</div>-->
+                    <!--</div>-->
+                  <!--</div>-->
+                  <!--<div class="col-xs-6 col-sm-3">-->
+                    <!--<div class="form-group">-->
+                      <!--<label>Date</label>-->
+                      <!--<div class="form-control">-->
+                        <!--<%= generalAuth.applicant2Date || '' %>-->
+                      <!--</div>-->
+                    <!--</div>-->
+                  <!--</div>-->
+                <!--</div>-->
+              <!--</div>-->
+            <!--</div>-->
+            <!--<% } %>-->
+          <!--</div>-->
+
+
+          <div class="row" style="page-break-before: always;">
+            <% if(app.infoForMonitoring) { %>
+            <% var infoForMonitoring = app.infoForMonitoring %>
+            <div class="application-content">
+              <div class="application-header row">
+                <h2>11. Information For Government Monitoring Purposes</h2>
+                <p>The following information is requested by the Federal Government for certain types of loans
+                  related to a
+                  dwelling in order to monitor the lender’s compliance with equal credit opportunity, fair housing
+                  and home
+                  mortgage disclosure laws. You are not required to furnish this information, but are encouraged to
+                  do so.
+                  The law provides that a lender may not discriminate either on the basis of this information, or on
+                  whether
+                  you choose to furnish it. If you furnish this information, please provide both ethnicity and race.
+                  For
+                  race, you may check more than one designation. If you do not furnish ethnicity, race, or sex,
+                  under
+                  Federal regulations, this lender is required to note the information on the basis of visual
+                  observation
+                  and surname if you have made this application in person. If you do not wish to furnish the
+                  information,
+                  please check the box below. (Lender must review the above material to assure that the disclosures
+                  satisfy
+                  all requirements to which the lender is subject under applicable state law for the particular type
+                  of loan
+                  applied for.)</p>
+              </div>
+
+
+              <div class="row flex-row">
+                <div class="col-xs-12">
+                  <h4>Borrower</h4>
+                  <% if(infoForMonitoring.applicantNotProvidingInfo == 'Yes'){ %>
+                  I do not wish to furnish this information.
+                  <% } else { %>
+
+                  <div class="col-xs-12 col-sm-4">
+                    <div class="form-group">
+                      <label>Ethnicity</label>
+                      <div class="form-control">
+                        <%= infoForMonitoring.applicantEthnicity || '' %>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-xs-12 col-sm-4">
+                    <div class="form-group">
+                      <label>Race</label>
+                      <div class="form-control">
+                        <%= infoForMonitoring.applicantRace || '' %>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-xs-12  col-sm-4">
+                    <div class="form-group">
+                      <label>Sex</label>
+                      <div class="form-control">
+                        <%= infoForMonitoring.applicantSex || '' %>
+                      </div>
+                    </div>
+                  </div>
+
+                  <% } %>
+
+                </div>
+
+                <% if(app.noOfCoBorrowers && app.noOfCoBorrowers > 0 ){ %>
+                <% for (var i = 1; i <= app.noOfCoBorrowers; i++){ %>
+
+                <div class="col-xs-12">
+                  <h4>Co Borrower <%= i > 1 ? i : '' %></h4>
+                  <% if(infoForMonitoring['coBorrower' + i + 'NotProvidingInfo'] == 'Yes'){ %>
+                  I do not wish to furnish this information.
+                  <% } else { %>
+
+                  <div class="col-xs-12 col-sm-4">
+                    <div class="form-group">
+                      <label>Ethnicity</label>
+                      <div class="form-control">
+                        <%= infoForMonitoring['coBorrower' + i + 'Ethnicity'] || '' %>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-xs-12 col-sm-4">
+                    <div class="form-group">
+                      <label>Race</label>
+                      <div class="form-control">
+                        <%= infoForMonitoring['coBorrower' + i + 'Race'] || '' %>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-xs-12 col-sm-4">
+                    <div class="form-group">
+                      <label>Sex</label>
+                      <div class="form-control">
+                        <%= infoForMonitoring['coBorrower' + i + 'Sex'] || '' %>
+                      </div>
+                    </div>
+                  </div>
+
+                  <% } %>
+
+                </div>
+
+                <% } %>
+                <% } %>
+
+                <div class="col-xs-12">
+                  <div class="form-group">
+                    <div class="text-box">
+                      <div class="jcf-scrollable">
+                        <p>Closing Notes: (1) IRS Form 4506T to be signed prior to underwriting for all borrowers and
+                          businesses related to the transaction. (2) Signatures on all tax returns may be completed at
+                          losing. This application is for a business purpose loan secured by commercial real estate. The
+                          undersigned specifically acknowledge and agree that (1) the loan requested by this application
+                          will be secured by a first mortgage or deed of trust on the property described herein; (2) the
+                          property will not be used for any illegal or prohibited purposes or use; (3) all statements
+                          made
+                          in this application are made for the purpose of obtaining the loan indicated herein; (4)
+                          occupation of the property will be as indicated above; (5) verification or reverification of
+                          any
+                          information contained in the application may be made at any time by the Lender, its agents,
+                          successors and assigns, either directly or through a credit reporting</p>
+                      </div>
+                    </div>
+                    <div class="terms-container">
+                      <div class="col-xs-12 col-sm-6">Applicant’s Agree with the terms</div>
+                      <% if(app.noOfCoBorrowers && app.noOfCoBorrowers > 0 ){ %>
+                      <% for (var i = 1; i <= app.noOfCoBorrowers; i++){ %>
+                      <div class="col-xs-12 col-sm-6">Co-Applicant <%= i > 1 ? i : '' %> Agree with the terms</div>
+                      <% } %>
+                      <% } %>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <% } %>
+          </div>
+
+          <div class="row btn-container">
+            <div class="col-xs-12 col-sm-6">
+              <a href="/application/loan-request" class="btn btn-outline">Back</a>
+            </div>
+            <div class="col-xs-12 col-sm-6">
+              <a href="/application/submit" class="btn btn-default" styele="margin-top: 30px;">Submit Application</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <% include ../footer.ejs %>
+  <script>
+    window.onload = function (e) {
+      jcf.replaceAll();
+    }
+  </script>
+  <!--
+      Client-side Templates
+      ========================
+
+      HTML templates are important prerequisites of modern, rich client applications.
+      To work their magic, frameworks like Backbone, Angular, Ember, and Knockout require
+      that you load these templates client-side.
+
+      By default, your Gruntfile is configured to automatically load and precompile
+      client-side JST templates in your `assets/templates` folder, then
+      include them here automatically (between TEMPLATES and TEMPLATES END).
+
+      To customize this behavior to fit your needs, just edit `tasks/pipeline.js`.
+      For example, here are a few things you could do:
+
+          + Import templates from other directories
+          + Use a different template engine (handlebars, jade, dust, etc.)
+          + Internationalize your client-side templates using a server-side
+            stringfile before they're served.
+  -->
+
+
+  <!--
+
+    Client-side Javascript
+    ========================
+
+    You can always bring in JS files manually with `script` tags, or asynchronously
+    on the client using a solution like AMD (RequireJS).  Or, if you like, you can
+    take advantage of Sails' conventional asset pipeline (boilerplate Gruntfile).
+
+    By default, files in your `assets/js` folder are included here
+    automatically (between SCRIPTS and SCRIPTS END).  Both JavaScript (.js) and
+    CoffeeScript (.coffee) are supported. In production, your scripts will be minified
+    and concatenated into a single file.
+
+    To customize any part of the built-in behavior, just edit `tasks/pipeline.js`.
+    For example, here are a few things you could do:
+
+        + Change the order of your scripts
+        + Import scripts from other directories
+        + Use a different preprocessor, like TypeScript
+
+  -->
+
+</div>
+
+</body>
+</html>

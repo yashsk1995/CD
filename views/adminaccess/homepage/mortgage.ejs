@@ -1,0 +1,63 @@
+<h1 class="page-title">Homepage Mortgage Insight</h1>
+<div class="" id="home_mortgage_section">
+    <div class="btn-container">
+        <input id="video_file" type="file" style="display: none" accept=".mp4"/>
+        <span class="btn btn-add" id="upload_banner_btn">Upload Video <span class="loader"></span></span>
+    </div>
+
+    <table class="setting-table">
+        <thead>
+            <tr>
+                <td>Video</td>
+                <td>Action</td>
+            </tr>
+        </thead>
+        <tbody id="uploaded_video_list">
+            <%
+            if(videos && videos.length != 0){
+                _.each(videos, function (video) { %>              
+                <%
+                    if(video['activity'] == 'true'){
+                        %>
+                        <tr class="banner--active">
+                        <%
+                    }
+                    else{
+                        %>
+                        <tr class="banner--inactive">
+                        <%
+                    }
+                %>
+                
+                    <td>
+                        <video>
+                            <source filename="<%=video['filename']%>" src="<%=video['filename']%>">
+                        </video>
+                    </td>
+                    <td>
+                        <%
+                        if(video['activity'] == 'true'){
+                            %>
+                            <span class="table-btn btn-activity" activity="true">inactive</span>
+                            <%
+                        }
+                        else{
+                            %>
+                            <span class="table-btn btn-activity" activity="false">active</span>
+                            <%
+                        }
+                        %>
+                        <span class="table-btn btn-remove">remove</span>
+                    </td>
+                </tr>
+                <%
+                })
+            }
+            %>
+        </tbody>
+    </table>
+    
+    <div class="button-wrap">
+        <span class="btn btn-outline" id="home_mortgage_save_btn">Save</span>
+    </div>
+</div>

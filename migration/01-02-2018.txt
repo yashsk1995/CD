@@ -1,0 +1,3 @@
+ALTER TABLE `silver_prod`.`landingpage`
+ADD COLUMN `calculatorType` VARCHAR(255) NULL AFTER `slug`,
+ADD COLUMN `fileUrl` VARCHAR(255) NULL AFTER `calculatorType`;

@@ -1,0 +1,141 @@
+<main id="main">
+  <div class="inner-banner">
+    <div class="bg-cover">
+      <img src="/images/frontend/img05.jpg" alt="image description">
+    </div>
+    <div class="container text-center">
+      <h1>Application</h1>
+    </div>
+  </div>
+  <div class="results-container">
+    <div class="container">
+      <div class="top-text">Fill in some additional information to calculate your Confidence Rate.</div>
+      <form action="/quick-application/<%= endUser.id %>" id="quick-application" method="post" class="result-form">
+        <div class="row flex-row">
+          <div class="col-xs-12 col-sm-6">
+            <div class="form-group">
+              <label for="borrower_name">Borrower Name</label>
+              <input id="borrower_name" name="name" value="<%= user.name || '' %>" type="text"
+                     class="form-control" requiredss>
+            </div>
+          </div>
+          <div class="col-xs-12 col-sm-6">
+            <div class="form-group">
+              <label for="borrower_email">Borrower Email</label>
+              <input id="borrower_email" name="email" value="<%= user.email || '' %>" readonly type="email" class="form-control">
+            </div>
+          </div>
+          <div class="col-xs-12 col-sm-6">
+            <div class="form-group">
+              <label for="phoneNumber">Borrower Phone Number</label>
+              <input id="phoneNumber" name="phoneNumber" value="<%= endUser.phoneNumber || '' %>" type="tel"
+                     class="form-control">
+            </div>
+          </div>
+          <div class="col-xs-12 col-sm-6">&nbsp;</div>
+          <div class="col-xs-12 col-sm-6">
+            <div class="form-group">
+              <label for="street_adress1">Street Address 1</label>
+              <input id="street_adress1" name="streetAddressOne" value="<%= endUser.streetAddressOne || '' %>" type="text"
+                     class="form-control">
+            </div>
+          </div>
+          <div class="col-xs-12 col-sm-6">
+            <div class="form-group">
+              <label for="street_adress2">Street Address 2</label>
+              <input id="street_adress2" name="streetAddressTwo" value="<%= endUser.streetAddressTwo || '' %>" type="text"
+                     class="form-control">
+            </div>
+          </div>
+          <div class="col-xs-12 col-sm-4">
+            <div class="form-group">
+              <label for="city">City</label>
+              <input id="city" name="city" value="<%= endUser.city || '' %>" type="text" class="form-control">
+            </div>
+          </div>
+          <div class="col-xs-12 col-sm-2">
+            <div class="form-group">
+              <label for="state">State</label>
+              <div class="select-wrap">
+                <select name="state" id="state">
+                  <% _.each(states, function(state) { %>
+                  <option <%= state.key == endUser.state ? 'selected' : '' %>
+                    value="<%= state.key %>"><%= state.key %></option>
+                  <% }) %>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="col-xs-12 col-sm-6">
+            <div class="form-group">
+              <label for="zipcode">Zipcode</label>
+              <input id="zipcode" name="zipCode" value="<%= endUser.zipCode || '' %>" type="text" class="form-control">
+            </div>
+          </div>
+        </div>
+        <div class="form-business-detail">
+          <div class="row flex-row">
+            <div class="col-xs-12 col-sm-6">
+              <div class="form-group">
+                <label for="business_year">Years in Business</label>
+                <input id="business_year" name="yearsInBusiness" type="number" value="<%= endUser.yearsInBusiness || '' %>"
+                       class="form-control">
+              </div>
+            </div>
+            <div class="col-xs-12 col-sm-6">
+              <div class="form-group">
+                <label for="business_type">Industry/Business Type</label>
+                <div class="select-wrap">
+                  <select name="industryType" id="business_type">
+                    <option value="" class="hidden">Choose</option>
+                    <% _.each(businessTypes, function(type) { %>
+                    <option <%= type == endUser.industryType ? 'selected' : '' %>
+                      value="<%= type %>"><%= type %></option>
+                    <% }) %>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="col-xs-12 col-sm-6">
+              <div class="form-group">
+                <label for="annual_revenue">Annual Gross Rents/Revenue</label>
+                <input id="annual_revenue" name="annualRevenue" type="text" value="<%= endUser.annualRevenue || '' %>"
+                       class="form-control" placeholder="$">
+              </div>
+            </div>
+            <div class="col-xs-12 col-sm-6">
+              <div class="form-group">
+                <label for="annual_expenses">Annual Expenses</label>
+                <input id="annual_expenses" name="annualExpenses" type="text" value="<%= endUser.annualExpenses || '' %>"
+                       class="form-control" placeholder="$">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="recalculate-button">
+          <button type="submit" class="btn btn-default">Calculate Confidence Rate</button>
+        </div>
+      </form>
+    </div>
+    <div class="why-box-holder">
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-6">
+            <div class="whyus-info-box">
+              <h2>Why Choose Us</h2>
+              <p>Commercial Direct provides alternative lending solutions that make sense for your unique business or investment needs.</p>
+              <a href="/category/success-stories" class="btn btn-white">Check Our Success Stories</a>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="whyus-info-box about">
+              <h2>About Us</h2>
+              <p>Commercial Direct is an online lender offering loans from $250,000 to $2,000,000 on a wide range of commercial property types.</p>
+              <a href="/about" class="btn btn-white">Learn More About Us</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>

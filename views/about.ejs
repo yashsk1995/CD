@@ -1,0 +1,93 @@
+<main id="main">
+  <div class="inner-banner">
+    <div class="bg-cover">
+      <img src="/images/frontend/img03.jpg" alt="image description">
+    </div>
+    <div class="container text-center">
+      <h1>About</h1>
+      <%- content.aboutUs || ''%>
+    </div>
+  </div>
+  <div class="about-text-holder">
+    <div class="container-fluid about-padding">
+      <div class="col-md-6 about-padding-right">
+          <%- content.aboutUsSectionOne || ''%>
+      </div>
+
+
+      <div class="col-md-6">
+          <img src="<%= content.aboutUsSectionOneImage || ''%>" alt="image description">
+      </div>
+
+    </div>
+  </div>
+  <section class="why-choose-section ">
+    <div class="bg-image bg-cover">
+      <img src="/images/frontend/img01.jpg" alt="image description">
+    </div>
+    <div class="container-fluid about-padding">
+      <div class="text-holder">
+          <%- content.aboutUsWideOne || ''%>
+        </div>
+    </div>
+  </section>
+
+
+  <div class="about-text-holder">
+      <div class="container-fluid about-padding">
+        <div class="col-md-6">
+            <img src="<%= content.aboutUsSectionTwoImage || ''%>" alt="image description">
+        </div>
+
+        <div class="col-md-6 about-padding-left">
+            <%- content.aboutUsSectionTwo || ''%>
+        </div>
+
+
+      </div>
+  </div>
+
+  <div class="about-text-holder" style="background-color:#f4f4f4">
+      <div class="container-fluid about-padding">
+          <%- content.aboutUsWideTwo || ''%>
+      </div>
+  </div>
+
+  <div class="about-text-holder">
+      <div class="container-fluid about-padding">
+        <div class="col-md-6 about-padding-right">
+            <%- content.aboutUsSectionThree || ''%>
+        </div>
+
+        <div class="col-md-6">
+            <img src="<%= content.aboutUsSectionThreeImage || ''%>" alt="image description">
+        </div>
+
+      </div>
+  </div>
+
+  <div class="about-text-holder" style="background-color:#f4f4f4">
+      <div class="container-fluid about-padding">
+          <%- content.aboutUsWideThree || ''%>
+      </div>
+  </div>
+
+
+  <div class="about-text-holder">
+      <div class="container-fluid about-padding">
+        <div class="col-md-6">
+            <img src="<%= content.aboutUsSectionFourImage || ''%>" alt="image description">
+        </div>
+
+        <div class="col-md-6 about-padding-left">
+            <%- content.aboutUsSectionFour || ''%>
+        </div>
+      </div>
+  </div>
+
+  <div class="about-text-holder" >
+        <div class="container-fluid about-padding">
+          <%- content.aboutUsWideFour || ''%>
+        </div>
+  </div>
+</main>

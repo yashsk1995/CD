@@ -1,0 +1,75 @@
+<main id="main">
+  <div class="inner-banner">
+    <div class="bg-cover">
+      <img src="/images/frontend/img06.jpg" alt="image description">
+    </div>
+    <div class="container text-center">
+      <h1> <%= locals.topic || 'Knowledge Base' %></h1>
+    </div>
+  </div>
+  <div class="container">
+    <ol class="breadcrumb">
+      <li><a href="/learn" nav-link>Learn</a></li>
+
+      <% if(locals.topic) { %>
+      <li> <a href="/knowledge" nav-link>Knowledge Base </a></li>
+      <li class="active"><%= locals.topic %></li>
+      <% } else { %>
+        <li class="active">Knowledge Base</li>
+      <% } %>
+    </ol>
+    <form action="/knowledge" method="get" class="content-search-form">
+      <input type="search" name="search" value="<%= search %>" class="form-control">
+      <button type="submit" class="btn btn-default"><span class="hidden-xs">Search</span><span
+          class="hidden-sm hidden-md hidden-lg"><span class="icon-search"></span></span></button>
+    </form>
+  </div>
+  <div class="knowledge-base-container">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-8">
+          <div class="row">
+
+            <% _.each(topics, function(topic) { %>
+            <div class="col-md-6">
+              <div class="knowledge-base-item">
+                <div class="ico-holder">
+                  <img src="/images/frontend/open-book.png" alt="icon description">
+                </div>
+                <div class="detail-text">
+                  <h2><a href="/knowledgeBase/<%=: topic.name | urlEncode %>" nav-link> <%= topic.name %> </a></h2>
+                  <ul class="knowledge-list">
+                    <% _.each(topic.articles, function(article) { %>
+                    <li><a href="/knowledge/<%=: topic.name | urlEncode %>/<%=: article.term | urlEncode %>" nav-link><%= article.term %></a></li>
+                    <% }) %>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <% }) %>
+
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="popular-article-box">
+            <h2>Latest Articles</h2>
+            <ul class="articles-list">
+              <% _.each(latestArticles, function(article) { %>
+              <li><a href="/knowledge/<%=: article.topic.name | urlEncode %>/<%=: article.term | urlEncode %>" nav-link><%= article.term %> </a></li>
+              <% }) %>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <form action="#" class="newsletter-subscribe-form center">
+        <strong class="form-title">Subscribe to our newsletter &amp; webinars</strong>
+        <label for="email">Your Email</label>
+        <div class="input-wrap">
+          <input type="email" id="email" class="form-control" placeholder="customer@email.com">
+          <button class="btn btn-default" type="submit">Subscribe</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</main>
+

@@ -1,0 +1,31 @@
+<%
+if (pageCount > 1) { %>
+<div class="pagination">
+  <% if (currentPage > 1) { %>
+  <a href="javascript:void(0)" onclick="handlePageChange(event, '1')">First Page</a>
+  <% } %>
+  <% var i = 1;
+    if (currentPage > 5) {
+      i = +currentPage - 4;
+    } %>
+  <% if (i !== 1) { %>
+  <a href="javascript:void(0)">...</a>
+  <% } %>
+  <% for (i; i <= pageCount; i++) { %>
+  <% if (currentPage == i) { %>
+  <a href="javascript:void(0)" class="active"><%= i %></a>
+  <% } else { %>
+  <a href="javascript:void(0)" onclick="handlePageChange(event, '<%= i %>')"><%= i %></a>
+  <% } %>
+  <% if (i == (+currentPage + 4)) { %>
+  <% if (i != pageCount) { %>
+  <a href="javascript:void(0)">...</a>
+  <% } %>
+  <% break; } %>
+  <% }
+  %>
+  <% if (currentPage != pageCount) { %>
+  <a href="javascript:void(0)" onclick="handlePageChange(event, '<%= pageCount %>')">Last Page</a>
+  <% } %>
+</div>
+<% } %>

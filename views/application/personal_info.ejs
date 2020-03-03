@@ -1,0 +1,651 @@
+<div class="application-content">
+  <div class="application-header">
+    <h2>1. Individual or Borrowing Entity Information </h2>
+    <p>(It will take 3 minutes to complete)</p>
+    <p>Complete this section for all guarantors and spouse or non-spouse, if applicable.
+      (Attach additional sheets if needed.) <br>Additional guarantors must complete sections I, V - XI</p>
+  </div>
+
+  <div id="infoModal" class="modal"
+       style="display:<%= Object.keys(application).length > 0 ? 'none' : 'block' %>">
+    <div class="content">
+      <div class="header">
+        <span id="closeLink" class="close">&times;</span>
+        <h3>Information</h3>
+      </div>
+      <div class="body">
+        <div class="text">
+          <p>
+            The complete application takes about 30 mins to complete. The application is saved at every step for you to
+            come back if you cannot complete it right now. 
+          </p>
+          <!-- <ul>
+            <li>[PLACEHOLDER] Passport</li>
+            <li>[PLACEHOLDER] Domicile</li>
+            <li>[PLACEHOLDER] Original Papers</li>
+            <li>[PLACEHOLDER] Transfer Letter</li>
+            <li>[PLACEHOLDER] CGI</li>
+          </ul> -->
+        </div>
+        <div class="form-row no-indent">
+          <button id="closeBtn" class="btn">OK</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <form id="personalForm" name="personalForm"
+        style="display: <%= application.entityInformation && application.entityInformation != 'Personal' ? 'none' : 'block' %>"
+        action="/application/personal-info" method="post" class="result-form">
+
+    <input type="hidden" value="true" id="hiddenStatus" name="isSubmitted"/>
+    <div class="row flex-row">
+      <div class="col-xs-12">
+        <div class="form-group">
+          <label for="entity_info">Entity Information</label>
+          <div class="select-wrap">
+            <select name="entityInformation" id="personalEntityInfo">
+              <option value="Personal">Individual</option>
+              <option value="Entity">Entity</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="col-xs-12 col-sm-6">
+        <div class="form-group">
+          <label for="borrower_name">Borrower Name</label>
+          <input id="borrower_name" name="borrowerName" value="<%= application.borrowerName || req.user.name || '' %>"
+                 type="text"
+                 class="form-control" required>
+        </div>
+      </div>
+      <div class="col-xs-12 col-sm-6">
+        <div class="form-group">
+
+          <label for="email_address">Email Address</label>
+          <input id="email_address" name="emailAddress" value="<%= application.emailAddress || req.user.email || '' %>"
+                 type="email"
+                 class="form-control" required>
+
+        </div>
+      </div>
+      <div class="col-xs-12 col-sm-6">
+        <div class="form-group">
+          <label for="date_of_birth">Date of Birth</label>
+          <input id="date_of_birth" name="dateOfBirth" value="<%= application.dateOfBirth || '' %>" type="text"
+                 class="form-control" required readonly="true">
+        </div>
+      </div>
+      <div class="col-xs-12 col-sm-6">
+        <div class="form-group">
+          <label for="marital">Marital Status</label>
+          <div class="select-wrap">
+            <select name="maritalStatus" id="marital" required>
+              <option value="" class="hidden">Choose</option>
+              <option <%= application.maritalStatus == 'Single' ? 'selected' : '' %> >Single</option>
+              <option <%= application.maritalStatus == 'Married' ? 'selected' : '' %> >Married</option>
+              <option <%= application.maritalStatus == 'Divorced' ? 'selected' : '' %>>Divorced</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="col-xs-12 col-sm-6">
+        <div class="form-group">
+          <label for="address_1">Address 1</label>
+          <input id="address_1" name="address1" type="text"
+                 value="<%= application.address1 || endUser.streetAddressOne || '' %>"
+                 class="form-control" required>
+        </div>
+      </div>
+      <div class="col-xs-12 col-sm-6">
+        <div class="form-group">
+          <label for="address_2">Address 2</label>
+          <input id="address_2" name="address2" type="text"
+                 value="<%= application.address2 || endUser.streetAddressTwo || '' %>"
+                 class="form-control">
+        </div>
+      </div>
+      <div class="col-xs-12 col-sm-4">
+        <div class="form-group">
+          <label for="city_name">City</label>
+          <input id="city_name" name="city" type="text" class="form-control"
+                 value="<%= application.city || endUser.city || '' %>"
+                 required>
+        </div>
+      </div>
+      <div class="col-xs-12 col-sm-2">
+        <div class="form-group">
+          <label for="state_name">State</label>
+          <div class="select-wrap">
+            <select name="state" id="state" required>
+              <% _.each(states, function(state) { %>
+              <option <%= state.key == application.state || (!application.state && endUser.state == state.key) ? 'selected' : '' %>
+                value="<%= state.key %>"><%= state.key %></option>
+              <% }) %>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="col-xs-12 col-sm-6">
+        <div class="form-group">
+          <label for="zipcode">Zipcode</label>
+          <input id="zipcode" name="zipCode" value="<%= application.zipCode || endUser.zipCode || '' %>" type="text"
+                 class="form-control" required>
+        </div>
+      </div>
+      <div class="col-xs-12 col-sm-6">
+        <div class="form-group">
+          <label for="phone_number">Phone Number</label>
+          <input id="phone_number" name="phoneNumber"
+                 value="<%= application.phoneNumber || endUser.phoneNumber || '' %>" type="tel"
+                 class="form-control" required>
+        </div>
+      </div>
+
+      <div class="coBorrowappend">
+        <% if(application.coBorrowers) { %>
+        <% _.each(application.coBorrowers, function(coBorrower) { %>
+        <div class='col-xs-12' id='coBorrowerInfo'>
+          <div class='form-seperator'>
+            <div class='col-xs-12 cross-section'>
+              <h3>Co Borrower</h3> <span class='pull-right clear-section'>X</span>
+            </div>
+            <div class='col-xs-12 col-sm-6'>
+              <div class='form-group'>
+                <label for='borrower_name'>Co Borrower Name</label>
+                <input required id='borrower_name' name='coBorrowerName' value='<%= coBorrower.coBorrowerName || '' %>'
+                       type='text' class='form-control'>
+              </div>
+            </div>
+            <div class='col-xs-12 col-sm-6'>
+              <div class='form-group'>
+                <label for='co_email'>Co Borrower Email</label>
+                <input id='co_email' name='coBorrowerEmail'
+                       value='<%= coBorrower.coBorrowerEmail || '' %>' type='text' class='form-control'>
+              </div>
+            </div>
+            <div class='col-xs-12 col-sm-6'>
+              <div class='form-group'>
+                <label for='address_1'>Address 1</label>
+                <input id='address_1' name='coBorrowerAddress' value='<%= coBorrower.coBorrowerAddress || '' %>'
+                       type='text' class='form-control'>
+              </div>
+            </div>
+            <div class='col-xs-12 col-sm-4'>
+              <div class='form-group'>
+                <label for='city_name'>City</label>
+                <input id='city_name' name='coBorrowerCity' value='<%= coBorrower.coBorrowerCity || '' %>' type='tel'
+                       class='form-control'>
+              </div>
+            </div>
+            <div class='col-xs-12 col-sm-2'>
+              <div class='form-group'>
+                <label for='state_name'>State</label>
+                <div class='select-wrap'>
+                  <select name='coBorrowerState' id='state'>
+                    <% _.each(states, function(state) { %>
+                    <option <%= state.key == coBorrower.coBorrowerState ? 'selected' : '' %>
+                      value='<%= state.key %>'><%= state.key %></option>
+                    <% }) %>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <% }) %>
+        <% } %>
+      </div>
+    </div>
+    <div class="add-more-button">
+      <a id="addCoBorrowerBtn"
+         class="btn btn-outline">Add Co-Borrower
+      </a>
+    </div>
+    <div class="recalculate-button">
+      <input type="hidden" name="progress" value="<%= progress %>"/>
+      <button type="submit" class="btn btn-default">Continue <span class="hide-mobile">With the Application</span>
+      </button>
+    </div>
+
+
+  </form>
+
+  <form id="borrowerForm" style="display: <%= application.entityInformation == 'Entity' ? 'block' : 'none' %>"
+        action="/application/personal-info" method="post" class="result-form">
+    <input type="hidden" value=true id="hiddenStatus" name="isSubmitted"/>
+    <div class="row flex-row">
+      <div class="col-xs-12">
+        <div class="form-group">
+          <label for="entity_info">Entity Information</label>
+          <div class="select-wrap">
+            <select name="entityInformation" id="borrowerEntityInfo">
+              <option value="Personal">Individual</option>
+              <option value="Entity" selected>Entity</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="col-xs-12 col-sm-6">
+        <div class="form-group">
+          <label for="entity_is">Borrowing entity is an</label>
+          <div class="select-wrap">
+            <select name="entityIs" id="entity_is" required>
+              <option value="" class="hidden">Choose</option>
+              <option <%= application.entityIs == 'LLC' ? 'selected' : '' %>>LLC</option>
+              <option <%= application.entityIs == 'LP/LLP' ? 'selected' : '' %>>LP/LLP</option>
+              <option <%= application.entityIs == 'S Corp' ? 'selected' : '' %>>S Corp</option>
+              <option <%= application.entityIs == 'Other' ? 'selected' : '' %>>Other</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="col-xs-12 col-sm-6">
+        <div id="entityIsOther" class="form-group"
+             style=" display: <%= application.entityIs == 'Other' ? 'block' : 'none' %>">
+          <label for="borrow_entity_other">Other</label>
+          <input id="borrow_entity_other" name="entityIsOther"
+                 value="<%= application.entityIsOther || '' %>"
+                 type="text" class="form-control">
+        </div>
+      </div>
+
+      <div class="col-xs-12 col-sm-6">
+        <div class="form-group">
+          <label for="borrow_entity_name">Borrowing Entity Name</label>
+          <input id="borrow_entity_name" name="borrowEntityName" required
+                 value="<%= application.borrowEntityName || '' %>"
+                 type="text" class="form-control">
+
+        </div>
+      </div>
+      <div class="col-xs-12 col-sm-6">
+        <div class="form-group">
+          <label for="date_formed">Date Formed</label>
+          <input id="date_formed" name="dateFormed" required value="<%= application.dateFormed || '' %>"
+                 class="form-control" readonly="true">
+        </div>
+      </div>
+      <div class="col-xs-12 col-sm-6">
+        <div class="form-group">
+          <label for="tax_id">Tax ID</label>
+          <input id="tax_id" name="taxId" required value="<%= application.taxId || '' %>" class="form-control">
+        </div>
+      </div>
+      <div class="col-xs-12">
+        <div class="form-text-wrap">
+          <p><strong>Any individual who owns 25% or more of the borrowing entity is required
+              to be a guarantor of the loan.</strong> <br>Please list ALL additional owners below or attach
+            organization chart.</p>
+        </div>
+      </div>
+
+      <div id="individuals" style="width: 100%">
+        <% if(application.individuals) { %>
+        <% var i = 0; %>
+        <% _.each(application.individuals, function(individual) { %>
+        <div id="individual">
+          <div class="col-xs-12 col-sm-12 my_class">
+            <h3> <%= i > 0 ? 'Co' : '' %> Borrower</h3>
+          </div>
+          <div class="col-xs-12 col-sm-6">
+            <div class="form-group">
+              <label for="name">Name</label>
+              <input id="name" name="individualName" value="<%= individual.individualName || '' %>" required
+                     class="form-control">
+            </div>
+          </div>
+          <div class="col-xs-12 col-sm-6">
+            <div class="form-group">
+              <label for="name">Email</label>
+              <input id="email" type="email" name="individualEmail" value="<%= individual.individualEmail || '' %>"
+                     required
+                     class="form-control">
+            </div>
+          </div>
+          <div class="col-xs-12 col-sm-6">
+            <div class="form-group">
+              <label for="ownership">Ownership </label>
+              <input id="ownership" name="ownership" class="form-control green"
+                     value="<%= individual.ownership || '' %>" placeholder="%" required>
+            </div>
+          </div>
+          <div class="col-xs-12 col-sm-6">
+            <div class="form-group">
+              <label for="on_title">On Title</label>
+              <div class="select-wrap">
+                <select name="onTitle" id="on_title" required>
+                  <option value="" class="hidden">Choose</option>
+                  <option <%= individual.onTitle == "Yes" ? 'selected' : '' %> >Yes</option>
+                  <option <%= individual.onTitle == "No" ? 'selected' : '' %> >No</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+        <% i++ %>
+        <% }) %>
+        <% } else{ %>
+        <div id="individual">
+          <div class="col-xs-12 col-sm-12 my_class">
+            <h3>Borrower</h3>
+          </div>
+
+          <div class="col-xs-12 col-sm-6">
+            <div class="form-group">
+              <label for="name">Name</label>
+              <input id="name" name="individualName" required class="form-control">
+            </div>
+          </div>
+          <div class="col-xs-12 col-sm-6">
+            <div class="form-group">
+              <label for="name">Email</label>
+              <input id="email" type="email" name="individualEmail" required
+                     class="form-control">
+            </div>
+          </div>
+
+          <div class="col-xs-12 col-sm-6">
+            <div class="form-group">
+              <label for="ownership">Ownership</label>
+              <input id="ownership" name="ownership" class="form-control green" placeholder="%" required>
+            </div>
+          </div>
+          <div class="col-xs-12 col-sm-6 my_class">
+            <div class="form-group">
+              <label for="on_title">On Title</label>
+              <div class="select-wrap">
+                <select name="onTitle" id="on_title" required>
+                  <option value="" class="hidden">Choose</option>
+                  <option>Yes</option>
+                  <option>No</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <% } %>
+
+      </div>
+    </div>
+    <div class="add-more-button">
+      <a id="addMoreIndividualsBtn" class="btn btn-outline">Add More Borrowing <span
+          class="hide-mobile">Individuals</span></a>
+    </div>
+
+    <div class="row flex-row">
+      <div class="col-xs-12">
+        <label>Is the structure of the entity changing as part of the loan transaction?</label>
+
+        <div class="radio-wrap">
+                        <span class="property-info">
+                          <input type="radio" id="rad01" value="Yes"
+                                 name="isStructureChange" <%= application.isStructureChange == 'Yes' ? 'checked' : '' %>
+                                 required>
+                          <label for="rad01">Yes</label>
+                        </span>
+          <span class="property-info">
+                          <input type="radio" id="rad02" value="No"
+                                 name="isStructureChange" <%= application.isStructureChange == 'No' ? 'checked' : '' %>
+                                 required>
+                          <label for="rad02">No</label>
+                        </span>
+        </div>
+      </div>
+      <div class="col-xs-12 explain-textarea"
+           style="display: <%= application.isStructureChange == 'Yes' ? 'block' : 'none' %>">
+        <div class="form-group">
+          <label for="explain">If yes, please explain:</label>
+          <textarea id="explain" cols="30" rows="10" name="structureChangeDescription"
+                    class="form-control" required><%= application.structureChangeDescription || '' %></textarea>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="recalculate-button">
+      <input type="hidden" name="progress" value="<%= progress %>"/>
+      <button type="submit" class="btn btn-default">Save and Continue</button>
+    </div>
+
+
+  </form>
+
+</div>
+<script>
+  var individualsCount = parseInt('<%= application.individuals ? application.individuals.length : 1 %>');
+  var coBorrowerCount = parseInt('<%= application.coBorrowers ? application.coBorrowers.length : 0 %>');
+
+  $(function () {
+    if (individualsCount == 4) {
+      $('#addMoreIndividualsBtn').hide();
+    }
+
+    if (coBorrowerCount == 3) {
+      $('#addCoBorrowerBtn').hide();
+    }
+
+    $("#tax_id").mask("99-9999999", {autoclear: false});
+    $("#social_security").mask("999-99-9999", {autoclear: false});
+    $(".co-ssn").mask("999-99-9999", {autoclear: false});
+    $('#zipcode').mask("99999");
+
+    $("#personalForm").removeAttr('novalidate');
+
+
+    $("#personalForm").validate({
+
+      rules: {
+
+        socialSecurity: {
+          ssn: true
+        },
+        coBorrowerName: {
+          required: true
+        },
+        coBorrowerSocialSecurity: {
+          required: true
+        },
+        coBorrowerAddress: {
+          required: true
+        },
+        coBorrowerCity: {
+          required: true
+        }
+
+
+      },
+
+      messages: {
+        socialSecurity: "",
+        coBorrowerName: "",
+        coBorrowerSocialSecurity: "",
+        coBorrowerAddress: "",
+        coBorrowerCity: "",
+        address1: "",
+        borrowerName: "",
+        city: "",
+        zipCode: "",
+        phoneNumber: "",
+        emailAddress: "",
+
+      },
+      errorPlacement: function (error, element) {
+        if ($(element).is('select')) {
+          element.next().after(error); // special placement for select elements
+        }
+        else {
+          error.insertAfter(element);  // default placement for everything else
+        }
+      },
+
+      submitHandler: function (form) {
+        form.submit();
+        $("#pleasewait").css('display', 'block');
+      }
+    });
+    $("#borrowerForm").validate({
+
+      rules: {
+        ownership: {
+          required: true
+        },
+        taxId: {
+          taxid: true
+        },
+        onTitle: {
+          required: true
+        },
+        individualName: {
+          required: true
+        },
+        isStructureChange: {
+          required: true
+        }
+
+      },
+      // Specify validation error messages
+      messages: {
+        taxId: "",
+        ownership: "",
+        onTitle: "",
+        individualName: "",
+        isStructureChange: "",
+        entityIs: "",
+        borrowEntityName: "",
+        dateFormed: "",
+        structureChangeDescription: "",
+      },
+      errorPlacement: function (error, element) {
+        if ($(element).is('select')) {
+          element.next().after(error); // special placement for select elements
+        }
+        else if ($(element).is('radio')) {
+          error.insertAfter(element);
+        }
+        else {
+          error.insertAfter(element);  // default placement for everything else
+        }
+      },
+      // Make sure the form is submitted to the destination defined
+      // in the "action" attribute of the form when valid
+      submitHandler: function (form) {
+        form.submit();
+        $("#pleasewait").css('display', 'block');
+      }
+    });
+  });
+
+
+  window.onload = function (e) {
+    $("#personalEntityInfo").change(function (event) {
+      event.preventDefault(); // if desired...
+      if (this.value.toLowerCase() == 'entity') {
+        $('#personalForm').hide();
+        $('#borrowerForm').show();
+        $("#personalEntityInfo").val('Personal').change();
+      }
+    });
+    $("#borrowerEntityInfo").change(function (event) {
+      event.preventDefault(); // if desired...
+      if (this.value.toLowerCase() == 'personal') {
+        $('#borrowerForm').hide();
+        $('#personalForm').show();
+        $("#borrowerEntityInfo").val('Entity').change();
+      }
+    });
+
+    $('#addMoreIndividualsBtn').click(function (e) {
+      individualsCount++;
+      if (individualsCount <= 4) {
+        e.preventDefault(); // if desired...
+        var item = "<div id='individual'><div class='col-xs-12 cross-section form-seperator'><h3>Co Borrower</h3><span class='pull-right cross'>X</span></div><div class='col-xs-12 col-sm-6'><div class='form-group'><label for='name'>Name</label><input id='name' name='individualName' class='form-control' required></div></div><div class='col-xs-12 col-sm-6'><div class='form-group'><label for='name'>Email</label><input id='name' type='email' name='individualEmail' class='form-control' required></div></div> <div class='col-xs-12 col-sm-6'><div class='form-group'><label for='ownership'>Ownership</label><input id='ownership' name='ownership' type='text' class='form-control green' placeholder='%' required></div></div><div class='col-xs-12 col-sm-6'><div class='form-group'><label for='on_title'>On Title</label> " + "<div class='select-wrap'><select name='onTitle' id='on_title' required><option value='' class='hidden'>Choose</option><option>Yes</option><option>No</option></select></div></div></div><div class='col-xs-2 col-sm-1 my_class'><div class='form-group'><label for='on_title'></label>";
+        // var item = "<div id='individual'><div class='col-xs-12 col-sm-4'><div class='form-group'><label for='name'>Name</label><input id='name' name='individualName' class='form-control' required></div></div><div class='col-xs-12 col-sm-2'><div class='form-group'><label for='ownership'>Ownership</label><input id='ownership' name='ownership' type='text' class='form-control green' placeholder='%' required></div></div><div class='col-xs-10 col-sm-5'><div class='form-group'><label for='on_title'>On Title</label> " +
+        //   "<div class='select-wrap'><select name='onTitle' id='on_title' required><option value='' class='hidden'>Choose</option><option>Yes</option><option>No</option></select></div></div></div><div class='col-xs-12 col-sm-6 my_class'><div class='form-group'><label for='on_title'></label><div class='cross'>X</div></div></div></div>";
+        $('#individuals').append(item);
+        jcf.replaceAll();
+
+      }
+      if (individualsCount == 4) {
+        $('#addMoreIndividualsBtn').hide();
+      }
+    });
+
+    $('#rad01').on("click", function (event) {
+      $('.explain-textarea').show();
+      $('#explain').attr("required", true);
+    });
+
+    $('#rad02').on("click", function (event) {
+      $('.explain-textarea').hide();
+      $('#explain').val('');
+      $('#explain').removeAttr('required');
+
+    });
+
+    $("body").on('click', '.cross', function (event) {
+      if (individualsCount > 1) {
+        $(this).closest('#individual').remove();
+        individualsCount--;
+      }
+      if (individualsCount == 3) {
+        $('#addMoreIndividualsBtn').show();
+      }
+    });
+
+    $('#addCoBorrowerBtn').click(function (event) {
+      e.preventDefault();
+      if (coBorrowerCount < 3) {
+        var item = "<div class='col-xs-12' id='coBorrowerInfo'><div class='form-seperator'><div class='col-xs-12 cross-section'><h3>Co Borrower</h3> " +
+          "<span class='pull-right clear-section'>X</span></div><div class='col-xs-12 col-sm-6'><div class='form-group'><label for='borrower_name'>Co Borrower Name</label>" +
+          "<input required id='borrower_name' name='coBorrowerName' type='text' class='form-control'></div></div><div class='col-xs-12 col-sm-6'><div class='form-group'>" +
+          "<label for='co_email'>Co Borrower Email </label><input type='email' id='co_email' name='coBorrowerEmail' class='form-control'>" +
+          "</div></div><div class='col-xs-12 col-sm-6'><div class='form-group'><label for='address_1'>Address 1</label><input id='address_1' name='coBorrowerAddress' type='text' class='form-control'>" +
+          "</div></div><div class='col-xs-12 col-sm-4'><div class='form-group'><label for='city_name'>City</label><input id='city_name' name='coBorrowerCity' type='tel' class='form-control'></div></div>" +
+          "<div class='col-xs-12 col-sm-2'><div class='form-group'><label for='state_name'>State</label><div class='select-wrap'><select name='coBorrowerState' id='state'>" +
+          "<% _.each(states, function(state) { %><option value='<%= state.key %>'><%= state.key %></option><% }) %></select></div></div></div></div></div>"
+        $('.coBorrowappend').append(item);
+        $(".co-ssn").mask("999-99-9999", {autoclear: false});
+        jcf.replaceAll();
+        coBorrowerCount++;
+      }
+      if (coBorrowerCount == 3) {
+        $('#addCoBorrowerBtn').hide();
+      }
+    });
+    $("body").on('click', '.clear-section', function (event) {
+      $(this).closest('#coBorrowerInfo').remove();
+      coBorrowerCount--;
+      if (coBorrowerCount <= 2) {
+        $('#addCoBorrowerBtn').show();
+      }
+    });
+    $("#entity_is").change(function (event) {
+
+      event.preventDefault(); // if desired...
+      if (this.value.toLowerCase() == 'other') {
+        $('#entityIsOther').show();
+      } else {
+        $('#entityIsOther').hide();
+      }
+    });
+
+    $("#closeBtn").click(function (e) {
+      e.preventDefault(); // if desired...
+      $("#infoModal").css('display', 'none');
+    });
+
+    $("#closeLink").click(function (e) {
+      e.preventDefault(); // if desired...
+      $("#infoModal").css('display', 'none');
+    });
+    $("#date_formed").datepicker({dateFormat: 'yy-mm-dd', changeYear: true, yearRange: "-100:+0",});
+    $("#date_of_birth").datepicker({dateFormat: 'yy-mm-dd', changeYear: true, yearRange: "-100:+0",});
+    $("#borrower_name-error").remove();
+
+  }
+
+
+</script>
+

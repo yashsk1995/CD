@@ -1,0 +1,259 @@
+<div class="home-banner" id="home_page">
+    <!-- <img class="home-banner__img" src="/images/frontend/sh_home_hero1.png"> -->
+    <div class="home-banner-slider">
+        <%
+        if(banners && banners.length > 0){
+            _.each(banners, function(banner){
+                if(banner['activity'] == 'true'){
+                    %>
+                    <div>
+                        <img src="<%=banner['filename']%>">
+                    </div>
+                    <%
+                }
+                
+            });
+        }
+        %>
+    </div>
+    <div class="home-banner-info">
+        <span class="home-banner-title">No doc commercial loans now available – <a class="home-banner-link" href="https://silverhillfunding.com/no-doc-commercial-loans/" target="_blank">Learn More</a></span>
+        <span class="home-banner-reg-btn" style="display: none">Register Now</span>
+    </div>
+</div>
+
+<div class="home-sh-broker-portal">
+    <div class="home-sh-broker-portal__title">The Commercial Direct Broker Portal</div>
+    <div class="home-sh-brokers">
+        <%
+        if(portals && portals.length > 0){
+            var pindex = 0;
+            var classname = '';
+            _.each(portals, function(portal){
+                if(pindex == 0){
+                    classname = 'home-sh-broker-item';
+                }
+                else if(pindex == 1) {
+                    classname = 'home-sh-broker-item sh-broker-item--dark-bk';
+                }
+                else if(pindex == 2){
+                    classname = 'home-sh-broker-item sh-broker-item--dark-bk';
+                }
+                else{
+                    classname = 'home-sh-broker-item';
+                }
+                %>
+                <div class="<%=classname%>">
+                    <%
+                    if(portal['type'] == 'link') {
+                        %>
+                        <a target="_blank" href="<%=portal['val']%>"><%=portal['title']%></a>
+                        <%
+                    }
+                    else if(portal['type'] == 'file'){
+                        %>
+                        <a target="_blank" href="/images/admin/uploads/<%=portal['val']%>"><%=portal['title']%></a>
+                        <%
+                    }
+                    else{
+                        %>
+                        <span class=""><%=portal['title']%></span>
+                        <%
+                    }
+                    %>
+                </div>
+                <%
+                
+                pindex ++;
+                
+            })
+        }
+        %>
+    </div>
+    
+</div>
+
+<div class="home-featured-download">
+    <div class="home-fd-top">
+        <span class="home-fd-top__sep-line"></span>
+        <span class="home-fd-top__title">Featured Download</span>
+        <span class="home-fd-top__sep-line"></span>
+    </div>
+    <div class="home-fd-content">
+        <div class="home-fd-content-left">
+            <div class="home-fd-content__title"><%=homeFeatured['title']?homeFeatured['title']:''%></div>
+            <div class="home-fd-content__desc"><%=homeFeatured['desc']?homeFeatured['desc']:''%></div>
+            <div class="home-fd-btn-wrap">
+                <span class="home-fd-download-btn">
+				<%
+                if(typeof req.session.authenticated != 'undefined' && req.session.authenticated){
+                    %>
+				<a class="home-banner-link" href="https://silverhillfunding.com/wp-content/uploads/2019/10/The-Definitive-Guide-SHF-whitepaper-compressed.pdf" target="_blank" style="color: #fff;text-decoration: none;">
+				<%
+                }
+                else{%>
+				<a class="home-banner-link" href="/login" style="color: #fff;text-decoration: none;">
+				<%
+                }
+                %>
+				Download</a></span>
+            </div>
+        </div>
+        <div class="home-fd-content-right">
+            <img class="home-fd-img" src="/images/frontend/sh_homefeature_download_new.png">
+        </div>
+    </div>
+</div>
+
+<div class="section-sep-line"></div>
+
+<div class="home-commercial-mortgage" style="display: none">
+    <div class="home-cm-title">Commercial Mortgage Insight on Demand</div>
+    <div class="home-cm-sub-title">Video resources for small balance originators</div>
+    <div class="home-cm-videos">
+        <%
+        if(videos && videos.length > 0){
+            _.each(videos, function(video){
+                if(video['activity'] == 'true'){
+                    %>
+                    <div class="home-cm-video-wrap">
+                        <video controls>
+                            <source src="<%=video['filename']%>">
+                        </video>
+                    </div>
+                    <%
+                }
+            })
+        }
+        %>
+    </div>
+    <div class="home-cm-btn-wrap">
+        <span class="home-cm-more-btn">Download</span>
+    </div>
+</div>
+
+<div class="home-deal-question" style="display: none">
+    <div class="home-deal-question-wrap">
+        <div class="home-deal-title">Have a Deal Right Now?</div>
+        <div class="home-deal-sub-title">Tell us about your commercial loan scenario here. <br>
+                One of our mortgage experts will be in touch with next-step information soon.</div>
+        <div class="home-deal-form-container">
+            <div class="home-df-row">
+                <div class="home-df-col-2">
+                    <div class="home-df-wrap">
+                        <div class="home-df-title">Broker First Name<span class="home-df-required">*</span></div>
+                        <div class="home-df-input-wrap">
+                            <input type="text">
+                        </div>
+                    </div>
+                </div>
+                <div class="home-df-col-2">
+                    <div class="home-df-wrap">
+                        <div class="home-df-title">Broker First Name<span class="home-df-required">*</span></div>
+                        <div class="home-df-input-wrap">
+                            <input type="text">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="home-df-row">
+                <div class="home-df-col-2">
+                    <div class="home-df-wrap">
+                        <div class="home-df-title">Email<span class="home-df-required">*</span></div>
+                        <div class="home-df-input-wrap">
+                            <input type="text">
+                        </div>
+                    </div>
+                </div>
+                <div class="home-df-col-2">
+                    <div class="home-df-wrap">
+                        <div class="home-df-title">Phone<span class="home-df-required">*</span></div>
+                        <div class="home-df-input-wrap">
+                            <input type="text">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="home-df-row">
+                <div class="home-df-col-2">
+                    <div class="home-df-wrap">
+                        <div class="home-df-title">Loan Type<span class="home-df-required">*</span></div>
+                        <div class="home-df-input-wrap">
+                            <input type="text">
+                        </div>
+                    </div>
+                </div>
+                <div class="home-df-col-2">
+                    <div class="home-df-wrap">
+                        <div class="home-df-title">Property Type<span class="home-df-required">*</span></div>
+                        <div class="home-df-input-wrap">
+                            <input type="text">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="home-df-row">
+                <div class="home-df-col-2">
+                    <div class="home-df-wrap">
+                        <div class="home-df-title"><span>Property Value/<br>Purchase Price</span><span class="home-df-required">*</span></div>
+                        <div class="home-df-input-wrap">
+                            <input type="text">
+                        </div>
+                    </div>
+                </div>
+                <div class="home-df-col-2">
+                    <div class="home-df-wrap">
+                        <div class="home-df-title">Loan Required<span class="home-df-required">*</span></div>
+                        <div class="home-df-input-wrap">
+                            <input type="text">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="home-df-row">
+                <div class="home-df-col-2">
+                    <div class="home-df-wrap">
+                        <div class="home-df-title">State<span class="home-df-required">*</span></div>
+                        <div class="home-df-input-wrap">
+                            <input type="text">
+                        </div>
+                    </div>
+                </div>
+                <div class="home-df-col-2">
+                    <div class="home-df-wrap">
+                        <div class="home-df-title">Credit Score<span class="home-df-required">*</span></div>
+                        <div class="home-df-input-wrap">
+                            <input type="text">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="home-df-row">
+                <div class="home-df-col-2">
+                    <div class="home-df-wrap">
+                        <div class="home-df-title">Occupancy<span class="home-df-required">*</span></div>
+                        <div class="home-df-input-wrap">
+                            <input type="text">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="home-df-row">
+                <div class="home-df-col-2">
+                </div>
+                <div class="home-df-col-2">
+                    <div class="home-df-wrap">
+                        <div class="home-df-title"></div>
+                        <div class="home-df-input-wrap">
+                            <span class="home-df-submit-btn">Submit</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="home-call-today">
+    Call Us Today: 844-641-1035
+</div>

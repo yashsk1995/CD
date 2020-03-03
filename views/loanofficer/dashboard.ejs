@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title><%= 'Commercial Direct Admin' %></title>
+
+  <!-- Viewport mobile tag for sensible mobile support -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+  <!--
+      Stylesheets and Preprocessors
+      ==============================
+
+      You can always bring in CSS files manually with `<link>` tags, or asynchronously
+      using a solution like AMD (RequireJS).  Or, if you like, you can take advantage
+      of Sails' conventional asset pipeline (boilerplate Gruntfile).
+
+      By default, stylesheets from your `assets/styles` folder are included
+      here automatically (between STYLES and STYLES END). Both CSS (.css) and LESS (.less)
+      are supported. In production, your styles will be minified and concatenated into
+      a single file.
+
+      To customize any part of the built-in behavior, just edit `tasks/pipeline.js`.
+      For example, here are a few things you could do:
+
+          + Change the order of your CSS files
+          + Import stylesheets from other directories
+          + Use a different or additional preprocessor, like SASS, SCSS or Stylus
+  -->
+
+  <link rel="stylesheet" href="/styles/admin/main.css?x=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+</head>
+
+<body>
+<% include ../adminaccess/header.ejs %>
+
+<main id="main">
+  <div class="container">
+    <section class="content-area">
+      <h1 class="page-title">Dashboard</h1>
+      <div class="content-modification">
+        <h4>Hello <%= req.user.name %></h4>
+        <p>This is Admin Panel for Loan Officers for the Commercial Direct</p>
+      </div>
+
+    </section>
+  </div>
+
+</main>
+<% include ../adminaccess/footer.ejs %>

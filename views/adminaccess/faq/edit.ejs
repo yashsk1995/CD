@@ -1,0 +1,50 @@
+<script src="/js/ckeditor/ckeditor.js"></script>
+<form method="POST" class="form" id="createForm" action="/adminaccess/faq/edit/<%= faq.id %>">
+  <a href="/adminaccess/faqs" class="back-link">Back to All Questions &raquo;</a>
+  <h1 class="page-title">Edit Question</h1>
+  <div class="form-row">
+    <label for="question">Question Title</label>
+    <input type="text" id="question" name="question" value="<%= faq.question || '' %>">
+    <p><%= error.question || '' %></p>
+  </div>
+  <div class="form-row">
+    <label for="answer">Answer</label>
+    <textarea id="answer" name="answer" cols="30" rows="10"><%= faq.answer || '' %></textarea>
+  </div>
+
+  <script>
+    CKEDITOR.replace('answer', {
+        allowedContent: true,
+        extraAllowedContent: '*(*)'
+      });
+  </script>
+
+  <input type="hidden" value="Draft" id="status" name="status"/>
+
+  <div class="button-wrap">
+    <button type="submit" class="btn btn-outline">Save as Draft</button>
+    <a href="#" class="btn" id="publishBtn">Publish Question</a>
+  </div>
+</form>
+
+<script>
+  window.onload = function (e) {
+
+    $(function () {
+      $("#publishBtn").click(function (e) {
+        e.preventDefault(); // if desired...
+        handlePublish();
+      });
+    });
+  }
+  handlePublish = function () {
+    $('#status').val('Published');
+    $('<input />').attr('type', 'hidden')
+      .attr('name', 'publishedAt')
+      .attr('value', new Date())
+      .appendTo('#createForm');
+    $('#createForm').submit();
+  }
+
+</script>
+

@@ -1,0 +1,770 @@
+<!-- Google Code for Loan Customizer Tag Conversion Page -->
+<script type="text/javascript">
+  /* <![CDATA[ */
+  var google_conversion_id = 854832868;
+  var google_conversion_label = "-fEdCI2HsXYQ5O3OlwM";
+  var google_remarketing_only = false;
+  /* ]]> */
+</script>
+<script type="text/javascript" src="//www.googleadservices.com/pagead/conversion.js">
+</script>
+<noscript>
+  <div style="display:inline;">
+    <img height="1" width="1" style="border-style:none;" alt=""
+         src="//www.googleadservices.com/pagead/conversion/854832868/?label=-fEdCI2HsXYQ5O3OlwM&amp;guid=ON&amp;script=0"/>
+  </div>
+</noscript>
+
+<main id="main">
+  <div class="inner-banner">
+    <div class="bg-cover">
+      <img src="/images/frontend/img05.jpg" alt="image description">
+    </div>
+    <div class="container text-center">
+      <h1> <%= type == 'advance' ? 'Loan Customizer' : 'Result' %></h1>
+    </div>
+  </div>
+  <div id="customizer-text" class="results-container">
+    <div class="container">
+      <% if (Object.keys(error).length > 0 && error.message){ %>
+      <p style="text-align: center; color: red;"><%= error.message || '' %></p>
+      <% } %>
+
+      <% if(Object.keys(error).length > 0 && error.isLoanRejected){ %>
+      <div class="top-text">
+        We're Sorry. Based on your inputs, your loan did not qualify.
+      </div>
+      <p style="text-align: center">Please call us at (844) 346-2913 to discuss your scenario</p>
+      <div class="form-row result-form">
+        <div class="form-center">
+          <p>This could be because</p>
+          <ul>
+            <li>We only lend Up to 80% LTV.</li>
+            <li>Our maximum loan amount is $2,000,000.</li>
+            <li>Our minimum loan amount is $150,000.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="top-text">
+        <a href="javascript:history.go(-1);">Would you like to try again?</a>
+      </div>
+      <% } else if(type == 'quick'){ %>
+      <div class="top-text">
+        Great! Based on your inputs, your property is eligible for a loan.
+      </div>
+      <% if (Object.keys(result).length == 0) { %>
+      <div class="top-text">
+        Now, lets customize the terms.
+      </div>
+      <% }%>
+      <% } else { %>
+      <% if(!req.user || req.user.type != 'end_user') { %>
+      <div class="continue"><a id='continueBtn' class="link" href="">Continue Existing Application</a></div>
+      <div class="top-text"><%- content.loanCustomizer || '' %></div>
+      <% } } %>
+      <% if(!error.isLoanRejected){ %>
+      <form class=".basic-loan-calculator result-form" id="customizer-loan-calculator"
+            method="POST" action="/advance-calculator/calculate">
+        <div class="row flex-row">
+          <div class="col-xs-12 col-sm-6">
+            <div class="form-group">
+              <label for="loan_type">Loan Type</label>
+              <div class="select-wrap">
+                <select name="loanType" id="loan_type" required>
+                  <option value="" class="hidden">Choose</option>
+                  <% _.each(loanTypes, function(type) { %>
+                  <option <%= type.name == loan.loanType ? 'selected' : '' %>
+                    value="<%= type.name %>"><%= type.name %></option>
+                  <% }) %>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="col-xs-12 col-sm-6">
+            <div class="form-group">
+              <label for="property_type">Property Type </label>
+              <div class="select-wrap">
+                <select name="propertyType" id="property_type" required>
+                  <option value="" class="hidden">Choose</option>
+                  <% _.each(propertyTypes, function(type) { %>
+                  <option <%= type.name == loan.propertyType ? 'selected' : '' %>
+                    value="<%= type.value %>"><%= type.name %></option>
+                  <% }) %>
+                </select>
+              </div>
+            </div>
+          </div>
+          <% if(loan.id){ %>
+          <input type="hidden" name="id" value="<%= loan.id || '' %>"/>
+          <% } %>
+          <% if(loan.source){ %>
+          <input type="hidden" name="source" value="<%= loan.source || '' %>"/>
+          <% } %>
+
+          <% if(sourceUrl){ %>
+          <input type="hidden" name="sourceUrl" value="<%= sourceUrl || '' %>"/>
+          <% } %>
+
+          <div class="col-xs-12 col-sm-6">
+            <div class="form-group form-group--hasunit">
+              <label for="property_price">Purchase Price/Property Value</label>
+              <span class="form-group-unit">$</span>
+              <input id="property_price" name="propertyPrice" type="text" class="form-control number-format" required
+                     placeholder="" value="<%= loan.propertyPrice || '' %>">
+            </div>
+          </div>
+          <div class="col-xs-12 col-sm-4">
+            <div class="form-group form-group--hasunit">
+              <label for="loan_amount">Loan Amount</label>
+              <span class="form-group-unit">$</span>
+              <input id="loan_amount" name="loanAmount" type="text" class="form-control number-format" required
+                     placeholder=""
+                     value="<%= loan.loanAmount || '' %>">
+            </div>
+          </div>
+
+          <div class="col-xs-12 col-sm-2">
+            <div class="form-group form-group--hasunit form--unit-right">
+              <label for="ltv_value">LTV</label>
+              <span class="form-group-unit">%</span>
+              <input id="ltv_value" name="ltvValue" type="text" class="form-control number-format" readonly>
+              <label id="ltv_error" class="error"></label>
+            </div>
+          </div>
+
+          <div class="col-xs-12 col-sm-6">
+            <div class="form-group">
+              <label for="credit_score">Credit Score</label>
+              <div class="select-wrap">
+                <select name="creditScore" id="credit_score"  required>
+                  <option value="" class="hidden">Choose</option>
+                  <% _.each(creditScores, function(score) { %>
+                  <option <%= score.value == loan.creditScore ? 'selected' : '' %>
+                    value="<%= score.value %>"><%= score.key %></option>
+                  <% }) %>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="col-xs-12 col-sm-4">
+            <div class="form-group">
+              <label for="city">City</label>
+              <input id="city" name="propertyCity" type="text" class="form-control" required
+                     value="<%= loan.propertyCity || '' %>">
+            </div>
+          </div>
+          <div class="col-xs-12 col-sm-2">
+            <div class="form-group">
+              <label for="state">State</label>
+              <div class="select-wrap">
+                <select id="state" name="propertyState" required>
+                  <% _.each(states, function(state) { %>
+                  <option <%= state.key == loan.propertyState ? 'selected' : '' %>
+                    value="<%= state.key %>"><%= state.key %></option>
+                  <% }) %>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-xs-12 col-sm-6">
+            <div class="form-group">
+              <label for="credit_score">Occupancy</label>
+              <div class="select-wrap">
+                <select name="propertyOccupancy" id="propertyOccupancy"  required>
+                  <option value="" class="hidden">Choose</option>
+                  <option value="owner_occupied" <%= loan.propertyOccupancy == "owner_occupied" ? 'selected' : '' %> >Property is owner occupied</option>
+                  <option value="rented" <%= loan.propertyOccupancy == "rented" ? 'selected' : '' %> >Property is rented to tenants</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- <div class="property-info-holder" style="display: none">
+              <span class="property-info">
+                <input type="radio" name="propertyOccupancy" id="property_occupied" value="owner_occupied"
+                       required <%= loan.propertyOccupancy == "owner_occupied" ? 'checked' : '' %>>
+                <label for="property_occupied">Property is owner occupied</label>
+              </span>
+          <span class="property-info">
+                <input type="radio" name="propertyOccupancy" id="property_rented" value="rented"
+                       required <%= loan.propertyOccupancy == "rented" ? 'checked' : '' %>>
+                <label for="property_rented">Property is rented to tenants</label>
+              </span>
+          <span class="property-info">
+                <input type="radio" name="propertyOccupancy" id="property_vacant" value="vacant"
+                       required <%= loan.propertyOccupancy == "vacant" ? 'checked' : '' %>>
+                <label for="property_vacant">Property is vacant</label>
+              </span>
+        </div> -->
+        <p id="propertyOccupancyError"></p>
+        <div id="slider-container" class="row flex-row form-seperator">
+          <div class="col-xs-12 col-sm-6">
+            <div class="form-group">
+              <label for="property_type">Fixed Rate Period</label>
+              <% 
+              var cur_sel = 2;
+              if(typeof loan.program == 'undefined'){
+                cur_sel = 5;
+              }
+              else{
+                cur_sel = loan.program;
+              }
+              %>
+              <div class="select-wrap">
+                <select name="program" id="program" required>
+                  <% for(var index=2; index < 11; index ++){
+                    %>
+                    <option <%= cur_sel == index ? 'selected' : '' %> value="<%= index%>"><%= index%></option>
+                    <%
+                  }
+                  %>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-xs-12 col-sm-6">
+            <div class="form-group">
+              <label for="property_type">Loan Term</label>
+              <% 
+              var cur_sel = 15;
+              if(typeof loan.amortizationTerm == 'undefined'){
+                cur_sel = 30;
+              }
+              else{
+                cur_sel = loan.amortizationTerm;
+              }
+              %>
+              <div class="select-wrap">
+                <select name="amortizationTerm" id="amortization_term" required>
+                  <% for(var index=15; index < 30; index ++){
+                    %>
+                    <option <%= cur_sel == index ? 'selected' : '' %> value="<%= index%>"><%= index%></option>
+                    <%
+                  }
+                  %>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-xs-12 col-sm-6">
+            <div class="form-group">
+              <label for="property_type">Prepayment Fee Option</label>
+              <% 
+              var cur_sel = 2;
+              if(typeof loan.prepayPenalty == 'undefined'){
+                cur_sel = '5% for 3 Years';
+              }
+              else{
+                cur_sel = loan.prepayPenalty;
+              }
+              %>
+              <div class="select-wrap">
+                <select name="prepayPenalty" id="prepare_penalty" required>
+                  <option value="5% for 3 Years" <%= cur_sel == '5% for 3 Years' ? 'selected' : '' %> >5% for 3 Years</option>
+                  <option value="5% for 5 Years" <%= cur_sel == '5% for 5 Years' ? 'selected' : '' %> >5% for 5 Years</option>
+                  <option value="Declining 5%, 4%, 3%, 2%, 1%" <%= cur_sel == 'Declining 5%, 4%, 3%, 2%, 1%' ? 'selected' : '' %> >Declining 5%, 4%, 3%, 2%, 1%</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-xs-12 col-sm-6">
+            <div class="form-group">
+              <label for="property_type">Interest Only Period</label>
+              <% 
+              var cur_sel = 0;
+              if(typeof loan.interestOnlyPeriodMonths == 'undefined'){
+                cur_sel = 0;
+              }
+              else{
+                cur_sel = loan.interestOnlyPeriodMonths;
+              }
+              %>
+              <div class="select-wrap">
+                <select name="interestOnlyPeriodMonths" id="interest_repiod" required>
+                  <% for(var index=0; index < 24; index ++){
+                    %>
+                    <option <%= cur_sel == index ? 'selected' : '' %> value="<%= index%>"><%= index%></option>
+                    <%
+                  }
+                  %>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-xs-12 col-sm-6" style="display: none">
+            <div class="form-group">
+              <label for="property_type">Payment Day</label>
+              <% 
+              var cur_sel = 1;
+              if(typeof loan.paymentDay == 'undefined'){
+                cur_sel = 1;
+              }
+              else{
+                cur_sel = loan.paymentDay;
+              }
+              %>
+              <div class="select-wrap">
+                <select name="paymentDay" id="payment_day" required>
+                  <% for(var index=1; index < 28; index ++){
+                    %>
+                    <option <%= cur_sel == index ? 'selected' : '' %> value="<%= index%>"><%= index%></option>
+                    <%
+                  }
+                  %>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-xs-12 col-sm-6">
+            <div class="form-group">
+              <label for="property_type">Rate Buydown</label>
+              <% 
+              var cur_sel = 0;
+              if(typeof loan.rateBuyDown == 'undefined'){
+                cur_sel = '-0.375 - 1 point';
+              }
+              else{
+                cur_sel = loan.rateBuyDown;
+              }
+
+              var values = [0, 0.33, 0.66, 1, 1.33, 1.66, 2];
+              %>
+              <div class="select-wrap">
+                <select name="rateBuyDown" id="rate_buydown" required>
+                  <option value="-0.375 - 1 point" <%= cur_sel == "-0.375 - 1 point" ? 'selected' : '' %> >-0.375 - 1 point</option>
+                  <option value="-0.75 - 2 points" <%= cur_sel == "-0.75 - 2 points" ? 'selected' : '' %> >-0.75 - 2 points</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+        <strong class="label-text">Documentation:</strong>
+        <div class="row flex-row">
+          <div class="col-xs-12 col-sm-6">
+            <div class="document-item">
+              <label for="platinum_doc">Complete Program</label>
+              <input type="radio" name="documentation" id="platinum_doc"
+                     value="Platinum" required <%= loan.documentation == "Platinum" ? 'checked' : '' %> >
+
+              <span class="text-info">
+                    I want the lowest rates and highest loan amounts. I will provide full documentation including personal + business tax returns, property operating receipts and other supporting information
+                  </span>
+            </div>
+          </div>
+          <div class="col-xs-12 col-sm-6">
+            <div class="document-item">
+              <input type="radio" name="documentation" id="silver_doc"
+                     value="Silver" <%= loan.documentation == "Silver" ? 'checked' : '' %> >
+              <label for="silver_doc">Lite Doc Program</label>
+              <span class="text-info">
+                   I prefer not to submit my tax returns, but will supply property operating information and other supporting information.
+                  </span>
+            </div>
+          </div>
+          <div class="col-xs-12 col-sm-6">
+            <div class="document-item" id="document-stated"
+                 style="display:<%= !loan.propertyOccupancy || loan.propertyOccupancy != 'owner_occupied' ? 'none' : 'block' %>">
+              <input type="radio" name="documentation" id="stated_doc"
+                     value="Stated" <%= loan.documentation == "Stated" ? 'checked' : '' %> >
+              <label for="stated_doc">Stated</label>
+              <span class="text-info">
+                   Please underwrite my loan using information from by personal + business credit reports and property appraisal.
+                  </span>
+            </div>
+          </div>
+		  <div class="col-xs-12 col-sm-6">
+            <div class="document-item" id="document-bank"
+                 style="display:<%= !loan.propertyOccupancy || loan.propertyOccupancy != 'owner_occupied' ? 'none' : 'block' %>">
+              <input type="radio" name="documentation" id="bank_doc"
+                     value="Bank Statement" <%= loan.documentation == "Bank Statement" ? 'checked' : '' %> >
+              <label for="bank_doc">Bank Statement</label>
+              <span class="text-info">
+                  
+                  </span>
+            </div>
+          </div>
+        </div>
+        <p id="documentationError"></p>
+        <input type="text" name="keyword" value="<%= loan.keyword || ''%>" class="hidden"/>
+        <input type="text" name="adpos" value="<%= loan.adpos || ''%>" class="hidden"/>
+        <input type="text" name="utm_content" value="<%= loan.utm_content || ''%>" class="hidden"/>
+        <input type="text" name="utm_source" value="<%= loan.utm_source || ''%>" class="hidden"/>
+        <input type="text" name="utm_medium" value="<%= loan.utm_medium || ''%>" class="hidden"/>
+        <input type="text" name="utm_campaign" value="<%= loan.utm_campaign || ''%>" class="hidden"/>
+        <input type="text" name="campaignid" value="<%= loan.campaignid || ''%>" class="hidden"/>
+
+        <div class="recalculate-button" id="calculate-button" style="display: <%= Object.keys(result).length > 0 ? 'none' : 'block'%>">
+          <button type="submit" class="btn btn-default">Calculate</button>
+        </div>
+
+      </form>
+      <% } %>
+    </div>
+
+    <div id="signInModal" class="sign-in-modal"
+         style="display:<%= loginModal && loginModal.isShow ? 'block' : 'none' %>">
+      <div class="content">
+        <div class="header">
+          <span id="closeBtn" class="close">&times;</span>
+          <h3>Sign in</h3>
+        </div>
+        <div class="body">
+          <form class="form login-form" id="loginForm" method="POST" action="/login">
+            <div class="form-row">
+              <p>
+                <%= loginModal && loginModal.message || '' %>
+              </p>
+            </div>
+            <div class="form-row">
+              <label for="user-name">Username</label>
+              <input class="form-control" type="email" id="user-name" name="email"
+                     placeholder="youremail@commercialdirect.com" required>
+              <p id="loginErrorMsg"></p>
+            </div>
+            <div class="form-row alter-sapce">
+              <label for="password">Password</label>
+              <input class="form-control" type="password" id="password" name="password" placeholder="Your password">
+            </div>
+
+            <div class="form-row alter-sapce" style="text-align:right;">
+              <a id="forgotPasswordUrl" href="">Forgot password?</a>
+            </div>
+            <div class="form-row no-indent">
+              <button type="submit" class="btn">Login</button>
+            </div>
+          </form>
+
+          <form class="form login-form" id="forgotPasswordForm" method="POST" action="/forgot-password"
+                style="display:none;">
+            <div class="form-row">
+              <p>Please enter you email to reset password</p>
+            </div>
+            <div class="form-row">
+
+              <label for="user-name">Email</label>
+              <input class="form-control" type="email" id="user-email" name="email"
+                     placeholder="youremail@commercialdirect.com" required>
+              <p id="forgot-password-message"></p>
+            </div>
+            <div class="form-row">
+              <p id='forgot-password-result'></p>
+            </div>
+            <div class="form-row no-indent">
+              <button type="submit" class="btn">Submit</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <% if (Object.keys(result).length > 0) { %>
+    <div id="result-container">
+      <div class="container">
+        <div id="result-box" class="result-box">
+          You have requested a <strong> <%= loan.amortizationTerm %> </strong> year loan fixed for
+          <strong><%= loan.program %> </strong> years for the amount of
+          <strong>$<%=: loan.loanAmount | formatCurrency %></strong><br/>
+          Based on these parameters and the other options you selected,<br/> your interest rate and monthly payment
+          will
+          be as follows
+          <div class="result-detail">
+            <div class="result-amount">
+              <strong class="title-text">Rate</strong>
+              <strong class="amount h1"><%= result.resultingRate || '' %>%</strong>
+              <% if(loan.rateBuyDown){ %>
+              <div class="result-info">At closing you will pay <%= loan.rateBuyDown %> points</div>
+              <% } %>
+            </div>
+            <div class="result-amount">
+              <strong class="title-text">Est. Monthly Payment</strong>
+              <% if(loan.interestOnlyPeriodMonths && loan.interestOnlyPeriodMonths > 0) { %>
+              <strong class="amount h1">$<%=: result.resultingMonthlyIOPayment | formatCurrency %></strong>
+              <% } else { %>
+              <strong class="amount h1">$<%=: result.resultingMonthlyPayment | formatCurrency %></strong>
+              <% } %>
+
+              <% if(loan.interestOnlyPeriodMonths && loan.interestOnlyPeriodMonths >= 1){ %>
+              <div class="result-info">
+                $<%=: result.resultingMonthlyPayment | formatCurrency %>
+                is the estimated monthly payment after the initial
+                <%= loan.interestOnlyPeriodMonths %>  <%= loan.interestOnlyPeriodMonths == 1 ? 'month' : 'months' %>
+              </div>
+              <% } %>
+            </div>
+            <div class="reduce-rate-box">
+              <div class="detail-box">
+                <p><strong class="title">Want a lower payment?</strong></p>
+                <ul>
+                  <li>Select a shorter loan term.</li>
+                </ul>
+                <ul>
+                  <li>Select a longer prepayment period.</li>
+                </ul>
+                <ul>
+                  <li>Select a shorter interest only period.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="action-box">
+            <p><strong class="title">Do you like this loan?</strong></p>
+            <div class="col-xm-12 col-sm-6">
+
+              <% if(req.user && req.user.type == 'end_user') { %>
+              <form id="formSave" method="post" action="/loan-application/save/<%=loan.id%>">
+
+                <button class="btn btn-white yes" type="submit">Yes - Let's get preapproved </button>
+              </form>
+              <% } else { %>
+              <button class="btn btn-white yes" id="approvedBtn">Yes - Let's get preapproved </button>
+              <% } %>
+            </div>
+            <div class="col-xm-12 col-sm-6">
+              <button class="btn btn-white no" id="reCalculateBtn">Not Quite- Lets try other options</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <% if(!req.user || req.user.type != 'end_user') { %>
+    <div class="container">
+      <form action="/loan-application/save" id="save-results-form" method="POST" class="save-results-form">
+        <h2>Save Results and Continue Application</h2>
+        <div class="row">
+          <div class="col-md-3">
+            <div class="form-group">
+              <label for="name">Name</label>
+              <input type="name" name="name" class="form-control" id="name">
+            </div>
+          </div>
+          <div class="col-sm-3">
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input type="email" name="email" class="form-control" id="email">
+            </div>
+          </div>
+          <div class="col-sm-3">
+            <div class="form-group">
+              <label for="phone">Phone Number</label>
+              <input type="tel" name="phoneNumber" class="form-control" id="phoneNumber" placeholder="(Optional)">
+            </div>
+          </div>
+
+          <input type="hidden" name="id" value="<%= loan.id || '' %>"/>
+          <input type="hidden" name="source" value="<%= loan.source || '' %>"/>
+          <input type="text" name="keyword" value="<%= loan.keyword || ''%>" class="hidden"/>
+          <input type="text" name="adpos" value="<%= loan.adpos || ''%>" class="hidden"/>
+          <input type="text" name="utm_content" value="<%= loan.utm_content || ''%>" class="hidden"/>
+          <input type="text" name="utm_source" value="<%= loan.utm_source || ''%>" class="hidden"/>
+          <input type="text" name="utm_medium" value="<%= loan.utm_medium || ''%>" class="hidden"/>
+          <input type="text" name="utm_campaign" value="<%= loan.utm_campaign || ''%>" class="hidden"/>
+          <input type="text" name="campaignid" value="<%= loan.campaignid || ''%>" class="hidden"/>
+
+          <div class="col-sm-3">
+            <button class="btn btn-default" type="submit">Save &amp; Continue</button>
+          </div>
+        </div>
+      </form>
+    </div>
+    <% } else { %>
+    <div class="container" style="margin:10px"></div>
+    <% } %>
+    <% } %>
+
+    <div class="why-box-holder">
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-6">
+            <div class="whyus-info-box">
+              <h2>Why Choose Us</h2>
+              <p>Commercial Direct provides alternative lending solutions that make sense for your unique business or
+                investment needs.</p>
+              <a href="/category/success-stories" nav-link class="btn btn-white">Check Our Success Stories</a>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="whyus-info-box about">
+              <h2>About Us</h2>
+              <p>Commercial Direct is an online lender offering loans from $250,000 to $2,000,000 on a wide range of
+                commercial property types.</p>
+              <a href="/about" nav-link class="btn btn-white">Learn More About Us</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<div id="specialPTypeModal" class="modal"
+     style="display:none">
+  <div class="content">
+    <div class="header">
+      <span id="closeLink" class="close">&times;</span>
+      <h3>Important Information</h3>
+    </div>
+    <div class="body">
+      <div class="text">
+        <p>
+          Please contact us over the phone at 1-844-346-2913 or at info@shf-commercialdirect.com to discuss your loan options
+        </p>
+      </div>
+      <div class="form-row no-indent">
+        <button id="closeBtns" class="btn">OK</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  window.onload = function (e) {
+
+    var loanLookup = JSON.parse('<%- JSON.stringify(loanLookup) || {} %>');
+    setLoanLookup(loanLookup);
+    $("#closeBtns").click(function (e) {
+      e.preventDefault(); // if desired...
+      $("#specialPTypeModal").css('display', 'none');
+    });
+
+    $("#closeLink").click(function (e) {
+      e.preventDefault(); // if desired...
+      $("#specialPTypeModal").css('display', 'none');
+    });
+
+    function showHideForgotPassword(isShow) {
+      if (isShow) {
+        $('#loginForm').hide();
+        $('#forgotPasswordForm').show();
+      } else {
+        $('#loginForm').show();
+        $('#forgotPasswordForm').hide();
+      }
+    };
+
+
+    var result = parseInt("<%= Object.keys(result).length %>");
+    if (result > 0) {
+      $('html, body').animate({
+        scrollTop: $('#result-box').offset().top - 50
+      }, 500);
+    }
+
+    $("#reCalculateBtn").click(function (e) {
+      e.preventDefault();
+
+      $('#result-container').hide();
+      $('#calculate-button').show();
+      $('html, body').animate({
+        scrollTop: $('#customizer-text').offset().top
+      }, 500);
+    });
+
+    $("#property_type").change(function (e) {
+
+      var val = $("#property_type").val();
+      if (val == "Mixed-Use Tier 1 (>=50% res)" || val == "Multi-Family" || val == "Mobile Home Park") {
+        if ($("input[name='propertyOccupancy']:checked").val() == 'owner_occupied') {
+          $("input[name='propertyOccupancy']:checked").prop('checked', false);
+        }
+        $('#property_occupied').prop("disabled", 'disabled');
+      }
+      else {
+        $('#property_occupied').removeProp("disabled");
+      }
+      jcf.replaceAll();
+
+      if (val == "2 To 4 Family" || val == "Single Family" || val == "Residential Condo") {
+        $("#specialPTypeModal").css('display', 'block');
+        $("#property_type").val("");
+        var countrySelect = document.getElementById('property_type');
+        var customFormInstance = jcf.getInstance(countrySelect);
+        customFormInstance.refresh();
+      }
+    });
+
+    $("#approvedBtn").click(function (e) {
+      e.preventDefault(); // if desired...
+      $('html, body').animate({
+        scrollTop: $('#save-results-form').offset().top
+      }, 500);
+    });
+
+    $("#property_occupied").click(function () {
+      $('#document-stated').show();
+	  $('#document-bank').show();
+    });
+
+    $('[name="propertyOccupancy"]').change(function(){
+      if($(this).val() == 'owner_occupied'){
+        $('#document-stated').show();
+	      $('#document-bank').show();
+      }
+      else{
+        $('#document-stated').hide();
+	      $('#document-bank').hide();
+      }
+    })
+
+    $("#property_vacant").click(function () {
+      $('#document-stated').hide();
+	  $('#document-bank').hide();
+    });
+
+    $("#property_rented").click(function () {
+      $('#document-stated').hide();
+	  $('#document-bank').hide();
+    });
+
+    $("#continueBtn").click(function (e) {
+      e.preventDefault(); // if desired...
+      $("#signInModal").css('display', 'block');
+    });
+
+    $("#forgotPasswordUrl").click(function (e) {
+      e.preventDefault(); // if desired...
+      showHideForgotPassword(true);
+    });
+
+    $("#closeBtn").click(function (e) {
+      e.preventDefault(); // if desired...
+      showHideForgotPassword(false);
+      $("#signInModal").css('display', 'none');
+    });
+
+    $('#loginForm').ajaxForm({
+      success: function (response) {
+        if (response.status == 'success') {
+          window.location = '/continue';
+        } else {
+          $('#loginErrorMsg').text(response.error.message);
+        }
+      },
+      error: function (response) {
+        $('#loginErrorMsg').text('Unable to send request');
+      }
+    });
+
+    $('#forgotPasswordForm').ajaxForm({
+      success: function (response) {
+        if (response.status == 'success') {
+          $('#forgot-password-message').text(response.message);
+        } else {
+          $('#forgot-password-message').text(response.error.message);
+        }
+      },
+      error: function (response) {
+        $('#forgot-password-message').text('Unable to send request');
+      }
+    });
+
+
+  }
+</script>
+
+

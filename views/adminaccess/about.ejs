@@ -1,0 +1,171 @@
+<script src="/js/ckeditor/ckeditor.js"></script>
+
+<h1 class="page-title"><%= title %></h1>
+<div class="content-modification">
+  <form method="POST" class="form" id="createForm" action="/adminaccess/staticcontent/about" enctype="multipart/form-data">
+    
+    <div class="form-row" >
+      <div class="text-editor">
+        <div class="tearea-wrap">
+          <label for="content_editor"><%= subTitle  %></label>
+          <textarea id="aboutUs" name="aboutUs"><%= content.aboutUs || '' %></textarea>
+        </div>
+        <script>
+          CKEDITOR.replace('aboutUs');
+        </script>
+      </div>
+    </div>
+    <input type="hidden" name="subTitle" value="<%= subTitle  %>"/>
+
+    <div class="form-row" >
+        <div class="text-editor">
+          <div class="tearea-wrap">
+            <label for="content_editor">Section One</label>
+            <textarea id="aboutUsSectionOne" name="aboutUsSectionOne"><%= content.aboutUsSectionOne || '' %></textarea>
+          </div>
+          <script>
+            CKEDITOR.replace('aboutUsSectionOne');
+          </script>
+        </div>
+    </div>
+
+    
+
+    <div class="form-row" >
+        <div class="text-editor">
+          <div class="tearea-wrap">
+            <label for="content_editor">Wide Section - One</label>
+            <textarea id="aboutUsWideOne" name="aboutUsWideOne"><%= content.aboutUsWideOne || '' %></textarea>
+          </div>
+          <script>
+            CKEDITOR.replace('aboutUsWideOne');
+          </script>
+        </div>
+    </div>
+
+    <div class="form-row" >
+        <div class="text-editor">
+          <div class="tearea-wrap">
+            <label for="content_editor">Section Two</label>
+            <textarea id="aboutUsSectionTwo" name="aboutUsSectionTwo"><%= content.aboutUsSectionTwo || '' %></textarea>
+          </div>
+          <script>
+            CKEDITOR.replace('aboutUsSectionTwo');
+          </script>
+        </div>
+    </div>
+
+   
+    <div class="form-row" >
+        <div class="text-editor">
+          <div class="tearea-wrap">
+            <label for="content_editor">Wide Section - Two</label>
+            <textarea id="aboutUsWideTwo" name="aboutUsWideTwo"><%= content.aboutUsWideTwo || '' %></textarea>
+          </div>
+          <script>
+            CKEDITOR.replace('aboutUsWideTwo');
+          </script>
+        </div>
+    </div>
+
+    <div class="form-row" >
+        <div class="text-editor">
+          <div class="tearea-wrap">
+            <label for="content_editor">Section Three</label>
+            <textarea id="aboutUsSectionThree" name="aboutUsSectionThree"><%= content.aboutUsSectionThree || '' %></textarea>
+          </div>
+          <script>
+            CKEDITOR.replace('aboutUsSectionThree');
+          </script>
+        </div>
+    </div>
+
+    
+
+    <div class="form-row" >
+        <div class="text-editor">
+          <div class="tearea-wrap">
+            <label for="content_editor">Wide Section - Three</label>
+            <textarea id="aboutUsWideThree" name="aboutUsWideThree"><%= content.aboutUsWideThree || '' %></textarea>
+          </div>
+          <script>
+            CKEDITOR.replace('aboutUsWideThree');
+          </script>
+        </div>
+    </div>
+
+    <div class="form-row" >
+        <div class="text-editor">
+          <div class="tearea-wrap">
+            <label for="content_editor">Section Four</label>
+            <textarea type="text" id="aboutUsSectionFour" name="aboutUsSectionFour"><%= content.aboutUsSectionFour || '' %></textarea>
+          </div>
+          <script>
+            CKEDITOR.replace('aboutUsSectionFour');
+          </script>
+        </div>
+    </div>
+
+   
+    <div class="form-row" >
+        <div class="text-editor">
+          <div class="tearea-wrap">
+            <label for="content_editor">Wide Section - Four</label>
+            <textarea id="aboutUsWideFour" name="aboutUsWideFour"><%= content.aboutUsWideFour || '' %></textarea>
+          </div>
+          <script>
+            CKEDITOR.replace('aboutUsWideFour');
+          </script>
+        </div>
+    </div>
+   
+
+
+    <div class="form-row" >
+        <label for="content_editor">Section One Image</label>
+        <input type="hidden" id="aboutUsSectionOneImage" name="aboutUsSectionOneImage"
+        value="<%= content.aboutUsSectionOneImage %>">
+        <input type="file" id="section_one_image" name="sectionOneImage"
+        data-jcf='{"buttonText": "Choose", "placeholderText": "Choose a photo"}' />  
+        <!-- <input type="text" id="content_editor" name="aboutUsSectionOneImage" value="<%= content.aboutUsSectionOneImage || '' %>">        -->
+    </div>
+
+    <div class="form-row" >
+      <label for="content_editor">Section Two Image</label>
+      <input type="hidden" id="aboutUsSectionTwoImage" name="aboutUsSectionTwoImage"
+       value="<%= content.aboutUsSectionTwoImage %>" >
+      <input type="file" id="section_two_image" name="sectionTwoImage" data-jcf='{"buttonText": "Choose", "placeholderText": "Choose a photo"}' >
+    </div>
+
+    <div class="form-row" >
+      <label for="content_editor">Section Three Image</label>
+      <input type="hidden" id="aboutUsSectionThreeImage" name="aboutUsSectionThreeImage" value="<%= content.aboutUsSectionThreeImage  %>">  
+      <input type="file" id="section_three_image" name="sectionThreeImage" data-jcf='{"buttonText": "Choose", "placeholderText": "Choose a photo"}'>  
+    </div>
+
+    <div class="form-row" >
+      <label for="content_editor">Section Four Image</label>
+      <input type="hidden" id="aboutUsSectionFourImage" name="aboutUsSectionFourImage" value="<%= content.aboutUsSectionFourImage %>">
+      <input type="file" id="section_four_image" name="sectionFourImage" data-jcf='{"buttonText": "Choose", "placeholderText": "Choose a photo"}'>
+  </div>
+
+    
+      <div class="button-wrap">
+        <button type="submit" class="btn btn-outline">Save</button>
+      </div>
+  </form>
+
+</div>
+
+
+<script>
+  var errorMessage = '<%= message %>';
+  window.onload = function (e) {
+    if(errorMessage && errorMessage != ''){
+      window.alert(errorMessage)
+    }
+    $(".collapse").collapse('show');
+  }
+</script>
+
+

@@ -1,0 +1,147 @@
+<div class="application-content">
+  <div class="application-header">
+    <h2>7. Assets And Liabilities</h2>
+    <p>(It will take 3 minutes to complete.)</p>
+  </div>
+  <form id="assetsLiabilitiesForm" action="/application/assets-liabilities" method="post" class="result-form">
+    <h3>Borrower</h3>
+    <input type="hidden" value=true id="hiddenStatus" name="isSubmitted" />
+    <div class="row flex-row">
+      <div class="col-xs-12 col-sm-6">
+        <div class="form-group">
+          <label for="total_assets">Total Assets</label>
+          <input id="total_assets" name="borrowerTotalAssets" value="<%= application.borrowerTotalAssets || '' %>" type="text"
+                 class="form-control" placeholder="$ " required>
+        </div>
+      </div>
+      <div class="col-xs-12 col-sm-6">
+        <div class="form-group">
+          <label for="total_cash_available">Total Cash Available</label>
+          <input id="total_cash_available" name="borrowerTotalCashAvailable"
+                 value="<%= application.borrowerTotalCashAvailable || '' %>"
+                 type="text" class="form-control" placeholder="$ " required>
+        </div>
+      </div>
+      <div class="col-xs-12 col-sm-6">
+        <div class="form-group">
+          <label for="total_lia">Total Liabilities</label>
+          <input id="total_lia" name="borrowerTotalLiabilities" value="<%= application.borrowerTotalLiabilities || '' %>"
+                 type="text" placeholder="$" class="form-control" required>
+        </div>
+      </div>
+      <div class="col-xs-12 col-sm-6">
+        <div class="form-group">
+          <label for="net_worth">Net Worth</label>
+          <input id="net_worth" name="borrowerNetWorth" value="<%= application.borrowerNetWorth || (application.borrowerTotalAssets - application.borrowerTotalLiabilities) || '' %>" type="text"
+                 placeholder="$" class="form-control" required readonly="true">
+        </div>
+      </div>
+    </div>
+
+    <% if(noOfCoBorrowers && noOfCoBorrowers > 0 ){ %>
+    <% for (var i = 1; i <= noOfCoBorrowers; i++){ %>
+    <div class="row flex-row form-seperator">
+      <div class="col-xs-12">
+        <h3>Co Borrower <%= i > 1 ? i : '' %></h3>
+      </div>
+      <div class="col-xs-12 col-sm-6">
+        <div class="form-group">
+          <label for="total_assets">Total Assets</label>
+          <input id="total_assets<%= i %>" name="coBorrower<%= i %>TotalAssets"
+                 value="<%= application['coBorrower' + i + 'TotalAssets'] || '' %>" type="text" class="form-control"
+                 placeholder="$ " required>
+        </div>
+      </div>
+      <div class="col-xs-12 col-sm-6">
+        <div class="form-group">
+          <label for="total_cash_available">Total Cash Available</label>
+          <input id="total_cash_available" name="coBorrower<%= i %>TotalCashAvailable"
+                 value="<%= application['coBorrower' + i + 'TotalCashAvailable'] || '' %>" type="text"
+                 class="form-control" placeholder="$ " required>
+        </div>
+      </div>
+      <div class="col-xs-12 col-sm-6">
+        <div class="form-group">
+          <label for="total_lia">Total Liabilities</label>
+          <input id="total_lia<%= i %>" name="coBorrower<%= i %>TotalLiabilities"
+                 value="<%= application['coBorrower' + i + 'TotalLiabilities'] || '' %>" type="text" placeholder="$"
+                 class="form-control" required>
+        </div>
+      </div>
+      <div class="col-xs-12 col-sm-6">
+        <div class="form-group">
+          <label for="net_worth">Net Worth</label>
+          <input id="net_worth<%= i %>" name="coBorrower<%= i %>NetWorth"
+                 value="<%= application['coBorrower' + i + 'NetWorth']  || '' %>" type="text" placeholder="$"
+                 class="form-control" required readonly="true">
+        </div>
+      </div>
+    </div>
+
+    <% } %>
+    <% } %>
+    <div class="recalculate-button">
+      <div class="row">
+        <div class="col-xs-12 col-sm-6">
+          <a href="/application/income-expense-info" class="btn btn-outline">Back</a>
+        </div>
+        <div class="col-xs-12 col-sm-6">
+          <input type="hidden" name="progress" value="<%= progress %>"/>
+          <button type="submit" class="btn btn-default">Save and Continue</button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+
+<script>
+  window.onload = function (e) {
+    $("#total_lia").on('keyup',function(){
+        var netWorth = $("#total_assets").val() - $(this).val();
+        $("#net_worth").val(netWorth);
+    });
+
+    $("#total_lia1").on('keyup',function(){
+        var netWorth = $("#total_assets1").val() - $(this).val();
+        $("#net_worth1").val(netWorth);
+    });
+    $("#total_lia2").on('keyup',function(){
+        var netWorth = $("#total_assets2").val() - $(this).val();
+        $("#net_worth2").val(netWorth);
+    });
+    $("#total_lia3").on('keyup',function(){
+        var netWorth = $("#total_assets3").val() - $(this).val();
+        $("#net_worth3").val(netWorth);
+    });
+    $("#total_lia4").on('keyup',function(){
+        var netWorth = $("#total_assets4").val() - $(this).val();
+        $("#net_worth3").val(netWorth);
+    });
+
+    $("#assetsLiabilitiesForm").validate({
+      messages: {
+        totalAssets: "",
+        totalCashAvailable: "",
+        totalLiabilities: "",
+        netWorth: ""
+      },
+      errorPlacement: function (error, element) {
+        if ($(element).is('select')) {
+          element.next().after(error); // special placement for select elements
+        }
+        else if ($(element).is('radio')) {
+          error.insertAfter(element);
+        }
+        else {
+          error.insertAfter(element);  // default placement for everything else
+        }
+      },
+      // Make sure the form is submitted to the destination defined
+      // in the "action" attribute of the form when valid
+      submitHandler: function (form) {
+        form.submit();
+        $("#pleasewait").css('display', 'block');
+      }
+    });
+  }
+</script>

@@ -1,0 +1,26 @@
+<main id="main">
+  <div class="inner-banner" style="min-height: auto; background-color:#124549">
+    <div class="container text-center">
+      <h1>Server Error</h1>
+    </div>
+  </div>
+  <div class="container" style="display:table; min-height: 300px;">
+    <div style="display:table-cell; vertical-align: middle; width: auto">
+      <% if (typeof data !== 'undefined') { %>
+
+      <pre class="error"><code>
+          <% if (typeof data.message !== 'undefined') { %>
+          <%- data.message %>
+          <% } else { %>
+          <%- data %>
+          <% } %>
+        </code></pre>
+      <% } else { %>
+      <p class="error">
+        Server Error. Please try again later or contact at info@cd.com
+      </p>
+      <% } %>
+
+    </div>
+  </div>
+</main>

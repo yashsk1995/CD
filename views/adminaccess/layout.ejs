@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Commercial Direct Funding Admin</title>
+
+  <!-- Viewport mobile tag for sensible mobile support -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+  <!--
+      Stylesheets and Preprocessors
+      ==============================
+
+      You can always bring in CSS files manually with `<link>` tags, or asynchronously
+      using a solution like AMD (RequireJS).  Or, if you like, you can take advantage
+      of Sails' conventional asset pipeline (boilerplate Gruntfile).
+
+      By default, stylesheets from your `assets/styles` folder are included
+      here automatically (between STYLES and STYLES END). Both CSS (.css) and LESS (.less)
+      are supported. In production, your styles will be minified and concatenated into
+      a single file.
+
+      To customize any part of the built-in behavior, just edit `tasks/pipeline.js`.
+      For example, here are a few things you could do:
+
+          + Change the order of your CSS files
+          + Import stylesheets from other directories
+          + Use a different or additional preprocessor, like SASS, SCSS or Stylus
+  -->
+  <link rel="stylesheet" href="/styles/frontend/bootstrap.min.css">
+  <link rel="stylesheet" href="/styles/admin/main.css?x=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <link rel="shortcut icon" href="/images/frontend/favicon.ico">
+</head>
+
+<body>
+<% include header.ejs %>
+
+<main id="main">
+  <div class="container">
+    <aside id="sidebar">
+      <ul class="side-nav">
+        <li id="menu_blog_category" <%= title == "Homepage Banner" ? 'class=active' : '' %> >
+          <a href="/adminaccess/homebanner">Homepage Banner</a>
+        </li>
+        <li id="menu_blog_category" <%= title == "Homepage Portal" ? 'class=active' : '' %> >
+          <a href="/adminaccess/homeportal">Homepage Portal</a>
+        </li>
+        <li id="menu_blog_category" <%= title == "Homepage Featured Download" ? 'class=active' : '' %> >
+          <a href="/adminaccess/featureddownload">Home Featured Download</a>
+        </li>
+        <li id="menu_blog_category" <%= title == "Home Commercial Mortgage Insight" ? 'class=active' : '' %> >
+          <a href="/adminaccess/homemortgageinsight">Home Commercial Mortgage Insight</a>
+        </li>
+        <li id="menu_blog_category" <%= title == "Blog Category" ? 'class=active' : '' %> >
+          <a href="/adminaccess/blogcategories">Blog Category</a>
+        </li>
+
+        <li id="menu_blog_post" <%= title == "Blog Post" ? 'class=active' : '' %>>
+          <a href="/adminaccess/blogposts">Blog Post</a>
+        </li>
+
+        <li id="menu_faq" <%= title == "FAQ" ? 'class=active' : '' %>>
+          <a href="/adminaccess/faqs">FAQ</a>
+        </li>
+
+        <li id="menu_topic" <%= title == "Knowledge Base Topic" ? 'class=active' : '' %> >
+          <a href="/adminaccess/knowledgebasetopics">Knowledge Base Topic</a>
+        </li>
+
+        <li id="menu_article" <%= title == "Knowledge Base Article" ? 'class=active' : '' %> >
+          <a href="/adminaccess/knowledgebasearticles">Knowledge Base Article</a>
+        </li>
+
+        <li id="menu_landing_page" <%= title == "Landing Page" ? 'class=active' : '' %> >
+          <a href="/adminaccess/landingpages">Landing Page</a>
+        </li>
+
+        <li id="menu_price_matrix" <%= title == "Lists" ? 'class=active' : '' %> >
+          <a href="/adminaccess/lists">Lists</a>
+        </li>
+
+        <li id="menu_price_matrix" <%= title == "Sales Reps" ? 'class=active' : '' %> >
+          <a href="/adminaccess/sales_reps">Sales Reps</a>
+        </li>
+
+        <li id="menu_price_matrix" <%= title == "Rate Adjustments" ? 'class=active' : '' %> >
+          <a href="/adminaccess/rateadjustments">Rate Adjustments</a>
+        </li>
+
+        <li id="menu_price_matrix" <%= title == "LTV Adjustments" ? 'class=active' : '' %> >
+          <a href="/adminaccess/ltvadjustments">LTV Adjustments</a>
+        </li>
+
+        <li id="menu_price_matrix" <%= title == "Price Matrix" ? 'class=active' : '' %> >
+          <a href="/adminaccess/pricematrix">Price Matrix</a>
+        </li>
+
+        <li id="menu_landing_page" <%= title == "Programs" ? 'class=active' : '' %> >
+          <a href="/adminaccess/programs">Programs</a>
+        </li>
+
+        <li id="menu_showcase" <%= title == "Showcase" ? 'class=active' : '' %> >
+          <a href="/adminaccess/successstories">Showcase</a>
+        </li>
+
+        <li <%= title == "Static Content" || title == "Static Content - Learn" ? 'class=active' : '' %> </li>
+        <a data-toggle="collapse" href="#collapse1">Static Content</a>
+
+        <div id="collapse1" class="panel-collapse collapse">
+          <a href="/adminaccess/staticcontent-learn"  <%= title == "Static Content - Learn" ? 'class=actives' : '' %> >
+            <div class="panel-body" >
+              Learn
+            </div>
+          </a>
+          <a href="/adminaccess/staticcontent/about"  <%= (title == "Static Content" && key=="aboutUs") ? 'class=actives' : '' %> >  <div class="panel-body">About Us</div> </a>
+          <a href="/adminaccess/staticcontent/privacy" <%= (title == "Static Content" && key=="privacyPolicy") ? 'class=actives' : '' %> > <div class="panel-body">Privacy Policy</div> </a>
+          <a href="/adminaccess/staticcontent/terms" <%= (title == "Static Content" && key=="termsAndConditions") ? 'class=actives' : '' %> > <div class="panel-body">Terms &nbsp; Conditions</div> </a>
+          <a href="/adminaccess/staticcontent/contact" <%= (title == "Static Content" && key=="contactUs") ? 'class=actives' : '' %> > <div class="panel-body">Contact Us</div> </a>
+          <a href="/adminaccess/staticcontent/showcase" <%= (title == "Static Content" && key=="showcase") ? 'class=actives' : '' %>  > <div class="panel-body">Showcase</div> </a>
+          <a href="/adminaccess/staticcontent/loanCustomizer" <%= (title == "Static Content" && key=="loanCustomizer") ? 'class=actives' : '' %> > <div class="panel-body">Loan Customizer</div> </a>
+          <a href="/adminaccess/staticcontent/bayview" <%= (title == "Static Content" && key=="aboutBayview") ? 'class=actives' : '' %> > <div class="panel-body">About Bayview</div> </a>
+          <a href="/adminaccess/staticcontent/testimonial" <%= (title == "Static Content" && key=="sampleTestimonial") ? 'class=actives' : '' %> > <div class="panel-body">Sample Testimonial</div> </a>
+          <a href="/adminaccess/staticcontent/videos" <%= (title == "Static Content" && key=="videos") ? 'class=actives' : '' %> ><div class="panel-body">Videos</div></a>
+        </div>
+
+        <li id="menu_user" <%= title == "User" ? 'class=active' : '' %> >
+          <a href="/adminaccess/users">User</a>
+        </li>
+
+        <li id="menu_video_cat" <%= title == "Video Category" ? 'class=active' : '' %> >
+          <a href="/adminaccess/videocategories">Video Category</a>
+        </li>
+
+        <li id="menu_video_post" <%= title == "Video Post" ? 'class=active' : '' %> >
+          <a href="/adminaccess/videoposts">Video Post</a>
+        </li>
+
+        <li id="menu_whitelisted_ip" <%= title == "Whitelisted IP" ? 'class=active' : '' %> >
+          <a href="/adminaccess/whitelistedips">Whitelisted IP</a>
+        </li>
+
+        <li><a href="/adminaccess/logout">Sign Out</a></li>
+      </ul>
+    </aside>
+    <section class="content-area">
+      <%- body %>
+    </section>
+  </div>
+</main>
+
+
+<!--
+    Client-side Templates
+    ========================
+
+    HTML templates are important prerequisites of modern, rich client applications.
+    To work their magic, frameworks like Backbone, Angular, Ember, and Knockout require
+    that you load these templates client-side.
+
+    By default, your Gruntfile is configured to automatically load and precompile
+    client-side JST templates in your `assets/templates` folder, then
+    include them here automatically (between TEMPLATES and TEMPLATES END).
+
+    To customize this behavior to fit your needs, just edit `tasks/pipeline.js`.
+    For example, here are a few things you could do:
+
+        + Import templates from other directories
+        + Use a different template engine (handlebars, jade, dust, etc.)
+        + Internationalize your client-side templates using a server-side
+          stringfile before they're served.
+-->
+
+
+<!--
+
+  Client-side Javascript
+  ========================
+
+  You can always bring in JS files manually with `script` tags, or asynchronously
+  on the client using a solution like AMD (RequireJS).  Or, if you like, you can
+  take advantage of Sails' conventional asset pipeline (boilerplate Gruntfile).
+
+  By default, files in your `assets/js` folder are included here
+  automatically (between SCRIPTS and SCRIPTS END).  Both JavaScript (.js) and
+  CoffeeScript (.coffee) are supported. In production, your scripts will be minified
+  and concatenated into a single file.
+
+  To customize any part of the built-in behavior, just edit `tasks/pipeline.js`.
+  For example, here are a few things you could do:
+
+      + Change the order of your scripts
+      + Import scripts from other directories
+      + Use a different preprocessor, like TypeScript
+
+-->
+<% include footer.ejs %>
+
+<script src="/js/dependencies/sails.io.js"></script>
+<script src="/js/jquery-1.11.2.min.js"></script>
+<script src="/js/jquery-ui.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/admin/jquery.main.js"></script>
+
+</body>
+</html>

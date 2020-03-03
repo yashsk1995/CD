@@ -1,0 +1,64 @@
+## Customize the test machine
+machine:
+
+  timezone:
+    America/New_York # Set the timezone
+
+  # Version of ruby to use
+  node:
+    version: 6.0.0
+
+  # Override /etc/hosts
+  #hosts:
+    #circlehost: 127.0.0.1
+    #dev.mycompany.com: 127.0.0.1
+
+  # Add some environment variables
+  environment:
+    CIRCLE_ENV: test
+    NODE_ENV: test
+    PORT: 1337
+
+## Customize checkout
+#checkout:
+  #post:
+   # - git submodule sync
+    #- git submodule update --init # use submodules
+
+## Customize dependencies
+dependencies:
+  pre:
+    #- npm install # install from a different package manager
+    - sudo apt-get update
+    - sudo apt-get install python-numpy
+    - sudo apt-get install python-dev
+    #- sudo -H pip install awsebcli --upgrade --ignore-installed
+    - sudo pip install 'awsebcli==3.7.4' --force-reinstall
+    - sudo add-apt-repository ppa:pov/wkhtmltopdf -y; sudo apt-get update; sudo apt-get install wkhtmltopdf
+
+  post:
+    - eb init commercialdirect.com -p Node.js -r us-east-1
+    - wget https://download.elastic.co/elasticsearch/release/org/elasticsearch/distribution/tar/elasticsearch/2.4.5/elasticsearch-2.4.5.tar.gz
+    - tar -xvf elasticsearch-2.4.5.tar.gz
+    - elasticsearch-2.4.5/bin/elasticsearch: {background: true}
+    # Make sure that Elasticsearch is up before running tests:
+    - sleep 10 && wget --waitretry=5 --retry-connrefused -v http://127.0.0.1:3306/
+
+database:
+  override:
+    - mysql -u ubuntu circle_test < my-database-setup.sql
+
+test:
+  override:
+    - node ./node_modules/mocha/bin/mocha test/bootstrap.test.js test/integration/**/*.test.js --reporter mocha-junit-reporter --reporter-options mochaFile=$CIRCLE_TEST_REPORTS/junit/test-results.xml
+
+## Customize deployment commands
+deployment:
+  staging:
+    branch: master
+    commands:
+      - eb deploy commercialdirect-com-dev
+  production:
+    branch: production
+    commands:
+      - eb deploy commercialdirect-com-production

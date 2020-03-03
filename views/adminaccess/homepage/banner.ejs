@@ -1,0 +1,58 @@
+<h1 class="page-title">Homepage Banner</h1>
+<div class="" id="home_banner_section">
+    <div class="btn-container">
+        <input id="image_file" type="file" style="display: none"/>
+        <span class="btn btn-add" id="upload_banner_btn">Upload Banner</span>
+    </div>
+    <h2>Uploaded Banners</h2>
+    <table class="setting-table">
+        <thead>
+            <tr>
+                <td>Image</td>
+                <td>Action</td>
+            </tr>
+        </thead>
+        <tbody id="uploaded_banner_list">
+            <%
+            if(banners && banners.length != 0){
+                _.each(banners, function (banner) { %>              
+                <%
+                    if(banner['activity'] == 'true'){
+                        %>
+                        <tr class="banner--active">
+                        <%
+                    }
+                    else{
+                        %>
+                        <tr class="banner--inactive">
+                        <%
+                    }
+                %>
+                
+                    <td><img class="banner__image" filename="<%=banner['filename']%>" src="<%=banner['filename']%>"></td>
+                    <td>
+                        <%
+                        if(banner['activity'] == 'true'){
+                            %>
+                            <span class="table-btn btn-activity" activity="true">inactive</span>
+                            <%
+                        }
+                        else{
+                            %>
+                            <span class="table-btn btn-activity" activity="false">active</span>
+                            <%
+                        }
+                        %>
+                        <span class="table-btn btn-remove">remove</span>
+                    </td>
+                </tr>
+                <%
+                })
+            }
+            %>
+        </tbody>
+    </table>
+    <div class="button-wrap">
+        <span class="btn btn-outline" id="home_banner_save_btn">Save</span>
+    </div>
+</div>

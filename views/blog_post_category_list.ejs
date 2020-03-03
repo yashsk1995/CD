@@ -1,0 +1,72 @@
+<main id="main">
+  <div class="inner-banner">
+    <div class="bg-cover">
+      <img src="/images/frontend/img26.jpg" alt="image description">
+    </div>
+    <div class="container text-center">
+      <h1>Blog</h1>
+    </div>
+  </div>
+  <div class="container">
+    <form action="/blog" method="get" class="content-search-form blog">
+      <input id="search" name="search" type="search" value="<%= search %>" class="form-control">
+      <button type="submit" class="btn btn-default"><span class="hidden-xs">Search</span><span
+          class="hidden-sm hidden-md hidden-lg"><span class="icon-search"></span></span></button>
+    </form>
+  </div>
+  <div class="container">
+    <div class="blog-list-container">
+      <div class="row">
+        <div class="col-sm-8">
+          <div class="blog-post-lists">
+            <% _.each(blogPosts, function(blogPost) { %>
+            <div class="blog-post-item">
+              <time datetime="blogCategory.createdAt "> <%=: blogPost.createdAt | formatFullDate %></time>
+              <h2><a href="/blog/<%=blogPost.slug %>" nav-link><%= blogPost.title %></a></h2>
+              <div class="img-holder">
+                <a href="/blog/<%=blogPost.slug %>" nav-link>
+                  <img src="<%= blogPost.previewImageUrl || '' %>" alt="<%= blogPost.previewImageAlt || '' %>">
+                </a>
+              </div>
+              <%-: blogPost.bodyHTML | getHtmlShortContents %>
+            </div>
+            <% }) %>
+          </div>
+        </div>
+
+        <div class="col-sm-4 hidden-xs">
+          <div class="popular-article-box">
+            <h2>Recent Posts</h2>
+            <ul class="articles-list">
+              <% _.each(recentPosts, function(post) { %>
+              <li><a href="/blog/<%=post.slug %>" nav-link><%= post.title %></a></li>
+              <% }) %>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="recent-post-holder">
+    <div class="container">
+      <% include ./adminaccess/pagination.ejs %>
+    </div>
+  </div>
+</main>
+
+
+<script>
+
+  handlePageChange = function (event, pageNo) {
+    event.preventDefault();
+    var newLocation = window.location.href + "?";
+
+    var searchText = $('#search').val();
+    if (searchText) {
+      newLocation += 'search=' + searchText + "&";
+    }
+    newLocation += "page=" + pageNo;
+    window.location = newLocation;
+  }
+</script>

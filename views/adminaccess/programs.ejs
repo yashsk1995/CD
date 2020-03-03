@@ -1,0 +1,49 @@
+<h1 class="page-title"><%= title %></h1>
+<div class="content-modification">
+  <form method="POST" class="form" id="createForm" action="/adminaccess/programs">
+    
+    <div class="form-row" >
+        <label for="category">Program Post One</label>
+        <select id="programsArticleOne" name="programsArticleOne">
+          <option value="" class="hidden">Choose Landing Page</option>
+          <% _.each(landingPages, function(page) { %>
+          <option  <%= articelOne  == page.id ? 'selected' : '' %>
+            value="<%= page.id %>"> <%= page.title %></option>
+          <% }) %>
+        </select>
+    </div>
+
+    <div class="form-row" >
+        <label for="category">Program Post Two</label>
+        <select id="programsArticleTwo" name="programsArticleTwo">
+          <option value="" class="hidden">Choose Landing Page</option>
+          <% _.each(landingPages, function(page) { %>
+          <option  <%= articelTwo == page.id ? 'selected' : '' %>
+            value="<%= page.id %>"> <%= page.title %></option>
+          <% }) %>
+        </select>
+    </div>
+
+    <div class="form-row" >
+        <label for="category">Program Post Three</label>
+        <select id="programsArticleThree" name="programsArticleThree">
+          <option value="" class="hidden">Choose Landing Page</option>
+          <% _.each(landingPages, function(page) { %>
+          <option  <%= articelThree  == page.id ? 'selected' : '' %>
+            value="<%= page.id %>"> <%= page.title %></option>
+          <% }) %>
+        </select>
+    </div>
+
+    
+
+    
+    <div class="button-wrap">
+        <button type="submit" class="btn btn-outline">Save</button>
+    </div>
+  </form>
+
+</div>
+
+
+

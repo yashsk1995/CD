@@ -1,0 +1,609 @@
+<div class="application-content">
+  <div class="application-header">
+    <h2>8. Personal Declarations</h2>
+    <p>(It will take 3 minutes to complete)</p>
+    <p>If you answer “Yes” to any questions A through F, please provide a separate explanation.</p>
+  </div>
+  <form id="personalForm" action="/application/personal-declarations" method="post" class="result-form">
+    <ul class="declare-list">
+      <li>
+        <div class="title">
+          <span>Are there any outstanding judgments against you?</span>
+          <div id="outstandingJudgmentError" class="error"></div>
+        </div>
+        <input type="hidden" value=true id="hiddenStatus" name="isSubmitted" />
+        <div class="options-wrapper">
+          <div class="option">
+            <span class="head">Borrower</span>
+            <span class="property-info">
+                            <input type="radio" id="rad01" value="Yes" class="outstandingJudgment"
+                                   name="anyOutstandingJudgment" <%= application.anyOutstandingJudgment == 'Yes' ? 'checked' : '' %>
+                                   required>
+                            <label for="rad01">Yes</label>
+                          </span>
+            <span class="property-info">
+                            <input type="radio" name="anyOutstandingJudgment" value="No" class="outstandingJudgment"
+                                   id="rad02" <%= application.anyOutstandingJudgment == 'No' ? 'checked' : '' %>
+                                   required>
+                            <label for="rad02">No</label>
+                          </span>
+          </div>
+
+          <% if(noOfCoBorrowers && noOfCoBorrowers > 0 ){ %>
+          <% for (var i = 1; i <= noOfCoBorrowers; i++){ %>
+          <div class="option">
+            <span class="head">Co-Borrower <%= i > 1 ? i : '' %> </span>
+            <span class="property-info">
+                            <input type="radio" name="coBorrower<%= i %>AnyOutstandingJudgment" value="Yes"
+                                   class="outstandingJudgment"
+                                   id="rad03<%= i %>" <%= application['coBorrower' + i + 'AnyOutstandingJudgment'] == 'Yes' ? 'checked' : '' %>
+                                   required>
+                            <label
+                              for="rad03<%= i %>">Yes</label>
+                          </span>
+            <span class="property-info">
+                            <input type="radio" name="coBorrower<%= i %>AnyOutstandingJudgment" value="No"
+                                   class="outstandingJudgment"
+                                   id="rad04<%= i %>" <%= application['coBorrower' + i + 'AnyOutstandingJudgment'] == 'No' ? 'checked' : '' %>
+                                   required>
+                            <label for="rad04<%= i %>">No</label>
+                          </span>
+          </div>
+          <% } %>
+          <% } %>
+        </div>
+      </li>
+      <li>
+        <div class="title">
+          <span>Have you declared bankruptcy within the last 4 years?</span>
+          <div id="bankruptcyLast4yearsError" class="error"></div>
+        </div>
+        <div class="options-wrapper">
+          <div class="option">
+            <span class="head">Borrower</span>
+            <span class="property-info">
+                            <input type="radio" id="rad05" value="Yes" class="bankruptcyLast4years"
+                                   name="bankruptcyLast4years" <%= application.bankruptcyLast4years == 'Yes' ? 'checked' : '' %>
+                                   required>
+                            <label for="rad05">Yes</label>
+                          </span>
+            <span class="property-info">
+                            <input type="radio" id="rad06" value="No" class="bankruptcyLast4years"
+                                   name="bankruptcyLast4years" <%= application.bankruptcyLast4years == 'No' ? 'checked' : '' %>
+                                   required>
+                            <label for="rad06">No</label>
+                          </span>
+          </div>
+          <% if(noOfCoBorrowers && noOfCoBorrowers > 0 ){ %>
+          <% for (var i = 1; i <= noOfCoBorrowers; i++){ %>
+          <div class="option">
+            <span class="head">Co-Borrower <%= i > 1 ? i : '' %> </span>
+            <span class="property-info">
+                            <input type="radio" name="coBorrower<%= i %>BankruptcyLast4years" value="Yes"
+                                   class="bankruptcyLast4years"
+                                   id="rad07<%= i %>" <%= application['coBorrower' + i + 'BankruptcyLast4years'] == 'Yes' ? 'checked' : '' %>
+                                   required>
+                            <label
+                              for="rad07<%= i %>">Yes</label>
+                          </span>
+            <span class="property-info">
+                            <input type="radio" name="coBorrower<%= i %>BankruptcyLast4years" value="No"
+                                   class="bankruptcyLast4years"
+                                   id="rad08<%= i %>" <%= application['coBorrower' + i + 'BankruptcyLast4years'] == 'No' ? 'checked' : '' %>
+                                   required>
+                            <label for="rad08<%= i %>">No</label>
+                          </span>
+          </div>
+          <% } %>
+          <% } %>
+        </div>
+      </li>
+      <li>
+        <div class="title">
+          <span>Have you had property foreclosed upon or given title in lieu thereof in the last 4 years?</span>
+          <div id="propertyForeclosedError" class="error"></div>
+        </div>
+        <div class="options-wrapper">
+          <div class="option">
+            <span class="head">Borrower</span>
+            <span class="property-info">
+                            <input type="radio" id="rad09" value="Yes" class="propertyForeclosed"
+                                   name="propertyForeclosed" <%= application.propertyForeclosed == 'Yes' ? 'checked' : '' %>
+                                   required>
+                            <label for="rad09">Yes</label>
+                          </span>
+            <span class="property-info">
+                            <input type="radio" id="rad10" value="No" class="propertyForeclosed"
+                                   name="propertyForeclosed" <%= application.propertyForeclosed == 'No' ? 'checked' : '' %>
+                                   required>
+                            <label for="rad10">No</label>
+                          </span>
+          </div>
+
+          <% if(noOfCoBorrowers && noOfCoBorrowers > 0 ){ %>
+          <% for (var i = 1; i <= noOfCoBorrowers; i++){ %>
+          <div class="option">
+            <span class="head">Co-Borrower <%= i > 1 ? i : '' %> </span>
+            <span class="property-info">
+                            <input type="radio" name="coBorrower<%= i %>PropertyForeclosed" value="Yes"
+                                   class="propertyForeclosed"
+                                   id="rad11<%= i %>" <%= application['coBorrower' + i + 'PropertyForeclosed'] == 'Yes' ? 'checked' : '' %>
+                                   required>
+                            <label
+                              for="rad11<%= i %>">Yes</label>
+                          </span>
+            <span class="property-info">
+                            <input type="radio" name="coBorrower<%= i %>PropertyForeclosed" value="No"
+                                   class="propertyForeclosed"
+                                   id="rad12<%= i %>" <%= application['coBorrower' + i + 'PropertyForeclosed'] == 'No' ? 'checked' : '' %>
+                                   required>
+                            <label for="rad12<%= i %>">No</label>
+                          </span>
+          </div>
+          <% } %>
+          <% } %>
+        </div>
+      </li>
+      <li>
+        <div class="title">
+          <span>Are you party to a lawsuit?</span>
+          <div id="partyToLawsuitError" class="error"></div>
+        </div>
+        <div class="options-wrapper">
+          <div class="option">
+            <span class="head">Borrower</span>
+            <span class="property-info">
+                            <input type="radio" id="rad13" value="Yes" class="partyToLawsuit"
+                                   name="partyToLawsuit" <%= application.partyToLawsuit == 'Yes' ? 'checked' : '' %>
+                                   required>
+                            <label for="rad13">Yes</label>
+                          </span>
+            <span class="property-info">
+                            <input type="radio" id="rad14" value="No" class="partyToLawsuit"
+                                   name="partyToLawsuit" <%= application.partyToLawsuit == 'No' ? 'checked' : '' %>
+                                   required>
+                            <label for="rad14">No</label>
+                          </span>
+          </div>
+
+          <% if(noOfCoBorrowers && noOfCoBorrowers > 0 ){ %>
+          <% for (var i = 1; i <= noOfCoBorrowers; i++){ %>
+          <div class="option">
+            <span class="head">Co-Borrower <%= i > 1 ? i : '' %> </span>
+            <span class="property-info">
+                            <input type="radio" name="coBorrower<%= i %>PartyToLawsuit" value="Yes"
+                                   class="partyToLawsuit"
+                                   id="rad15<%= i %>" <%= application['coBorrower' + i + 'PartyToLawsuit'] == 'Yes' ? 'checked' : '' %>
+                                   required>
+                            <label
+                              for="rad15<%= i %>">Yes</label>
+                          </span>
+            <span class="property-info">
+                            <input type="radio" name="coBorrower<%= i %>PartyToLawsuit" value="No"
+                                   class="partyToLawsuit"
+                                   id="rad16<%= i %>" <%= application['coBorrower' + i + 'PartyToLawsuit'] == 'No' ? 'checked' : '' %>
+                                   required>
+                            <label for="rad16<%= i %>">No</label>
+                          </span>
+          </div>
+          <% } %>
+          <% } %>
+        </div>
+      </li>
+      <li>
+        <div class="title">
+          <span>Have you directly or indirectly been obligated on any loan which resulted in foreclosure,
+          transfer of title in lieu of foreclosure or judgment in the last 4 years?</span>
+          <div id="obligatedAnyLoanError" class="error"></div>
+        </div>
+        <div class="options-wrapper">
+          <div class="option">
+            <span class="head">Borrower</span>
+            <span class="property-info">
+                            <input type="radio" id="rad17" value="Yes" class="obligatedAnyLoan"
+                                   name="obligatedAnyLoan" <%= application.obligatedAnyLoan == 'Yes' ? 'checked' : '' %>
+                                   required>
+                            <label for="rad17">Yes</label>
+                          </span>
+            <span class="property-info">
+                            <input type="radio" id="rad18" value="No" class="obligatedAnyLoan"
+                                   name="obligatedAnyLoan" <%= application.obligatedAnyLoan == 'No' ? 'checked' : '' %>
+                                   required>
+                            <label for="rad18">No</label>
+                          </span>
+          </div>
+          <% if(noOfCoBorrowers && noOfCoBorrowers > 0 ){ %>
+          <% for (var i = 1; i <= noOfCoBorrowers; i++){ %>
+          <div class="option">
+            <span class="head">Co-Borrower <%= i > 1 ? i : '' %> </span>
+            <span class="property-info">
+                            <input type="radio" name="coBorrower<%= i %>ObligatedAnyLoan" value="Yes"
+                                   class="obligatedAnyLoan"
+                                   id="rad19<%= i %>" <%= application['coBorrower' + i + 'ObligatedAnyLoan'] == 'Yes' ? 'checked' : '' %>
+                                   required>
+                            <label
+                              for="rad19<%= i %>">Yes</label>
+                          </span>
+            <span class="property-info">
+                            <input type="radio" name="coBorrower<%= i %>ObligatedAnyLoan" value="No"
+                                   class="obligatedAnyLoan"
+                                   id="rad20<%= i %>" <%= application['coBorrower' + i + 'ObligatedAnyLoan'] == 'No' ? 'checked' : '' %>
+                                   required>
+                            <label for="rad20<%= i %>">No</label>
+                          </span>
+          </div>
+          <% } %>
+          <% } %>
+        </div>
+      </li>
+      <li>
+        <div class="title">
+          <span>Are you presently delinquent or in default on any Federal debt or any other loan, mortgage, financial obligation or loan guarantee?</span>
+          <div id="delinquentOnAnyLoanError" class="error"></div>
+        </div>
+        <div class="options-wrapper">
+          <div class="option">
+            <span class="head">Borrower</span>
+            <span class="property-info">
+                            <input type="radio" id="rad121" value="Yes" class="delinquentOnAnyLoan"
+                                   name="delinquentOnAnyLoan" <%= application.delinquentOnAnyLoan == 'Yes' ? 'checked' : '' %>
+                                   required>
+                            <label for="rad121">Yes</label>
+                          </span>
+            <span class="property-info">
+                            <input type="radio" id="rad22" value="No" class="delinquentOnAnyLoan"
+                                   name="delinquentOnAnyLoan" <%= application.delinquentOnAnyLoan == 'No' ? 'checked' : '' %>
+                                   required>
+                            <label for="rad22">No</label>
+                          </span>
+          </div>
+
+          <% if(noOfCoBorrowers && noOfCoBorrowers > 0 ){ %>
+          <% for (var i = 1; i <= noOfCoBorrowers; i++){ %>
+          <div class="option">
+            <span class="head">Co-Borrower <%= i > 1 ? i : '' %> </span>
+            <span class="property-info">
+                            <input type="radio" name="coBorrower<%= i %>DelinquentOnAnyLoan" value="Yes"
+                                   class="delinquentOnAnyLoan"
+                                   id="rad23<%= i %>" <%= application['coBorrower' + i + 'DelinquentOnAnyLoan'] == 'Yes' ? 'checked' : '' %>
+                                   required>
+                            <label
+                              for="rad23<%= i %>">Yes</label>
+                          </span>
+            <span class="property-info">
+                            <input type="radio" name="coBorrower<%= i %>DelinquentOnAnyLoan" value="No"
+                                   class="delinquentOnAnyLoan"
+                                   id="rad24<%= i %>" <%= application['coBorrower' + i + 'DelinquentOnAnyLoan'] == 'No' ? 'checked' : '' %>>
+                            <label for="rad24<%= i %>">No</label>
+                          </span>
+          </div>
+          <% } %>
+          <% } %>
+
+        </div>
+      </li>
+      <li>
+        <div class="title">
+          <span>Are you obligated to pay alimony, child support or separate maintenance?</span>
+          <div id="obligatedToPayError" class="error"></div>
+        </div>
+        <div class="options-wrapper">
+          <div class="option">
+            <span class="head">Borrower</span>
+            <span class="property-info">
+                            <input type="radio" id="rad25" value="Yes" class="obligatedToPay"
+                                   name="obligatedToPay" <%= application.obligatedToPay == 'Yes' ? 'checked' : '' %>
+                                   required>
+                            <label for="rad25">Yes</label>
+                          </span>
+            <span class="property-info">
+                            <input type="radio" id="rad26" value="No" class="obligatedToPay"
+                                   name="obligatedToPay" <%= application.obligatedToPay == 'No' ? 'checked' : '' %>
+                                   required>
+                            <label for="rad26">No</label>
+                          </span>
+          </div>
+
+          <% if(noOfCoBorrowers && noOfCoBorrowers > 0 ){ %>
+          <% for (var i = 1; i <= noOfCoBorrowers; i++){ %>
+          <div class="option">
+            <span class="head">Co-Borrower <%= i > 1 ? i : '' %> </span>
+            <span class="property-info">
+                            <input type="radio" name="coBorrower<%= i %>ObligatedToPay" value="Yes"
+                                   class="obligatedToPay"
+                                   id="rad27<%= i %>" <%= application['coBorrower' + i + 'ObligatedToPay'] == 'Yes' ? 'checked' : '' %>
+                                   required>
+                            <label
+                              for="rad27<%= i %>">Yes</label>
+                          </span>
+            <span class="property-info">
+                            <input type="radio" name="coBorrower<%= i %>ObligatedToPay" value="No"
+                                   class="obligatedToPay"
+                                   id="rad28<%= i %>" <%= application['coBorrower' + i + 'ObligatedToPay'] == 'No' ? 'checked' : '' %>
+                                   required>
+                            <label for="rad28<%= i %>">No</label>
+                          </span>
+          </div>
+          <% } %>
+          <% } %>
+
+        </div>
+      </li>
+      <li>
+        <div class="title">
+          <span>If applicable, do you intend to occupy the property as your primary housing residence?</span>
+          <div id="occupyPropertyAsHouseError" class="error"></div>
+        </div>
+        <div class="options-wrapper">
+          <div class="option">
+            <span class="head">Borrower</span>
+            <span class="property-info">
+                            <input type="radio" id="rad29" value="Yes" class="occupyPropertyAsHouse"
+                                   name="occupyPropertyAsHouse" <%= application.occupyPropertyAsHouse == 'Yes' ? 'checked' : '' %>
+                                   required>
+                            <label for="rad29">Yes</label>
+                          </span>
+            <span class="property-info">
+                            <input type="radio" id="rad30" value="No" class="occupyPropertyAsHouse"
+                                   name="occupyPropertyAsHouse" <%= application.occupyPropertyAsHouse == 'No' ? 'checked' : '' %>
+                                   required>
+                            <label for="rad30">No</label>
+                          </span>
+          </div>
+          <% if(noOfCoBorrowers && noOfCoBorrowers > 0 ){ %>
+          <% for (var i = 1; i <= noOfCoBorrowers; i++){ %>
+          <div class="option">
+            <span class="head">Co-Borrower <%= i > 1 ? i : '' %> </span>
+            <span class="property-info">
+                            <input type="radio" name="coBorrower<%= i %>OccupyPropertyAsHouse" value="Yes"
+                                   class="occupyPropertyAsHouse"
+                                   id="rad31<%= i %>" <%= application['coBorrower' + i + 'OccupyPropertyAsHouse'] == 'Yes' ? 'checked' : '' %>
+                                   required>
+                            <label
+                              for="rad31<%= i %>">Yes</label>
+                          </span>
+            <span class="property-info">
+                            <input type="radio" name="coBorrower<%= i %>OccupyPropertyAsHouse" value="No"
+                                   class="occupyPropertyAsHouse"
+                                   id="rad32<%= i %>" <%= application['coBorrower' + i + 'OccupyPropertyAsHouse'] == 'No' ? 'checked' : '' %>
+                                   required>
+                            <label for="rad32<%= i %>">No</label>
+                          </span>
+          </div>
+          <% } %>
+          <% } %>
+
+        </div>
+      </li>
+      <li>
+        <div class="title">
+          <span>Have you been convicted of a felony within the past 10 years?</span>
+          <div id="convictedLast10YearsError" class="error"></div>
+        </div>
+        <div class="options-wrapper">
+          <div class="option">
+            <span class="head">Borrower</span>
+            <span class="property-info">
+                            <input type="radio" id="rad33" value="Yes" class="convictedLast10Years"
+                                   name="convictedLast10Years" <%= application.convictedLast10Years == 'Yes' ? 'checked' : '' %>
+                                   required>
+                            <label for="rad33">Yes</label>
+                          </span>
+            <span class="property-info">
+                            <input type="radio" id="rad34" value="No" class="convictedLast10Years"
+                                   name="convictedLast10Years" <%= application.convictedLast10Years == 'No' ? 'checked' : '' %>
+                                   required>
+                            <label for="rad34">No</label>
+                          </span>
+          </div>
+
+          <% if(noOfCoBorrowers && noOfCoBorrowers > 0 ){ %>
+          <% for (var i = 1; i <= noOfCoBorrowers; i++){ %>
+          <div class="option">
+            <span class="head">Co-Borrower <%= i > 1 ? i : '' %> </span>
+            <span class="property-info">
+                            <input type="radio" name="coBorrower<%= i %>ConvictedLast10Years" value="Yes"
+                                   class="convictedLast10Years"
+                                   id="rad35<%= i %>" <%= application['coBorrower' + i + 'ConvictedLast10Years'] == 'Yes' ? 'checked' : '' %>
+                                   required>
+                            <label
+                              for="rad35<%= i %>">Yes</label>
+                          </span>
+            <span class="property-info">
+                            <input type="radio" name="coBorrower<%= i %>ConvictedLast10Years" value="No"
+                                   class="convictedLast10Years"
+                                   id="rad36<%= i %>" <%= application['coBorrower' + i + 'ConvictedLast10Years'] == 'No' ? 'checked' : '' %>
+                                   required>
+                            <label for="rad36<%= i %>">No</label>
+                          </span>
+          </div>
+          <% } %>
+          <% } %>
+
+        </div>
+      </li>
+      <li>
+        <div class="title">
+          <span>Are you a U.S. citizen?</span>
+          <div id="isUSCitizenError" class="error"></div>
+        </div>
+        <div class="options-wrapper">
+          <div class="option">
+            <span class="head">Borrower</span>
+            <span class="property-info">
+                            <input type="radio" id="rad37" value="Yes" class="isUSCitizen"
+                                   name="isUSCitizen" <%= application.isUSCitizen == 'Yes' ? 'checked' : '' %> required>
+                            <label for="rad37">Yes</label>
+                          </span>
+            <span class="property-info">
+                            <input type="radio" id="rad38" value="No" class="isUSCitizen"
+                                   name="isUSCitizen" <%= application.isUSCitizen == 'No' ? 'checked' : '' %> required>
+                            <label for="rad38">No</label>
+                          </span>
+          </div>
+
+          <% if(noOfCoBorrowers && noOfCoBorrowers > 0 ){ %>
+          <% for (var i = 1; i <= noOfCoBorrowers; i++){ %>
+          <div class="option">
+            <span class="head">Co-Borrower <%= i > 1 ? i : '' %> </span>
+            <span class="property-info">
+                            <input type="radio" name="coBorrower<%= i %>USCitizen" value="Yes" class="isUSCitizen"
+                                   id="rad39<%= i %>" <%= application['coBorrower' + i + 'USCitizen'] == 'Yes' ? 'checked' : '' %>
+                                   required>
+                            <label
+                              for="rad39<%= i %>">Yes</label>
+                          </span>
+            <span class="property-info">
+                            <input type="radio" name="coBorrower<%= i %>USCitizen" value="No" class="isUSCitizen"
+                                   id="rad40<%= i %>" <%= application['coBorrower' + i + 'USCitizen'] == 'No' ? 'checked' : '' %>
+                                   required>
+                            <label for="rad40<%= i %>">No</label>
+                          </span>
+          </div>
+          <% } %>
+          <% } %>
+        </div>
+      </li>
+      <li>
+        <div class="title">
+          <span>Are you a permanent resident alien?</span>
+          <div id="isPermanentResidentError" class="error"></div>
+        </div>
+        <div class="options-wrapper">
+          <div class="option">
+            <span class="head">Borrower</span>
+            <span class="property-info">
+                            <input type="radio" id="rad41" value="Yes" class="isPermanentResident"
+                                   name="isPermanentResident" <%= application.isPermanentResident == 'Yes' ? 'checked' : '' %>
+                                   required>
+                            <label for="rad41">Yes</label>
+                          </span>
+            <span class="property-info">
+                            <input type="radio" id="rad42" value="No" class="isPermanentResident"
+                                   name="isPermanentResident" <%= application.isPermanentResident == 'No' ? 'checked' : '' %>
+                                   required>
+                            <label for="rad42">No</label>
+                          </span>
+          </div>
+
+          <% if(noOfCoBorrowers && noOfCoBorrowers > 0 ){ %>
+          <% for (var i = 1; i <= noOfCoBorrowers; i++){ %>
+          <div class="option">
+            <span class="head">Co-Borrower <%= i > 1 ? i : '' %> </span>
+            <span class="property-info">
+                            <input type="radio" name="coBorrower<%= i %>PermanentResident" value="Yes"
+                                   class="isPermanentResident"
+                                   class="permanent-resident-radio"
+                                   id="rad43<%= i %>" <%= application['coBorrower' + i + 'PermanentResident'] == 'Yes' ? 'checked' : '' %>
+                                   required>
+                            <label
+                              for="rad43<%= i %>">Yes</label>
+                          </span>
+            <span class="property-info">
+                            <input type="radio" name="coBorrower<%= i %>PermanentResident" value="No"
+                                   class="isPermanentResident"
+                                   class="permanent-resident-radio"
+                                   id="rad44<%= i %>" <%= application['coBorrower' + i + 'PermanentResident'] == 'No' ? 'checked' : '' %>
+                                   required>
+                            <label for="rad44<%= i %>">No</label>
+                          </span>
+          </div>
+          <% } %>
+          <% } %>
+        </div>
+      </li>
+    </ul>
+    <div class="col-xs-12 no-padding">
+      <div class="form-group">
+        If you answered no to questions J and K, please provide visa status
+      </div>
+      <div class="form-group">
+        <label for="visa_status_0">Borrower Visa Status</label>
+        <input id="visa_status_0" name="borrowerVisaStatus" value="<%= application.borrowerVisaStatus || '' %>"
+               type="text" class="form-control">
+      </div>
+    </div>
+
+    <% if(noOfCoBorrowers && noOfCoBorrowers > 0 ){ %>
+    <% for (var i = 1; i <= noOfCoBorrowers; i++){ %>
+    <div class="col-xs-12 no-padding">
+      <div class="form-group">
+        <label for="visa_status_<%= i %>">Co Borrower <%= i > 1 ? i : '' %> Visa Status</label>
+        <input id="visa_status_<%= i %>" name="coBorrower<%= i %>VisaStatus"
+               value="<%= application['coBorrower' + i + 'VisaStatus'] || '' %>"
+               type="text" class="form-control">
+      </div>
+    </div>
+
+    <% } %>
+    <% } %>
+    <div class="recalculate-button">
+      <div class="row">
+        <div class="col-xs-12 col-sm-6">
+          <a href="/application/assets-liabilities" class="btn btn-outline">Back</a>
+        </div>
+        <div class="col-xs-12 col-sm-6">
+          <input type="hidden" name="progress" value="<%= progress %>"/>
+          <input type="hidden" name="noOfCoBorrowers" value="<%= noOfCoBorrowers %>"/>
+          <button type="submit" class="btn btn-default">Save and Continue</button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<script>
+  window.onload = function (e) {
+
+    $.validator.setDefaults({
+      ignore: ":hidden"
+    });
+
+    $("#personalForm").validate({
+      rules: {
+        borrowerVisaStatus: {
+          required: function (element) {
+            var isRequired =  ($("input[name='isUSCitizen']:checked").val() == 'No' && $("input[name='isPermanentResident']:checked").val() == 'No');
+            return isRequired;
+          }
+        },
+        coBorrower1VisaStatus: {
+          required: function (element) {
+            var isRequired = ($("input[name='coBorrower1USCitizen']:checked").val() == 'No' && $("input[name='coBorrower1PermanentResident']:checked").val() == 'No');
+            return isRequired;
+          }
+        },
+        coBorrower2VisaStatus: {
+          required: function (element) {
+            var isRequired = ($("input[name='coBorrower2USCitizen']:checked").val() == 'No' && $("input[name='coBorrower2PermanentResident']:checked").val() == 'No');
+              return isRequired;
+          }
+        },
+        coBorrower3VisaStatus: {
+          required: function (element) {
+            var isRequired = ($("input[name='coBorrower3USCitizen']:checked").val() == 'No' && $("input[name='coBorrower3PermanentResident']:checked").val() == 'No');
+              return isRequired;
+          }
+        }
+      },
+
+      errorPlacement: function (error, element) {
+        if ($(element).is('select')) {
+          element.next().after(error); // special placement for select elements
+        }
+        else if ($(element).is(':radio')) {
+          var errorId = '#' + element.attr('class').split(' ')[0] + 'Error';
+          error.appendTo(errorId);
+        }
+        else {
+          error.insertAfter(element);  // default placement for everything else
+        }
+      },
+      // Make sure the form is submitted to the destination defined
+      // in the "action" attribute of the form when valid
+      submitHandler: function (form) {
+        form.submit();
+        $("#pleasewait").css('display', 'block');
+      }
+    });
+  }
+</script>

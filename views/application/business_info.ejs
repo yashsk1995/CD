@@ -1,0 +1,264 @@
+<div class="application-content">
+  <div class="application-header">
+    <h2>4. Business Information</h2>
+    <p>(It will take 3 minutes to complete)</p>
+    <p><strong>Please complete if you are Self-Employed or the Borrower is a Business Entity</strong></p>
+  </div>
+  <form id="businessInfoForm" action="/application/business-info" method="post" class="result-form">
+    <div class="row flex-row">
+      <input type="hidden" value=true id="hiddenStatus" name="isSubmitted"/>
+      <div class="col-xs-12 col-sm-6">
+        <div class="form-group">
+          <label for="business_name">Business Name</label>
+          <input id="business_name" name="businessName" value="<%= application.businessName || '' %>" type="text"
+                 class="form-control" required>
+        </div>
+      </div>
+      <div class="col-xs-12 col-sm-6">
+        <div class="form-group">
+          <label for="address">Address</label>
+          <input id="address" name="address" value="<%= application.address || '' %>" type="text"
+                 class="form-control" required>
+        </div>
+      </div>
+      <div class="col-xs-12 col-sm-4">
+        <div class="form-group">
+          <label for="city">City</label>
+          <input id="city" name="city" value="<%= application.city || '' %>" type="text"
+                 class="form-control" required>
+        </div>
+      </div>
+      <div class="col-xs-12 col-sm-2">
+        <div class="form-group">
+          <label for="state_name">State</label>
+          <div class="select-wrap">
+            <select name="state" id="state_name" required>
+              <% _.each(states, function(state) { %>
+              <option <%= (application.state == state.key) ? 'selected' : '' %>
+                value="<%= state.key %>"><%= state.key %></option>
+              <% }) %>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="col-xs-12 col-sm-6">
+        <div class="form-group">
+          <label for="zip_code">Zipcode</label>
+          <input id="zip_code" name="zipCode" value="<%= application.zipCode || '' %>" type="tel"
+                 class="form-control" required>
+        </div>
+      </div>
+      <div class="col-xs-12 col-sm-6">
+        <div class="form-group">
+          <label for="years_owner">Years as Business Owner</label>
+          <input id="years_owner" name="yearsAsOwner"
+                 value="<%= application.yearsAsOwner || endUser.yearsInBusiness || '' %>" type="number"
+                 class="form-control" required>
+        </div>
+      </div>
+      <div class="col-xs-12 col-sm-6">
+        <div class="form-group">
+          <label for="business_occupy">Will this business occupy the subject property?</label>
+          <div class="select-wrap">
+            <select name="businessOccupy" id="business_occupy" required>
+              <option value="" class="hidden">Choose</option>
+              <option <%= application.businessOccupy == 'Yes' ? 'selected' : '' %>>Yes</option>
+              <option <%= application.businessOccupy == 'No' ? 'selected' : '' %>>No</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="col-xs-12 col-sm-6">
+        <div class="form-group">
+          <label for="type_business">Type of Business</label>
+          <div class="select-wrap">
+            <select name="businessType" id="type_business" required>
+              <option value="" class="hidden">Choose</option>
+              <% _.each(businessTypes, function(type) { %>
+              <option <%= type == application.businessType || (!application.businessType && endUser.industryType == type) ? 'selected' : '' %>
+                value="<%= type %>"><%= type %></option>
+              <% }) %>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="col-xs-12">
+        <div class="form-seperator">
+          <div class="row">
+            <div class="row">
+              <div class="col-xs-12 col-sm-2">
+                <div class="tax-info">
+                  <p style="padding-top:10px">Tax Year 1</p>
+                </div>
+              </div>
+              <input type="hidden" value="<%= customData %>">
+              <div class="col-xs-12 col-sm-2">
+                <select name="taxYear1" id="taxYear1" required>
+                </select>
+              </div>
+              <div class="col-xs-12 col-sm-3">
+                <div class="tax-info">
+                  <p style="padding-top:10px">Business Income</p>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-12 col-sm-6">
+                <div class="form-group">
+                  <label for="annual_revenue">Annual Revenues</label>
+                  <input id="annual_revenue" name="taxYear1Revenue" value="<%= application.taxYear1Revenue || '' %>"
+                         type="text" class="form-control" placeholder="$" required>
+                </div>
+              </div>
+              <div class="col-xs-12 col-sm-6">
+                <div class="form-group">
+                  <label for="annual_expenses">Annual Expenses</label>
+                  <input id="annual_expenses" name="taxYear1Expenses" value="<%= application.taxYear1Expenses || '' %>"
+                         type="text" class="form-control" placeholder="$" required>
+                </div>
+              </div>
+              <div class="col-xs-12 col-sm-6">
+                <div class="form-group">
+                  <label for="net_operating">Net Operating Income (A-B)</label>
+                  <input id="net_operating" name="taxYear1NetIncome" value="<%= application.taxYear1NetIncome || '' %>"
+                         type="text" class="form-control" placeholder="$" required readonly="true">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xs-12">
+        <div class="form-seperator">
+          <div class="row">
+            <div class="col-xs-12 col-sm-2">
+              <div class="tax-info">
+                <p style="padding-top:10px">Tax Year 2</p>
+              </div>
+            </div>
+            <div class="col-xs-12 col-sm-2">
+              <select name="taxYear2" id="taxYear2" required>
+
+              </select>
+            </div>
+            <div class="col-xs-12 col-sm-3">
+              <div class="tax-info">
+                <p style="padding-top:10px">Business Income</p>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-12 col-sm-6">
+              <div class="form-group">
+                <label for="annual_revenue_1">Annual Revenues</label>
+                <input id="annual_revenue_1" name="taxYear2Revenue" value="<%= application.taxYear2Revenue || '' %>"
+                       type="text" class="form-control" placeholder="$" required>
+              </div>
+            </div>
+            <div class="col-xs-12 col-sm-6">
+              <div class="form-group">
+                <label for="annual_expenses_2">Annual Expenses</label>
+                <input id="annual_expenses_2" name="taxYear2Expenses" value="<%= application.taxYear2Expenses || '' %>"
+                       type="text" class="form-control" placeholder="$" required>
+              </div>
+            </div>
+            <div class="col-xs-12 col-sm-6">
+              <div class="form-group">
+                <label for="net_operating_2">Net Operating Income (A-B)</label>
+                <input id="net_operating_2" name="taxYear2NetIncome" value="<%= application.taxYear2NetIncome || '' %>"
+                       type="text" class="form-control" placeholder="$" readonly="true" required>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="recalculate-button">
+      <div class="row">
+        <div class="col-xs-12 col-sm-6">
+          <a href="/application/property-info" class="btn btn-outline">Back</a>
+        </div>
+        <div class="col-xs-12 col-sm-6">
+          <input type="hidden" name="progress" value="<%= progress %>"/>
+          <button type="submit" class="btn btn-default">Save and Continue</button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<script>
+  $("#zip_code").mask("99999");
+
+  window.onload = function (e) {
+
+    var year = (new Date()).getFullYear();
+    var years = [year, year - 1, year - 2];
+    var taxYear1 = '<%= application.taxYear1 || '' %>';
+    var taxYear2 = '<%= application.taxYear2 || '' %>';
+    years.forEach(function (year) {
+      if (year == taxYear1) {
+        $("#taxYear1").append($("<option />").val(year).text(year).attr("selected", "selected"));
+      } else {
+        $("#taxYear1").append($("<option />").val(year).text(year));
+      }
+    });
+    years.forEach(function (year) {
+      if (year == taxYear2) {
+        $("#taxYear2").append($("<option />").val(year).text(year).attr("selected", "selected"));
+      } else {
+        $("#taxYear2").append($("<option />").val(year).text(year));
+      }
+    });
+
+    jcf.replaceAll();
+
+
+    $('#annual_revenue, #annual_expenses').change(function () {
+      var annual_revenue = parseFloat($('#annual_revenue').val()) || 0;
+      var annual_expenses = parseFloat($('#annual_expenses').val()) || 0;
+
+      $('#net_operating').val(annual_revenue - annual_expenses);
+    });
+    $('#annual_revenue_1, #annual_expenses_2').change(function () {
+      var annual_revenue_1 = parseFloat($('#annual_revenue_1').val()) || 0;
+      var annual_expenses_2 = parseFloat($('#annual_expenses_2').val()) || 0;
+
+      $('#net_operating_2').val(annual_revenue_1 - annual_expenses_2);
+    });
+
+    $("#businessInfoForm").validate({
+      messages: {
+        businessName: "",
+        address: "",
+        city: "",
+        zipCode: "",
+        yearsAsOwner: "",
+        taxYear1Revenue: "",
+        taxYear1Expenses: "",
+        taxYear1NetIncome: "",
+        taxYear2Revenue: "",
+        taxYear2Expenses: "",
+        taxYear2NetIncome: "",
+      },
+
+      errorPlacement: function (error, element) {
+        if ($(element).is('select')) {
+          element.next().after(error); // special placement for select elements
+        }
+        else if ($(element).is('radio')) {
+          error.insertAfter(element);
+        }
+        else {
+          error.insertAfter(element);  // default placement for everything else
+        }
+      },
+      // Make sure the form is submitted to the destination defined
+      // in the "action" attribute of the form when valid
+      submitHandler: function (form) {
+        form.submit();
+        $("#pleasewait").css('display', 'block');
+      },
+
+    });
+  }
+</script>

@@ -1,0 +1,120 @@
+<main id="main">
+  <div class="inner-banner">
+    <div class="bg-cover">
+      <img src="/images/frontend/img05.jpg" alt="image description">
+    </div>
+    <div class="container text-center">
+      <h1>Pay Fees</h1>
+    </div>
+  </div>
+  <div class="confidence-rate-container text-center">
+    <% if(isShowEmailModal) { %>
+    <span class="approval-rate">Please Enter your email</span>
+    <form id="personalForm" style="max-width: 500px; padding: 10px;"
+          action="/payFees" method="get" class="result-form">
+      <div class="row flex-row">
+        <div class="col-xs-12">
+          <div class="form-group" style="text-align: left">
+            <label for="borrow_entity_other">Email Address</label>
+            <input id="borrow_entity_other" name="email"
+                   type="text" class="form-control">
+          </div>
+        </div>
+      </div>
+      <div class="recalculate-button">
+        <button type="submit" class="btn btn-default">Continue</button>
+      </div>
+    </form>
+
+    <% }else if(error && Object.keys(error).length > 0) { %>
+    <div class="container">
+      <span class="approval-rate"><%= error.message %></span>
+    </div>
+    <% }else{ %>
+    <div class="container">
+      <span class="approval-rate">Please select your preferred payment type</span>
+      <div class="bottom-text">
+        <div class="row">
+          <div class="col-sm-6" id="paypal-button">
+          </div>
+          <div class="col-sm-6">
+            <a href="#" class="btn btn-outline">Chase</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <% } %>
+  </div>
+  </div>
+</main>
+
+<% if(!isShowEmailModal && !(error && Object.keys(error).length > 0)) { %>
+<script src="https://www.paypalobjects.com/api/checkout.js"></script>
+
+<script>
+  var userId = "<%- user ? user.endUser ? user.endUser.id : 0 : 0 %>";
+  paypal.Button.render({
+
+    env: '<%- payPal.mode %>', // Or 'sandbox',
+
+    commit: true, // Show a 'Pay Now' button
+
+    client: {
+      sandbox: '<%- payPal.clientId %>',
+      production: '<%- payPal.clientId %>'
+    },
+
+    style: {
+      label: 'pay', // checkout | credit | pay
+      size: 'medium',    // small | medium | responsive
+      shape: 'pill',     // pill | rect
+      color: 'silver'      // gold | blue | silver
+    },
+
+    payment: function (data, actions) {
+      // Set up the payment here
+      return actions.payment.create({
+        payment: {
+          transactions: [
+            {
+              amount: {total: '<%- feeDetails.payableAmount %>', currency: 'USD'}
+            }
+          ]
+        }
+      });
+    },
+
+    onAuthorize: function (data, actions) {
+      // Execute the payment here
+      return actions.payment.execute().then(function () {
+        console.log(data);
+        $.ajax({
+          url: '/payFees/confirm-paypal',
+          type: 'POST',
+          data: {
+            payment_id: data.paymentID,
+            user_id: userId,
+            amount: '<%- feeDetails.payableAmount %>',
+            fee_id: '<%- feeDetails.id %>'
+          },
+          success: function (response) {
+            if (response.status == 'success') {
+              window.location = '/payFees/success';
+            } else {
+              window.alert('Unable to process payment. Please try again!');
+            }
+          },
+          error: function (err) {
+            window.alert('Unable to process payment. Please try again!');
+          }
+        });
+      });
+    }
+
+  }, '#paypal-button');
+</script>
+<% } %>
+
+
+
+

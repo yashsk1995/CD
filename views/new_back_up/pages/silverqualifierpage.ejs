@@ -1,0 +1,648 @@
+<style>
+.form-input-container .input-container {
+    display: inline-table;
+    width: 68%;
+}
+.calc-input-sub-panels {
+margin-bottom: 5px;
+}
+
+.ltv-notes-container {
+    margin-top: 30px;
+}
+.form-input-container label{
+width: 30%;
+}
+.form-input-container {
+   
+    width: 100%;
+}
+</style>
+<div class="page-container" id="silver_qualifier_page">
+    <div class="page-sub-title">SILVER QUALIFIER MORTGAGE PAYMENT CALCULATOR</div>
+    <div class="page-sub-small-title">CALCULATE YOUR DEAL HERE</div>
+    <div class="page-desc">See which Silver Hill program and options will work best for your client.</div>
+    <div class="calc-step-container">
+        <div class="calc-step-wrap">
+            <div class="calc-step-title">step1</div>
+            <div class="calc-step-content">
+                <!-- <div class="calc-step-sub-title">enter</div> -->
+                <div class="calc-step-desc">Enter your information in the Required and Optional fields.</div>
+            </div>
+        </div>
+        <div class="calc-step-wrap">
+            <div class="calc-step-title">step2</div>
+            <div class="calc-step-content">
+                <!-- <div class="calc-step-sub-title">click</div> -->
+                <div class="calc-step-desc">Click “Calculate Now”</div>
+            </div>
+        </div>
+        <div class="calc-step-wrap">
+            <div class="calc-step-title">step3</div>
+            <div class="calc-step-content">
+                <!-- <div class="calc-step-sub-title">view</div> -->
+                <div class="calc-step-desc">View results displayed below the calculator.</div>
+                <!-- <div class="calc-step-sub-desc">Change any details and click “Calculate Now” again for results. Run as many scenarios as you like.</div> -->
+            </div>
+        </div>
+        <div class="calc-step-wrap">
+            <div class="calc-step-title">step4</div>
+            <div class="calc-step-content">
+                <div class="calc-step-desc">Take note of the option details you prefer – results are not saved, but you can return and run scenarios anytime.</div>
+            </div>
+        </div>
+    </div>
+
+    <%
+    if(typeof params['downloadtermsheet'] == 'undefined'){
+        %>
+		<div class="calc-divided-panel calc-result-panel" style="width:100%;margin-top: 18px;">
+                <%
+                if(errors.length > 0){
+                    %>
+                    <div class="calc-result-alert">
+                        <div class="speech-bubble">
+                            <div class="arrow bottom right"></div>
+                            <%
+                            _.each(errors, function (error) {
+                                %>
+                                <i class="fa fa-times-circle" style="color:red; margin-right: 10px">  </i>
+                                <div style="text-align:left; font-size:15px; color:red; margin-left:20px;display: inline-block; position: relative;top:0px;font-weight: 700;">
+                                    <%=error['message']%>
+                                </div>
+                                <%
+                            })
+                            %>
+                        </div>
+                    </div>
+                    <%
+                } else {
+                if(post_valid && results_30.length == 0 && results_25.length == 0 && results_20.length == 0 && results_15.length == 0){
+                    %>
+                    <div class="calc-result-error">
+                        NO LOANS AVAILABLE
+                    </div>
+                    <%
+                }
+                if(results_30.length > 0){
+                    %>
+                    <div class="calc-result-sub-panel">
+                        <div class="calc-result-sub-panel-header" data-term="30">
+                            <i class="fa fa-plus-circle"></i>Results Based on 30-Year Amortization
+                        </div>
+                        <div class="calc-result-table" style="display:none">
+                            <div class="calc-result-table-right">
+                                <div class="calc-result-table-row calc-result-table-header">
+                                    <div class="calc-result-table-col calc-result-col--select"> Select</div>
+                                    <div class="calc-result-table-col calc-result-col--program"> Program</div>
+                                    <div class="calc-result-table-col calc-result-col--rate"> Rate</div>
+                                    <div class="calc-result-table-col calc-result-col--payment"> Est.mo.Payment</div>
+                                </div>
+                                <%
+                                var resultindex = 0;
+								var state_disp='';
+                                _.each(results_30, function (row) {
+									if(row['loan_program'] != '7/1 ARM'){
+										state_disp=row['state'];
+										if(row['state']=='Tennessee') {
+										 if(row['loan_program'] == '30 Yr Fixed') {
+                                    %>
+									<div class="calc-result-table-row" id="30-year-rate<%=resultindex%>" data-term="30" data-loan_program="<%=row['loan_program']%>" data-rate="<%=row['rate']%>" data-monthly_payment="<%=row['monthly_payment']%>">
+                                        <div class="calc-result-table-col calc-result-col--select"> <input type="radio" id="30-year-rate<%=resultindex%>-target" data-toggle="modal" data-target="#myModal1" name="term-sheet" class="centeredRadio"></div>
+                                        <div class="calc-result-table-col calc-result-col--program"> <%=row['loan_program']%></div>
+                                        <div class="calc-result-table-col calc-result-col--rate"> <%=row['rate']%> </div>
+                                        <div class="calc-result-table-col calc-result-col--payment"> $<%=row['monthly_payment']%></div>
+                                       
+                                    </div>  
+									<% }
+									}else{ %>
+									
+                                    <div class="calc-result-table-row" id="30-year-rate<%=resultindex%>" data-term="30" data-loan_program="<%=row['loan_program']%>" data-rate="<%=row['rate']%>" data-monthly_payment="<%=row['monthly_payment']%>">
+                                        <div class="calc-result-table-col calc-result-col--select"> <input type="radio" id="30-year-rate<%=resultindex%>-target" data-toggle="modal" data-target="#myModal1" name="term-sheet" class="centeredRadio"></div>
+                                        <div class="calc-result-table-col calc-result-col--program"> <%=row['loan_program']%></div>
+                                        <div class="calc-result-table-col calc-result-col--rate"> <%=row['rate']%> </div>
+                                        <div class="calc-result-table-col calc-result-col--payment"> $<%=row['monthly_payment']%></div>
+                                        <%
+                                        if(row['loan_program'] == '30 Year Interest Only'){
+                                            %>
+                                            <div class="calc-result-table-tooltip">
+                                                *Payment amount for the interest-only option applies to the initial 5-year IO term only. Following that period, the loan transitions to a 25-year amortization schedule.
+                                            </div>
+                                            <%
+                                        }
+                                        %>
+                                    </div>    
+                                    <%
+									}
+									}
+                                    resultindex++;
+                                })                            
+                                %>
+                            </div>
+                        </div>
+                    </div>
+					<% 
+						if(state_disp=='Tennessee') {
+					%>
+						<div style="font-size: 15px;font-weight: bold;">All Loans in Tennessee (TN) must be 30 Year Fixed</div>
+					<% } %>	
+                    <!-- calc-result-sub-panel -->
+                    <%
+                }
+                %>
+    
+                <%
+                if(results_25.length > 0){
+                    %>
+                    <div class="calc-result-sub-panel" style="display:none">
+                        <div class="calc-result-sub-panel-header" data-term="25">
+                            <i class="fa fa-plus-circle"></i>25 Year
+                        </div>
+                        <div class="calc-result-table" style="display:none">
+                            <div class="calc-result-table-right">
+                                <div class="calc-result-table-row calc-result-table-header">
+                                    <div class="calc-result-table-col calc-result-col--select"> Select</div>
+                                    <div class="calc-result-table-col calc-result-col--program"> Program</div>
+                                    <div class="calc-result-table-col calc-result-col--rate"> Rate</div>
+                                    <div class="calc-result-table-col calc-result-col--payment"> Est.mo.Payment</div>
+                                </div>
+                                <%
+                                _.each(results_25, function (row) {
+                                    if(row['loan_program'] != '30 Yr Fixed' && row['loan_program'] != '30 Year Interest Only'){
+                                    %>
+                                    <div class="calc-result-table-row" id="25-year-rate<%=resultindex%>" data-term="25" data-loan_program="<%=row['loan_program']%>" data-rate="<%=row['rate']%>" data-monthly_payment="<%=row['monthly_payment']%>">
+                                        <div class="calc-result-table-col calc-result-col--select"> <input type="radio" id="30-year-rate0-target" data-toggle="modal" data-target="#myModal1" name="term-sheet" class="centeredRadio"></div>
+                                        <div class="calc-result-table-col calc-result-col--program"> <%=row['loan_program']%></div>
+                                        <div class="calc-result-table-col calc-result-col--rate"> <%=row['rate']%> </div>
+                                        <div class="calc-result-table-col calc-result-col--payment"> $<%=row['monthly_payment']%></div>
+                                    </div>    
+                                    <%
+                                    }
+                                })
+                                %>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- calc-result-sub-panel -->
+                    <%
+                }
+                %>
+    
+                <%
+                if(results_20.length > 0){
+                    %>
+                    <div class="calc-result-sub-panel" style="display:none">
+                        <div class="calc-result-sub-panel-header" data-term="20">
+                            <i class="fa fa-plus-circle"></i>20 Year
+                        </div>
+                        <div class="calc-result-table" style="display:none">
+                            <div class="calc-result-table-right">
+                                <div class="calc-result-table-row calc-result-table-header">
+                                    <div class="calc-result-table-col calc-result-col--select"> Select</div>
+                                    <div class="calc-result-table-col calc-result-col--program"> Program</div>
+                                    <div class="calc-result-table-col calc-result-col--rate"> Rate</div>
+                                    <div class="calc-result-table-col calc-result-col--payment"> Est.mo.Payment</div>
+                                </div>
+                                <%
+                                _.each(results_20, function (row) {
+                                    if(row['loan_program'] != '30 Yr Fixed' && row['loan_program'] != '30 Year Interest Only'){
+                                    %>
+                                    <div class="calc-result-table-row" id="20-year-rate<%=resultindex%>" data-term="20" data-loan_program="<%=row['loan_program']%>" data-rate="<%=row['rate']%>" data-monthly_payment="<%=row['monthly_payment']%>">
+                                        <div class="calc-result-table-col calc-result-col--select"> <input type="radio" id="30-year-rate0-target" data-toggle="modal" data-target="#myModal1" name="term-sheet" class="centeredRadio"></div>
+                                        <div class="calc-result-table-col calc-result-col--program"> <%=row['loan_program']%></div>
+                                        <div class="calc-result-table-col calc-result-col--rate"> <%=row['rate']%> </div>
+                                        <div class="calc-result-table-col calc-result-col--payment"> $<%=row['monthly_payment']%></div>
+                                    </div>    
+                                    <%
+                                    }
+                                })
+                                %>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- calc-result-sub-panel -->
+                    <%
+                }
+                %>
+    
+                <%
+                if(results_15.length > 0){
+                    %>
+                    <div class="calc-result-sub-panel">
+                        <div class="calc-result-sub-panel-header" data-term="15">
+                            <i class="fa fa-plus-circle"></i>15 Year
+                        </div>
+                        <div class="calc-result-table" style="display:none">
+                            <div class="calc-result-table-right">
+                                <div class="calc-result-table-row calc-result-table-header">
+                                    <div class="calc-result-table-col calc-result-col--select"> Select</div>
+                                    <div class="calc-result-table-col calc-result-col--program"> Program</div>
+                                    <div class="calc-result-table-col calc-result-col--rate"> Rate</div>
+                                    <div class="calc-result-table-col calc-result-col--payment"> Est.mo.Payment</div>
+                                </div>
+                                <%
+                                _.each(results_15, function (row) {
+                                    %>
+                                    <div class="calc-result-table-row" id="15-year-rate<%=resultindex%>" data-term="15" data-loan_program="<%=row['loan_program']%>" data-rate="<%=row['rate']%>" data-monthly_payment="<%=row['monthly_payment']%>">
+                                        <div class="calc-result-table-col calc-result-col--select"> <input type="radio" id="30-year-rate0-target" data-toggle="modal" data-target="#myModal1" name="term-sheet" class="centeredRadio"></div>
+                                        <div class="calc-result-table-col calc-result-col--program"> <%=row['loan_program']%></div>
+                                        <div class="calc-result-table-col calc-result-col--rate"> <%=row['rate']%> </div>
+                                        <div class="calc-result-table-col calc-result-col--payment"> $<%=row['monthly_payment']%></div>
+                                    </div>    
+                                    <%
+                                })
+                                %>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- calc-result-sub-panel -->
+                    <%
+                } }
+                %>
+            </div>
+        <div class="calc-panel">
+            <div class="calc-divided-panel calc-input-panel" style="width:100%;">
+                <form id="mortgage-calculator-form" name="calc" action="/silver-qualifier" method="post" novalidate="novalidate">
+					<div class="left-side-calc" style="width: 45%;display: inline-table; margin-right:4%;">
+                    <div class="calc-panel-part-title">required</div>
+                    <div class="calc-input-sub-panels">
+                        <div class="calc-input-sub-panel sub-panel--left">
+                            <div class="calc-input-notes">Loan Amount<br>(Between $100K and $2MM)</div>
+                            
+                            
+                            
+                        </div>
+                        <div class="calc-input-sub-panel sub-panel--right">
+                            <div class="ltv-notes-container">
+                                <div class="ltv-note-title">LTV</div>
+                                <div class="ltv-note-content"><span class="ltvText"><%=values['ltv']%></span></div>
+                            </div>
+                        </div>
+                    </div>
+					<div class="form-input-container">
+                                <div class="input-container has--inner-error" style="width:100%">
+                                    <input type="text" name="loan_amount" value="<%=params['loan_amount']%>" min="<%=rateAdjustments['min_loan_amount']%>" max="<%=rateAdjustments['max_loan_amount']%>">
+                                </div>
+                            </div>
+                    <div class="form-input-container" style="display: none">
+                        <label>Interest Only </label>
+                        <div class="input-container input-container--select">
+                            <select class="selectSpacer" name="interest_only" id="interest_only" required="" aria-required="true">
+                                <option value="">-- Select --</option>
+                                <option value="Yes" <%=params['interest_only']=='Yes'?'selected':'' %> >Yes</option>
+                                <option value="No" <%=params['interest_only']=='No'?'selected':'' %> >No</option>
+                            </select>
+                        </div>
+                    </div>
+					<div class="form-input-container">
+                                <label>Property Value</label>
+                                <div class="input-container">
+                                    <input type="text" name="property_value" value="<%=params['property_value']%>" min="0">
+                                </div>
+                            </div>
+                    <div class="form-input-container">
+                        <label>Property Type</label>
+                        <div class="input-container input-container--select">
+                            <select class="selectSpacer" name="property_type" id="property_type" required="" aria-required="true">
+                                <option value="" data-tier="">-- Select --</option>
+                                <% var property_types = lists['property_type'];
+                                    if(property_types && property_types.length != 0){
+                                    _.each(property_types, function (property_type) { %>
+                                        <option value="<%=property_type['property_type']%>" <%=params['property_type']==property_type['property_type']?'selected':'' %> data-tier="<%=property_type['tier']%>"><%=property_type['property_type']%></option>
+                                    <% })
+                                    }
+                                %>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-input-container">
+                        <label>Occupancy</label>
+                        <div class="input-container input-container--select">
+                            <select class="selectSpacer" name="occupancy" required="" aria-required="true">
+                                <option value="">-- Select --</option>
+                                <% var occupancys = lists['occupancy'];
+                                    if(occupancys && occupancys.length != 0){
+                                    _.each(occupancys, function (occupancy) { %>
+                                        <option value="<%=occupancy['occupancy']%>" <%=params['occupancy']==occupancy['occupancy']?'selected':'' %> ><%=occupancy['occupancy']%></option>
+                                    <% })
+                                    }
+                                %>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-input-container">
+                        <label>Documentation</label>
+                        <div class="input-container input-container--select">
+                            <select class="selectSpacer" name="documentation" required="" aria-required="true">
+                                <option value="">-- Select --</option>
+                                <% var documentations = lists['documentation'];
+                                    if(documentations && documentations.length != 0){
+                                    _.each(documentations, function (documentation) { %>
+                                        <option value="<%=documentation['documentation']%>" <%=params['documentation']==documentation['documentation']?'selected':'' %> ><%=documentation['documentation']%></option>
+                                    <% })
+                                    }
+                                %>
+                                <option value="No Doc" <%=params['documentation']=='No Doc'?'selected':'' %> >No Doc</option>
+                            </select>
+                        </div>
+                    </div>
+    
+                    <div class="form-input-container">
+                        <label>Property State</label>
+                        <div class="input-container input-container--select">
+                            <select class="selectSpacer" name="state" required="" aria-required="true">
+                                <% var states = lists['states'];
+                                if(states && states.length != 0){
+                                _.each(states, function (state) { %>
+                                    <option value="<%=state['state']%>" <%=params['state']==state['state']?'selected':'' %> ><%=state['state']%></option>
+                                <% })
+                                }
+                                %>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-input-container">
+                        <label>Average Middle Credit Score</label>
+                        <div class="input-container input-container--select">
+                            <select class="selectSpacer" name="credit_score_range" required="" aria-required="true">
+                                <% var credits = lists['credit'];
+                                if(credits && credits.length != 0){
+                                    _.each(credits, function (credit) { 
+                                        if(credit['in_list'] == 'true'){
+                                            %>
+                                            <option value="<%=credit['display']%>" <%=params['credit_score_range']==credit['display']?'selected':'' %> ><%=credit['display']%></option>
+                                            <%
+                                        }
+                                    })
+                                }
+                                %>
+                            </select>
+                        </div>
+                    </div>
+    
+                    <div class="form-input-container">
+                        <label>Purpose</label>
+                        <div class="input-container input-container--select">
+                            <select class="selectSpacer" name="purpose" required="" aria-required="true">
+                                <% var purposes = lists['purpose'];
+                                if(purposes && purposes.length != 0){
+                                _.each(purposes, function (purpose) { %>
+                                    <option value="<%=purpose['purpose']%>" <%=params['purpose']==purpose['purpose']?'selected':'' %> ><%=purpose['purpose']%></option>
+                                <% })
+                                }
+                                %>
+                            </select>
+                        </div>
+                    </div>
+					</div>
+					<div class="right-side-calc" style="width: 45%;display: inline-table;margin-left:4%;">
+                    <div class="calc-panel-part-title">OPTIONAL FIELDS</div>
+    
+                    <div class="form-input-container">
+                        <label>YSP</label>
+                        <div class="input-container input-container--select">
+                            <select class="selectSpacer" name="ysp">
+                                <% var ysps = lists['ysp'];
+                                if(ysps && ysps.length != 0){
+                                _.each(ysps, function (ysp) { %>
+                                    <option data-rate-change-value="<%=parseFloat(ysp['ysp'])%>" value="<%=ysp['ysp']%>" <%=params['ysp']==ysp['ysp']?'selected':'' %> ><%=ysp['ysp']%></option>
+                                <% })
+                                }
+                                %>
+                            </select>
+                        </div>
+                        <div class="input-below-label">Not available when Rate Buydown selected</div>
+                    </div>
+                    
+                    <div class="form-input-container">
+                        <label>Rate Buydown</label>
+                        <div class="input-container input-container--select">
+                            <select class="selectSpacer" name="rate_buydown">
+                                <% var rate_buydowns = lists['rate_buydown'];
+                                if(rate_buydowns && rate_buydowns.length != 0){
+                                _.each(rate_buydowns, function (rate_buydown) { %>
+                                    <option value="<%=rate_buydown['rate_buydown']%>" <%=params['rate_buydown']==rate_buydown['rate_buydown']?'selected':'' %> ><%=rate_buydown['rate_buydown']%></option>
+                                <% })
+                                }
+                                %>
+                            </select>
+                        </div>
+                        <div class="input-below-label">Not available when Rate YSP selected</div>
+                    </div>
+    
+                    <div class="form-input-container">
+                        <label>Prepay</label>
+                        <div class="input-container input-container--select">
+                            <select class="selectSpacer" name="prepay_buydown1">
+                                
+                                <% var prepays = lists['prepay'];
+                                if(prepays && prepays.length != 0){
+                                _.each(prepays, function (prepay) { %>
+                                    <option value="<%=prepay['prepay']%>" <%=params['prepay_buydown1']==prepay['prepay']?'selected':'' %> ><%=prepay['prepay']%></option>
+                                <% })
+                                }
+                                %>
+                                
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="calc-input-btn-container">
+                        <input type="submit" class="calc-input-submit-btn" value="Calculate Now"></input>
+                    </div>
+					</div>
+                </form>
+            </div>
+            <!-- calc-input-panel -->
+            
+            <!-- calc-result-panel -->
+        </div>
+        <!-- calc-panel -->
+        <%
+    }
+    else {
+        %>
+        <div class="loanterm-result-panel">
+                <!-- loanterm-result-background.jpg -->
+            <div class="loanterm-result-label">loan term sheet</div>
+            <div class="loanterm-result-desc">This term sheet is a basic outline of the terms and conditions currently being considered based on the initial information provided. This is not a commitment to lend, but merely an expression of our interest in providing the aforementioned financing request. The terms and conditions are subject to change in whole or in part at any time during the process including and up to the time that our due diligence, credit analysis and underwriting is complete.</div>
+            <div class="loanterm-head-info">
+                <div class=""><strong>Borrower(s):</strong><%=params['borrower'] ? params['borrower'] : ''%></div>
+                <div class=""><strong>Guarantor(s):</strong><%=params['guarantor'] ? params['guarantor'] : ''%></div>
+            </div>
+            <div class="loanterm-table">
+                <div class="loanterm-table-row">
+                    <div class="loanterm-table-col">Property Address (collateral)</div>
+                    <div class="loanterm-table-col"><%=params['propertyaddress'] ? params['propertyaddress'] : '' %></div>
+                </div>
+                <div class="loanterm-table-row">
+                    <div class="loanterm-table-col">Loan Amount</div>
+                    <div class="loanterm-table-col"><%=params['loan_amount'] ? params['loan_amount'] : '' %></div>
+                </div>
+                <div class="loanterm-table-row">
+                    <div class="loanterm-table-col">LTV %</div>
+                    <div class="loanterm-table-col"><%=params['ltv'] ? params['ltv'] : ''%></div>
+                </div>
+                <div class="loanterm-table-row">
+                    <div class="loanterm-table-col">Loan Purpose</div>
+                    <div class="loanterm-table-col"><%=params['purpose'] ? params['purpose'] : ''%></div>
+                </div>
+                <div class="loanterm-table-row">
+                    <div class="loanterm-table-col">Term</div>
+                    <div class="loanterm-table-col"><%=params['programe'] ? params['programe'] : ''%></div>
+                </div>
+                <div class="loanterm-table-row">
+                    <div class="loanterm-table-col">Amortization</div>
+                    <div class="loanterm-table-col"><%=params['term'] ? params['term'] : ''%></div>
+                </div>
+                <div class="loanterm-table-row">
+                    <div class="loanterm-table-col">Interest Rate</div>
+                    <div class="loanterm-table-col"><%=params['rate'] ? params['rate'] : ''%></div>
+                </div>
+                <div class="loanterm-table-row">
+                    <div class="loanterm-table-col">Estimated Monthly Payment (P&I payment)</div>
+                    <div class="loanterm-table-col">$ <%=params['est'] ? params['est'] : ''%></div>
+                </div>
+                <div class="loanterm-table-row">
+                    <div class="loanterm-table-col">Broker Fee</div>
+                    <div class="loanterm-table-col">$ <%=params['brokerfee'] ? params['brokerfee'] : ''%></div>
+                </div>
+                <div class="loanterm-table-row">
+                    <div class="loanterm-table-col">Rate Buy Down Points</div>
+                    <div class="loanterm-table-col"><%=params['rate_buydown'] ? params['rate_buydown'] : ''%></div>
+                </div>
+                <div class="loanterm-table-row">
+                    <div class="loanterm-table-col">Prepay</div>
+                    <div class="loanterm-table-col"><%=params['prepay_buydown'] ? params['prepay_buydown'] : ''%></div>
+                </div>
+            </div>
+            <div class="loanterm-result-desc">
+                Again, this is a term sheet and not a commitment to lend. These terms and conditions are subject to change. Please note that this outline does not contain all of the terms, conditions, fees and other provisions involved in this transaction that would be more fully described in the definitive legal document(s) for the proposed transaction.<br><br>
+                Should you wish to request Silver Hill Funding to proceed with issuing a formal Letter of Intent under the general terms and conditions outlined herein in this non-binding term sheet, please submit the underwriting documents requested on the following page within seven (7) calendar days of the effective date of this letter.<br><br>
+                By submitting the documents below I/we desire to proceed with this transaction to obtain a Letter of Intent for pre-approved terms. I/we understand that I/we must provide additional documentation and information within the prescribed timelines.<br><br>
+                To begin the processing of your loan application, submit the following documents:<br><br>
+                <ul>
+                    <li>Fully completed and signed application. Find our loan application here <a target="_blank" href="https://silverhillfunding.com/wp-content/uploads/2019/07/SHF-Loan-Application-V12-6.pdf">https://goo.gl/ExCMPM</a></li>
+                    <li>Tri-Merge Credit Report dated within 60 days of submission.</li>
+                    <li>If Purchase, fully executed Purchase and Sale Contract with all Amendments, Schedules, and Signatures.</li>
+                </ul>
+            </div>
+            <div class="loanterm-footer">
+                <strong>
+                    Sincerely,<br><br><br>
+
+                    Silver Hill Funding<br>
+                    4425 Ponce De Leon Blvd. Ste. 250<br>
+                    Coral Gables, FL 33146<br>
+                    Telephone: 877-857-2652<br>
+                    Email: info@silverhillfunding.com<br>
+                    Web: www.silverhillfunding.com<br>
+                </strong>
+            </div>
+            <div class="loanterm-form-btn-container">
+                <a class="loanterm-form-btn" target="_blank" href='/downloadtermsheet?filename=<%=params["pdfilename"]%>&filepath=<%=params["pdfilepath"]%>'><i class="fa fa-download"></i>Download Loan Term Sheet</a>
+                <!-- <span class="loanterm-form-btn" data-filename="<%=params['pdfilename'] ? params['pdfilename'] : ''%>" id="loan_term_download_btn"><i class="fa fa-download"></i>Download Loan Term Sheet</span> -->
+                <a class="loanterm-form-btn" id="loan_term_reload_btn1" href="/silver-qualifier"><i class="fa fa-repeat"></i>Calculate Again</a>
+            </div>
+        </div>
+        <%
+    }
+    %>
+    
+    <div class="calc-notes">
+        Contact your relationship manager to discuss bulk residential (multiple 2+ unit) scenarios.<br><br>
+        Results of this calculator and any generated term sheets are intended for estimation only. This is not an approval or commitment to lend and only intended to provide a broad estimation. Actual payments and interest rates will be calculated by Silver Hill after submission of a loan application and all other required documentation. Silver Hill Funding programs are offered to qualified commercial lending institutions and are not applicable to the general public and/or individual consumers. This information is for lending institutions only, and not intended for use by individual consumers or borrowers. Programs may be cancelled or modified at any time without prior notice. Programs may not be available in all jurisdictions. These materials are intended to provide general information to the reader.
+    </div>
+</div>
+<div id="myModal" class="modal fade estimatepopup" data-keyboard="false"
+    data-backdrop="static" style="top:100px;" role="dialog">
+    <div class="modal-dialog">
+        <!-- <form id="mortgage-calculator-term-sheet-form" action="" -->
+            <!-- method="post" name="term-sheet" style="margin-bottom: 0;"> -->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Select an option to generate a term sheet.</h4>
+                </div>
+                <div class="modal-body">
+                    <p style="text-align:center"> <strong>Complete this form to generate a term sheet with your selected options.</strong></p>
+                    <br/>
+                    <div class="form-group" style="clear:both;">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">  Property Address <span class="required">*</span></label>
+                        <div class="col-md-9 col-sm-6 col-xs-12" style="margin-bottom:10px">
+                            <textarea style="resize:none" class="form-control col-md-7 col-xs-12"
+                                id="details" name="propertyaddress"></textarea>
+                        </div>
+                    </div>
+
+                    <p>&nbsp; </p>
+
+                    <input type="hidden" name="calcsubmit_id" value="<%=calcsubmit_id%>">
+
+                    <div class="form-group" style="clear:both;">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">   Borrower <span class="required">*</span></label>
+                        <div class="col-md-9 col-sm-6 col-xs-12" style="margin-bottom:10px">
+                            <input type="text" class="form-control col-md-7 col-xs-12" name="borrower" value="<%=values['borrower']%>">
+                        </div>
+                    </div>
+
+                    <p>&nbsp; </p>
+
+                    <div class="form-group" style="clear:both;">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">   Guarantor</label>
+                        <div class="col-md-9 col-sm-6 col-xs-12" style="margin-bottom:10px">
+                            <input type="text" class="form-control col-md-7 col-xs-12" name="guarantor" value="<%=values['guarantor']%>">
+                        </div>
+                    </div>
+
+                    <p>&nbsp; </p>
+
+                    <div class="form-group" style="clear:both;">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">   Broker Fee <span class="required">*</span></label>
+                        
+                        <div class="col-md-9 col-sm-6 col-xs-12" style="margin-bottom:10px;position: relative;">
+                            <div style="position: absolute; left: -10px"> $ </div>
+                            <input type="text" style=""
+                                class="form-control col-md-7 col-xs-12 brokerfee"
+                                name="brokerfee" onkeypress=""
+                                ondrop="return false;" onpaste="return false;"
+                                value="">
+                        </div>
+                    </div>
+
+                    <p>&nbsp; </p>
+
+                    <!-- <input type="hidden" name="loan_amount" value="<%=values['loan_amount']%>" />
+                    <input type="hidden" name="property_value" value="<%=values['property_value']%>" />
+                    <input type="hidden" name="property_type" value="<%=values['property_type']%>" />
+                    <input type="hidden" name="occupancy" value="<%=values['occupancy']%>" />
+                    <input type="hidden" name="documentation" value="<%=values['documentation']%>" />
+                    <input type="hidden" name="state" value="<%=values['state']%>" />
+                    <input type="hidden" name="credit_score_range" value="<%=values['credit_score_range']%>" />
+                    <input type="hidden" name="purpose" value="<%=values['purpose']%>" />
+                    <input type="hidden" name="ysp" value="<%=values['ysp']%>" />
+                    <input type="hidden" name="rate_buydown" value="<%=values['rate_buydown']%>" />
+                    <input type="hidden" name="prepay_buydown" value="<%=values['prepay_buydown']%>" />
+
+                    <input type="hidden" name="bvmc_term_sheet_nonce" value="" />
+                    <input type="hidden" name="action" value="term-sheet" />
+                    <input type="hidden" name="last_submit_id" value="" />
+                    <input type="hidden" id="programe" name="programe" value="">
+                    <input type="hidden" id="rate" name="rate" value="">
+                    <input type="hidden" id="month" name="est" value="">
+                    <input type="hidden" id="term" name="term" value="">
+                    <input type="hidden" value="" name="pdfname"> -->
+
+                    <div class="form-group" style="clear:both; text-align:center;">
+                        <button type="button" class="btn btn-success" id="download_term_sheet_btn"
+                            name="termSheetSubmit">Download Term Sheet</button>
+                        <p><strong>A customized term sheet will download to your device.</strong></p>
+                    </div>
+                </div>
+            </div>
+        <!-- </form> -->
+    </div>
+</div>

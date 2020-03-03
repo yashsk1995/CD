@@ -1,0 +1,87 @@
+<main id="main">
+  <div class="inner-banner">
+    <div class="bg-cover">
+      <img src="/images/frontend/img03.jpg" alt="image description">
+    </div>
+    <div class="container text-center">
+      <h1>Frequently <br>Asked Questions</h1>
+    </div>
+  </div>
+  <div class="container">
+    <ol class="breadcrumb">
+      <li><a href="/learn" nav-link>Learn</a></li>
+      <li class="active">FAQ</li>
+    </ol>
+    <div class="row">
+      <div class="col-sm-6 hidden-xs">
+        <ul class="question-lists tabset">
+          <% _.each(faqs, function(faq) { %>
+          <li><a href="#<%= faq.id %>" id="id<%= faq.id %>"><%= faq.question %></a></li>
+          <% }) %>
+        </ul>
+      </div>
+      <div class="col-sm-6">
+        <div class="faq-answer-box tab-content accordion">
+
+          <% _.each(faqs, function(faq) { %>
+          <div id="<%= faq.id %>" class="active">
+            <h2 class="opener"><%= faq.question %></h2>
+            <div class="slide">
+              <%- faq.answer %>
+              <div class="feedback-box">
+                <span>Was that helpful?</span><a href="javascript:saveFeedback(true, '<%= +faq.id %>')"><i
+                    class="icon-like"></i></a><a href="javascript:saveFeedback(false, '<%= +faq.id %>')"><i
+                    class="icon-dislike"></i></a>
+              </div>
+            </div>
+          </div>
+
+          <% }) %>
+        </div>
+
+        <form action="#" class="newsletter-subscribe-form">
+          <strong class="form-title">Subscribe to our newsletter &amp; webinars</strong>
+          <label for="email">Your Email</label>
+          <div class="input-wrap">
+            <input type="email" id="email" class="form-control" placeholder="customer@email.com">
+            <button class="btn btn-default" type="submit">Subscribe</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</main>
+
+
+<script>
+   window.onload = function (e) {
+    $(function () {
+      if(window.location.hash) {
+      var hash = window.location.hash.substring(1); //Puts hash in variable, and removes the # character
+        var el = 'id'+hash;
+        document.getElementById(el).click();
+      }
+    });
+   }
+
+
+
+  function saveFeedback(helpful, faqId) {
+    $.ajax({
+      url: '/faq/feedback',
+      type: 'POST',
+      data: {
+        helpful: helpful,
+        faqId: faqId
+      },
+      success: function (response) {
+        console.log("SUCCESS", response);
+      },
+      error: function (err) {
+        console.log("ERROR", err);
+      }
+    });
+  }
+
+</script>
+

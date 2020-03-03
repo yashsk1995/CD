@@ -1,0 +1,30 @@
+<main id="main">
+  <div class="inner-banner">
+    <div class="bg-cover">
+      <img src="/images/frontend/img26.jpg" alt="image description">
+    </div>
+    <div class="container text-center">
+      <h1>Search Results for <%= searchString %></h1>
+    </div>
+  </div>
+  <div class="container">
+    <ol class="breadcrumb">
+      <li><a href="/learn" nav-link> Learn </a></li>
+      <li class="active">Search Results</li>
+    </ol>
+  </div>
+  <div class="container">
+    <div class="blog-list-container">
+      <div class="text-holder">
+        <div class="blog-post-lists">
+          <% _.each(searchResults, function(searchResult) { %>
+          <div class="blog-post-item">
+            <h2><a href="<%= searchResult.url %>" nav-link><%= searchResult.title %></a></h2>
+          </div>
+          <% }) %>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</main>

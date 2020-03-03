@@ -1,0 +1,641 @@
+
+<h1 class="page-title">Lists</h1>
+<div class="options-container" id="lists_section">
+  <div class="option-wrap">
+    <div class="option-title">Loan Term</div>
+    <div class="option-val-table">
+      <div class="rate-adjustment-btn-container">
+        <span class="btn btn-outline lists_option_add_btn" key="loan_term">Add</span>
+      </div>
+      <table class="options-table">
+        <thead>
+          <tr>
+            <th>Display</th>
+            <th>Years Before First Rate Adjustments</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="lists_loan_term_tbl">
+          <% var loan_terms = lists['loan_term'];
+          if(loan_terms && loan_terms.length != 0){
+            _.each(loan_terms, function (loan_term) { %>
+              <tr>
+                <td>
+                    <input type="text" name="display" value="<%=loan_term['display']%>">
+                </td>
+                <td>
+                    <input type="number" name="years" value="<%=loan_term['years']%>">
+                </td>
+                <td>
+                  <span class="lists-loan-term-remove-btn remove-btn remove">remove</span>
+                </td>
+              </tr>
+            <% })
+          }
+          %>
+        </tbody>
+      </table>
+    </div>
+    <div style="display: none">
+      <table>
+        <tbody id="lists_loan_term_tbl_row_template">
+          <tr>
+            <td>
+                <input type="text" name="display" value="">
+            </td>
+            <td>
+                <input type="number" name="years" value="">
+            </td>
+            <td>
+              <span class="lists-loan-term-remove-btn remove-btn remove">remove</span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <!-- option-wrap -->
+
+  <div class="option-wrap">
+    <div class="option-title">ATM Term</div>
+    <div class="option-val-table">
+      <div class="rate-adjustment-btn-container">
+        <span class="btn btn-outline lists_option_add_btn" key="atm_term">Add</span>
+      </div>
+      <table class="options-table">
+        <thead>
+          <tr>
+            <th>ATM Term</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="lists_atm_term_tbl">
+            <% var atm_terms = lists['atm_term'];
+            if(atm_terms && atm_terms.length != 0){
+              _.each(atm_terms, function (atm_term) { %>
+                <tr>
+                  <td>
+                      <input type="text" name="atm_term" value="<%=atm_term['atm_term']%>">
+                  </td>
+                  <td>
+                    <span class="lists-atm-term-remove-btn remove-btn remove">remove</span>
+                  </td>
+                </tr>
+              <% })
+            }
+            %>
+        </tbody>
+      </table>
+    </div>
+    <div style="display: none">
+      <table>
+        <tbody id="lists_atm_term_tbl_row_template">
+          <tr>
+            <td>
+                <input type="text" name="atm_term" value="">
+            </td>
+            <td>
+              <span class="lists-atm-term-remove-btn remove-btn remove">remove</span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <!-- option-wrap -->
+
+  <div class="option-wrap">
+      <div class="option-title">Tier</div>
+      <div class="option-val-table">
+        <div class="rate-adjustment-btn-container">
+          <span class="btn btn-outline lists_option_add_btn" key="tier">Add</span>
+        </div>
+        <table class="options-table">
+          <thead>
+            <tr>
+              <th>Tier</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="lists_tier_tbl">
+              <% var tiers = lists['tier'];
+              if(tiers && tiers.length != 0){
+                _.each(tiers, function (tier) { %>
+                  <tr>
+                    <td>
+                        <input type="text" name="tier" value="<%=tier['tier']%>">
+                    </td>
+                    <td>
+                      <span class="lists-tier-remove-btn remove-btn remove">remove</span>
+                    </td>
+                  </tr>
+                <% })
+              }
+              %>
+          </tbody>
+        </table>
+      </div>
+      <div style="display: none">
+        <table>
+          <tbody id="lists_tier_tbl_row_template">
+            <tr>
+              <td>
+                  <input type="text" name="tier" value="">
+              </td>
+              <td>
+                <span class="lists-tier-remove-btn remove-btn remove">remove</span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <!-- option-wrap -->
+  
+    <div class="option-wrap">
+      <div class="option-title">Property Type</div>
+      <div class="option-val-table">
+        <div class="rate-adjustment-btn-container">
+          <span class="btn btn-outline lists_option_add_btn" key="property_type">Add</span>
+        </div>
+        <table class="options-table">
+          <thead>
+            <tr>
+              <th>Tier</th>
+              <th>Property Type</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="lists_property_type_tbl">
+              <% var property_types = lists['property_type'];
+              if(property_types && property_types.length != 0){
+                _.each(property_types, function (property_type) { %>
+                  <tr>
+                    <td>
+                      <select name="tier">
+                        <option value=""></option>
+                        <% var tiers = lists['tier'];
+                        if(tiers && tiers.length != 0){
+                          _.each(tiers, function (tier) { %>
+                            <option value="<%=tier['tier']%>" <%=property_type['tier']==tier['tier']?'selected':'' %> ><%=tier['tier']%></option>
+                          <% })
+                        }
+                        %>
+                      </select>
+                    </td>
+                    <td>
+                        <input type="text" name="property_type" value="<%=property_type['property_type']%>">
+                    </td>
+                    <td>
+                      <span class="lists-property-type-remove-btn remove-btn remove">remove</span>
+                    </td>
+                  </tr>
+                <% })
+              }
+              %>
+          </tbody>
+        </table>
+      </div>
+      <div style="display: none">
+        <table>
+          <tbody id="lists_property_type_tbl_row_template">
+            <tr>
+              <td>
+                <select name="tier">
+                  <option value=""></option>
+                  <% var tiers = lists['tier'];
+                  if(tiers && tiers.length != 0){
+                    _.each(tiers, function (tier) { %>
+                      <option value="<%=tier['tier']%>"><%=tier['tier']%></option>
+                    <% })
+                  }
+                  %>
+                </select>
+              </td>
+              <td>
+                  <input type="text" name="property_type" value="">
+              </td>
+              <td>
+                <span class="lists-property-type-remove-btn remove-btn remove">remove</span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <!-- option-wrap -->
+
+    <div class="option-wrap">
+      <div class="option-title">Occupancy</div>
+      <div class="option-val-table">
+        <div class="rate-adjustment-btn-container">
+          <span class="btn btn-outline lists_option_add_btn" key="occupancy">Add</span>
+        </div>
+        <table class="options-table">
+          <thead>
+            <tr>
+              <th>Occupancy</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="lists_occupancy_tbl">
+              <% var occupancys = lists['occupancy'];
+              if(occupancys && occupancys.length != 0){
+                _.each(occupancys, function (occupancy) { %>
+                  <tr>
+                    <td>
+                        <input type="text" name="occupancy" value="<%=occupancy['occupancy']%>">
+                    </td>
+                    <td>
+                      <span class="lists-occupancy-remove-btn remove-btn remove">remove</span>
+                    </td>
+                  </tr>
+                <% })
+              }
+              %>
+          </tbody>
+        </table>
+      </div>
+      <div style="display: none">
+        <table>
+          <tbody id="lists_occupancy_tbl_row_template">
+            <tr>
+              <td>
+                  <input type="text" name="occupancy" value="">
+              </td>
+              <td>
+                <span class="lists-occupancy-remove-btn remove-btn remove">remove</span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <!-- option-wrap -->
+
+    <div class="option-wrap">
+      <div class="option-title">Documentation</div>
+      <div class="option-val-table">
+        <div class="rate-adjustment-btn-container">
+          <span class="btn btn-outline lists_option_add_btn" key="documentation">Add</span>
+        </div>
+        <table class="options-table">
+          <thead>
+            <tr>
+              <th>Documentation</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="lists_documentation_tbl">
+              <% var documentations = lists['documentation'];
+              if(documentations && documentations.length != 0){
+                _.each(documentations, function (documentation) { %>
+                  <tr>
+                    <td>
+                        <input type="text" name="documentation" value="<%=documentation['documentation']%>">
+                    </td>
+                    <td>
+                      <span class="lists-documentation-remove-btn remove-btn remove">remove</span>
+                    </td>
+                  </tr>
+                <% })
+              }
+              %>
+          </tbody>
+        </table>
+      </div>
+      <div style="display: none">
+        <table>
+          <tbody id="lists_documentation_tbl_row_template">
+            <tr>
+              <td>
+                  <input type="text" name="documentation" value="">
+              </td>
+              <td>
+                <span class="lists-documentation-remove-btn remove-btn remove">remove</span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <!-- option-wrap -->
+
+    <div class="option-wrap">
+      <div class="option-title">Purpose</div>
+      <div class="option-val-table">
+        <div class="rate-adjustment-btn-container">
+          <span class="btn btn-outline lists_option_add_btn" key="purpose">Add</span>
+        </div>
+        <table class="options-table">
+          <thead>
+            <tr>
+              <th>Purpose</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="lists_purpose_tbl">
+              <% var purposes = lists['purpose'];
+              if(purposes && purposes.length != 0){
+                _.each(purposes, function (purpose) { %>
+                  <tr>
+                    <td>
+                        <input type="text" name="purpose" value="<%=purpose['purpose']%>">
+                    </td>
+                    <td>
+                      <span class="lists-purpose-remove-btn remove-btn remove">remove</span>
+                    </td>
+                  </tr>
+                <% })
+              }
+              %>
+          </tbody>
+        </table>
+      </div>
+      <div style="display: none">
+        <table>
+          <tbody id="lists_purpose_tbl_row_template">
+            <tr>
+              <td>
+                  <input type="text" name="purpose" value="">
+              </td>
+              <td>
+                <span class="lists-purpose-remove-btn remove-btn remove">remove</span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <!-- option-wrap -->
+
+    <div class="option-wrap">
+      <div class="option-title">Rate Buydown</div>
+      <div class="option-val-table">
+        <div class="rate-adjustment-btn-container">
+          <span class="btn btn-outline lists_option_add_btn" key="rate_buydown">Add</span>
+        </div>
+        <table class="options-table">
+          <thead>
+            <tr>
+              <th>Rate Buydown</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="lists_rate_buydown_tbl">
+              <% var rate_buydowns = lists['rate_buydown'];
+              if(rate_buydowns && rate_buydowns.length != 0){
+                _.each(rate_buydowns, function (rate_buydown) { %>
+                  <tr>
+                    <td>
+                        <input type="text" name="rate_buydown" value="<%=rate_buydown['rate_buydown']%>">
+                    </td>
+                    <td>
+                      <span class="lists-rate-buydown-remove-btn remove-btn remove">remove</span>
+                    </td>
+                  </tr>
+                <% })
+              }
+              %>
+          </tbody>
+        </table>
+      </div>
+      <div style="display: none">
+        <table>
+          <tbody id="lists_rate_buydown_tbl_row_template">
+            <tr>
+              <td>
+                  <input type="text" name="rate_buydown" value="">
+              </td>
+              <td>
+                <span class="lists-rate-buydown-remove-btn remove-btn remove">remove</span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <!-- option-wrap -->
+
+    <div class="option-wrap">
+      <div class="option-title">YSP</div>
+      <div class="option-val-table">
+        <div class="rate-adjustment-btn-container">
+          <span class="btn btn-outline lists_option_add_btn" key="ysp">Add</span>
+        </div>
+        <table class="options-table">
+          <thead>
+            <tr>
+              <th>YSP</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="lists_ysp_tbl">
+            <% var ysps = lists['ysp'];
+            if(ysps && ysps.length != 0){
+              _.each(ysps, function (ysp) { %>
+                <tr>
+                  <td>
+                      <input type="text" name="ysp" value="<%=ysp['ysp']%>">
+                  </td>
+                  <td>
+                    <span class="lists-ysp-remove-btn remove-btn remove">remove</span>
+                  </td>
+                </tr>
+              <% })
+            }
+            %>
+          </tbody>
+        </table>
+      </div>
+      <div style="display: none">
+        <table>
+          <tbody id="lists_ysp_tbl_row_template">
+            <tr>
+              <td>
+                  <input type="text" name="ysp" value="">
+              </td>
+              <td>
+                <span class="lists-ysp-remove-btn remove-btn remove">remove</span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <!-- option-wrap -->
+
+    <div class="option-wrap">
+      <div class="option-title">Credit Score Range</div>
+      <div class="option-val-table">
+        <div class="rate-adjustment-btn-container">
+          <span class="btn btn-outline lists_option_add_btn" key="credit">Add</span>
+        </div>
+        <table class="options-table">
+          <thead>
+            <tr>
+              <th>Display</th>
+              <th>Min</th>
+              <th>Max</th>
+              <th>In List</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="lists_credit_tbl">
+            <% var credits = lists['credit'];
+            if(credits && credits.length != 0){
+              _.each(credits, function (credit) { %>
+                <tr>
+                  <td>
+                      <input type="text" name="display" value="<%=credit['display']%>">
+                  </td>
+                  <td>
+                      <input type="number" name="min" value="<%=credit['min']%>">
+                  </td>
+                  <td>
+                      <input type="number" name="max" value="<%=credit['max']%>">
+                  </td>
+                  <td>
+                      <input type="checkbox" name="in_list" <%=credit['in_list'] == 'true' ? 'checked' : '' %>>
+                  </td>
+                  <td>
+                    <span class="lists-credit-remove-btn remove-btn remove">remove</span>
+                  </td>
+                </tr>
+              <% })
+            }
+            %>
+          </tbody>
+        </table>
+      </div>
+      <div style="display: none">
+        <table>
+          <tbody id="lists_credit_tbl_row_template">
+            <tr>
+              <td>
+                  <input type="text" name="display" value="">
+              </td>
+              <td>
+                  <input type="number" name="min" value="">
+              </td>
+              <td>
+                  <input type="number" name="max" value="">
+              </td>
+              <td>
+                <span class="lists-credit-remove-btn remove-btn remove">remove</span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <!-- option-wrap -->
+
+    <div class="option-wrap">
+      <div class="option-title">Prepay Buydown</div>
+      <div class="option-val-table">
+        <div class="rate-adjustment-btn-container">
+          <span class="btn btn-outline lists_option_add_btn" key="prepay">Add</span>
+        </div>
+        <table class="options-table">
+          <thead>
+            <tr>
+              <th>Prepay Buydown</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="lists_prepay_tbl">
+            <% var prepays = lists['prepay'];
+            if(prepays && prepays.length != 0){
+              _.each(prepays, function (prepay) { %>
+                <tr>
+                  <td>
+                      <input type="text" name="prepay" value="<%=prepay['prepay']%>">
+                  </td>
+                  <td>
+                    <span class="lists-prepay-remove-btn remove-btn remove">remove</span>
+                  </td>
+                </tr>
+              <% })
+            }
+            %>
+          </tbody>
+        </table>
+      </div>
+      <div style="display: none">
+        <table>
+          <tbody id="lists_prepay_tbl_row_template">
+            <tr>
+              <td>
+                  <input type="text" name="prepay" value="">
+              </td>
+              <td>
+                <span class="lists-prepay-remove-btn remove-btn remove">remove</span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <!-- option-wrap -->
+
+    <div class="option-wrap">
+      <div class="option-title">States</div>
+      <div class="option-val-table">
+        <div class="rate-adjustment-btn-container">
+          <span class="btn btn-outline lists_option_add_btn" key="states">Add</span>
+        </div>
+        <table class="options-table">
+          <thead>
+            <tr>
+              <th>State</th>
+              <th>Reduction</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="lists_states_tbl">
+            <% var states = lists['states'];
+            if(states && states.length != 0){
+              _.each(states, function (state) { %>
+                <tr>
+                  <td>
+                      <input type="text" name="state" value="<%=state['state']%>">
+                  </td>
+                  <td>
+                      <input type="text" name="reduction" value="<%=state['reduction']%>">
+                  </td>
+                  <td>
+                    <span class="lists-states-remove-btn remove-btn remove">remove</span>
+                  </td>
+                </tr>
+              <% })
+            }
+            %>
+          </tbody>
+        </table>
+      </div>
+      <div style="display: none">
+        <table>
+          <tbody id="lists_states_tbl_row_template">
+            <tr>
+              <td>
+                  <input type="text" name="state" value="">
+              </td>
+              <td>
+                  <input type="text" name="reduction" value="">
+              </td>
+              <td>
+                <span class="lists-states-remove-btn remove-btn remove">remove</span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <!-- option-wrap -->
+    <div class="button-wrap">
+      <span  class="btn btn-outline" id="lists_save_btn">Save</span>
+    </div>
+</div>
+
+

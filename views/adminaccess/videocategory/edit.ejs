@@ -1,0 +1,59 @@
+<script src="/js/ckeditor/ckeditor.js"></script>
+<form method="POST"  class="form" id="createForm" enctype="multipart/form-data" action="/adminaccess/videoCategory/edit/<%= videoCategory.id %>">
+  <a href="/adminaccess/videocategories" class="back-link">Back to All Categories &raquo;</a>
+  <h1 class="page-title">New Category</h1>
+  <div class="form-row">
+    <label for="post_title">Category Title</label>
+    <input type="text" id="post_title" name="name" value="<%= videoCategory.name || '' %>">
+    <p><%= error.name || '' %></p>
+    <input type="hidden" name="author" value="<%= req.user.id %>"/>
+  </div>
+  <div class="form-row">
+    <label for="post_title">Category Slug</label>
+    <input type="text" id="cat_slug" name="slug" value="<%= videoCategory.slug || '' %>">
+    <p><%= error.slug || '' %></p>
+  </div>
+  <div class="form-row">
+    <label for="post_title">Category Tagline</label>
+    <input type="text" id="title_tagline" name="tagline" value="<%= videoCategory.tagline || '' %>">
+   
+    <input type="hidden" name="author" value="<%= req.user.id %>"/>
+  </div>
+  <div class="form-row">
+    <div class="tearea-wrap">
+      <label for="body_text">Body HTML</label>
+      <textarea id="body_text" name="bodyHTML"><%= videoCategory.bodyHTML || '' %></textarea>
+    </div>
+    <script>
+      CKEDITOR.replace('body_text');
+    </script>
+  </div>  
+ 
+  <div class="form-row" >
+    <label for="content_editor">Header Image</label>
+    <input type="hidden" id="headerImageUrl" name="headerImageUrl"
+     value="<%= videoCategory.headerImageUrl %>" >
+    <input type="file" id="hedimg" name="headerImage" data-jcf='{"buttonText": "Choose", "placeholderText": "Choose a photo"}' >
+  </div>
+  <div class="form-row">
+    <label for="post_title">Header Image Alt Text</label>
+    <input type="text" id="cat_slug" name="headerImageAlt" value="<%= videoCategory.headerImageAlt || '' %>">
+   
+  </div>
+
+  <div class="form-row" >
+    <label for="content_editor">Preview Image</label>
+    <input type="hidden" id="previewImageUrl" name="previewImageUrl"
+     value="<%= videoCategory.previewImageUrl %>" >
+    <input type="file" id="previewImage" name="previewImage" data-jcf='{"buttonText": "Choose", "placeholderText": "Choose a photo"}' >
+  </div>
+  <div class="form-row">
+    <label for="post_title">Preview Image Alt Text</label>
+    <input type="text" id="previewImageAlt" name="previewImageAlt" value="<%= videoCategory.previewImageAlt || '' %>">
+
+  </div>
+
+  <div class="button-wrap">
+    <button type="submit" class="btn">Save</button>
+  </div>
+</form>

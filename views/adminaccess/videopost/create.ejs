@@ -1,0 +1,117 @@
+<script src="/js/ckeditor/ckeditor.js"></script>
+
+<form method="POST" class="form" id="createForm" action="/adminaccess/videopost/create" enctype="multipart/form-data">
+  <a href="/adminaccess/videoposts" class="back-link">Back to All Video Posts &raquo;</a>
+  <h1 class="page-title">New Video Post</h1>
+  <div class="form-row">
+    <label for="post_title">Post Title</label>
+    <input type="text" id="name" name="name" value="<%= videoPost.name || '' %>">
+    <p><%= error.title || '' %></p>
+  </div>
+  <div class="form-row">
+    <label for="slug">Slug</label>
+    <input type="text" id="slug" name="slug" value="<%= videoPost.slug || '' %>">
+    <p><%= error.slug || '' %></p>
+  </div>
+  <div class="text-editor">
+    <div class="tearea-wrap">
+      <label for="body_text">Body HTML</label>
+      <textarea id="body_text" name="bodyHTML"><%= videoPost.bodyHTML || '' %></textarea>
+    </div>
+    <script>
+      CKEDITOR.replace('body_text');
+    </script>
+  </div>
+  <div class="form-row">   
+    <label for="preview_image">Video Url</label>
+    <input type="text" id="videoUrl" name="videoUrl">
+
+</div>
+<div class="form-row"> 
+    <label for="preview_image">Video Transcription</label>
+    <textarea id="transcript" name="transcript"><%= videoPost.transcript || '' %></textarea>
+
+  <script>
+    CKEDITOR.replace('transcript');
+  </script>
+</div>
+  <div class="row">
+    <div class="col-5">
+      <div class="form-row">
+        <label for="author">Author</label>
+        <input type="text" id="author" name="authorName" value="<%= videoPost.authorName || '' %>">
+      </div>
+    </div>
+    <div class="col-7">
+      <div class="form-row">
+        <label for="seo-page-title">SEO: Page Title</label>
+        <input type="text" id="seo-page-title" name="pageTitle" value="<%= videoPost.pageTitle || '' %>">
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-5">
+      <div class="form-row">
+        <label for="tags">Tags</label>
+        <div class="tag-input">
+          <input type="text" class="tagsInput" id="tags" name="metaTags" value="<%= videoPost.metaTags || '' %>">
+        </div>
+      </div>
+    </div>
+    <div class="col-7">
+      <div class="form-row">
+        <label for="keyword">SEO: Keywords</label>
+        <div class="tag-input">
+          <input type="text" class="tagsInput" id="keyword" name="keywords" value="<%= videoPost.keywords || '' %>">
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-5">
+      <div class="form-row">
+        <label for="category">Category</label>
+        <select id="category" name="category">
+          <option value="" class="hidden">Choose Category</option>
+          <% _.each(videoCategories, function(category) { %>
+          <option <%= videoPost.category == category.name ? 'selected' : '' %>
+            name="<%= category.name %>"> <%= category.name %></option>
+          <% }) %>
+        </select>
+      </div>
+    </div>
+  </div>
+  <div class="form-row" >
+    <label for="content_editor">Preview Image</label>
+    <input type="hidden" id="previewImageUrl" name="previewImageUrl"
+     value="<%= videoPost.previewImageUrl %>" >
+    <input type="file" id="previewImage" name="previewImage" data-jcf='{"buttonText": "Choose", "placeholderText": "Choose a photo"}' >
+  </div>
+  <input type="hidden" value="Draft" id="status" name="status"/>
+
+  <div class="button-wrap">
+    <button type="submit" class="btn btn-outline">Save as Draft</button>
+    <a href="#" class="btn" id="publishBtn">Publish Post</a>
+  </div>
+</form>
+ 
+<script>
+  window.onload = function (e) {
+
+    $(function () {
+      $("#publishBtn").click(function (e) {
+        e.preventDefault();
+        handlePublish();
+      });
+    });
+  }
+  handlePublish = function () {
+    $('#status').val('Published');
+    $('<input />').attr('type', 'hidden')
+      .attr('name', 'publishedAt')
+      .attr('value', new Date())
+      .prependTo('#createForm');
+    $('#createForm').submit();
+  }
+
+</script>

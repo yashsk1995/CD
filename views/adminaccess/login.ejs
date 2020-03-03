@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Commercial Direct</title>
+  <link rel="shortcut icon" href="/images/frontend/favicon.ico">
+  <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:300,300i,400,400i,600,600i,700,700i,800,800i,900"
+        rel="stylesheet">
+  <link rel="stylesheet" href="/styles/admin/main.css?x=1">
+</head>
+<body>
+<div id="wrapper">
+  <main id="main">
+    <div class="container container-win-height" style="">
+      <div class="horizontal-center">
+        <div class="vertical-middle">
+          <div class="logo-holder">
+            <div class="logo">
+              <a href="#"><img src="/images/frontend/CD_web-1.jpg" alt="Commercial Direct Funding"></a>
+            </div>
+          </div>
+          <form class="form login-form" method="POST" action="/adminaccess">
+            <div class="form-row">
+              <label for="user-name">Username</label>
+              <input type="email" id="user-name" name="email" placeholder="youremail@commercialdirect.com">
+              <p><%= error.message ? error.message : '' %></p>
+            </div>
+            <div class="form-row alter-sapce">
+              <label for="password">Password</label>
+              <input type="password" id="password" name="password" placeholder="Your password">
+            </div>
+            <div class="form-row align-right">
+              <a href="/adminaccess/forgot-password">Forgot password?</a>
+            </div>
+            <div class="form-row no-indent">
+              <button type="submit" class="btn">Login</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+<script src="/js/dependencies/sails.io.js"></script>
+<script src="/js/jquery-1.11.2.min.js"></script>
+<script src="/js/jquery-ui.min.js"></script>
+<script src="/js/admin/jquery.main.js"></script>
+</body>
+</html>

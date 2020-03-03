@@ -1,0 +1,26 @@
+<main id="main">
+  <div class="inner-banner">
+    <div class="bg-cover">
+      <img src="<%= category.headerImageUrl %>" alt="<%= category.headerImageAlt %>">
+    </div>
+    <div class="container text-center">
+      <h1><%= videoPost.name %></h1>
+
+    </div>
+  </div>
+  <div class="container">
+    <ol class="breadcrumb">
+      <li><a href="/hidden12345">Videos</a></li>
+      <li><a href="/videos/category/<%= category.slug %>" nav-link><%= category.name %></a></li>
+      <li class="active"><%= videoPost.name %></li>
+    </ol>
+
+    <div>
+      <%-: videoPost.bodyHTML | getHtmlShortContents %>
+    </div>
+    <div class="video-container">
+      <iframe width="100%" height="400px" frameborder="0" src="<%= videoPost.videoUrl %>" allowfullscreen></iframe>
+    </div>
+  </div>
+
+</main>

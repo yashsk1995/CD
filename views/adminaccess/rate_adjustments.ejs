@@ -1,0 +1,421 @@
+
+<h1 class="page-title">Rate Adjustments</h1>
+<div class="content-modification" id="rate_adjustments_section">
+  <form method="POST" class="form" id="createForm" action="/adminaccess/rateadjustments">
+    <div class="rate-adjustment-content">
+      <div class="rate-adjustment-btn-container">
+        <span class="btn btn-outline" id="rate_adjustment_add_btn">Add</span>
+      </div>
+      <div class="rate-ajustment-table-container">
+        <div class="rate-ajustment-table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th rowspan="2" style="vertical-align: middle;">Description</th>
+                  <th class="center-text" colspan="12" style1="background-color: #f4f4f4;">Conditions</th>
+                  <th rowspan="2" style="vertical-align: middle;">Adjustment</th>
+                  <th rowspan="2"></th>
+                </tr>
+                <tr>
+                  <th>LTV</th>
+                  <th colspan="2">Loan Amount</th>
+                  <th>Loan Term</th>
+                  <th>ATM Term</th>
+                  <th>Teir</th>
+                  <th>Occupancy</th>
+                  <th>Documentation</th>
+                  <th>Purpose</th>
+                  <th colspan="2">Credit Score</th>
+                  <th>Prepay Buyback</th>
+                </tr>
+              </thead>
+              <tbody id="rate_adjustment_tbl">
+                  <% var rate_adjustments = rateAdjustments['rate_adjustments'];
+                  if(rate_adjustments && rate_adjustments != ''){
+                    _.each(rate_adjustments, function (rate_adjustments) { %>
+                      <tr>
+                        <td>
+                          <input placeholder="Description" type="text" style="min-width: 250px;" name="rate_adjustments_description" value="<%=rate_adjustments['rate_adjustments_description']%>">
+                        </td>
+                        <td>
+                          <div style="width: 100px">
+                            <select name="rate_adjustments_conditions_ltv">
+                              <option value="" <%=rate_adjustments['rate_adjustments_conditions_ltv']==""?'selected':'' %> ></option>
+                              <option value="0.00" <%=rate_adjustments['rate_adjustments_conditions_ltv']=="0.00"?'selected':'' %> >&gt;= 0%</option>
+                              <option value="0.50" <%=rate_adjustments['rate_adjustments_conditions_ltv']=="0.50"?'selected':'' %> >&gt;= 50%</option>
+                              <option value="0.55" <%=rate_adjustments['rate_adjustments_conditions_ltv']=="0.55"?'selected':'' %> >&gt;= 55%</option>
+                              <option value="0.60" <%=rate_adjustments['rate_adjustments_conditions_ltv']=="0.60"?'selected':'' %> >&gt;= 60%</option>
+                              <option value="0.65" <%=rate_adjustments['rate_adjustments_conditions_ltv']=="0.65"?'selected':'' %> >&gt;= 65%</option>
+                              <option value="0.70" <%=rate_adjustments['rate_adjustments_conditions_ltv']=="0.70"?'selected':'' %> >&gt;= 70%</option>
+                              <option value="0.75" <%=rate_adjustments['rate_adjustments_conditions_ltv']=="0.75"?'selected':'' %> >&gt;= 75%</option>
+                              <option value="0.80" <%=rate_adjustments['rate_adjustments_conditions_ltv']=="0.80"?'selected':'' %> >&gt;= 80%</option>
+                            </select>
+                          </div>
+                        </td>
+                        <td>
+                          <select name="rate_adjustments_conditions_loan_amount_operation">
+                            <option value="" <%=rate_adjustments['rate_adjustments_conditions_loan_amount_operation']==""?'selected':'' %> ></option>
+                            <option value="greater_than" <%=rate_adjustments['rate_adjustments_conditions_loan_amount_operation']=="greater_than"?'selected':'' %> >&gt;</option>
+                            <option value="greater_than_or_equal" <%=rate_adjustments['rate_adjustments_conditions_loan_amount_operation']=="greater_than_or_equal"?'selected':'' %> >&gt;=</option>
+                            <option value="equal" <%=rate_adjustments['rate_adjustments_conditions_loan_amount_operation']=="equal"?'selected':'' %> >=</option>
+                            <option value="less_than" <%=rate_adjustments['rate_adjustments_conditions_loan_amount_operation']=="less_than"?'selected':'' %> >&lt;</option>
+                            <option value="less_than_or_equal" <%=rate_adjustments['rate_adjustments_conditions_loan_amount_operation']=="less_than_or_equal"?'selected':'' %> >&lt;=</option>
+                          </select>
+                        </td>
+                        <td>
+                          <input placeholder="Loan Amount" type="number" step="0.00001" style="min-width: 80px;" name="rate_adjustments_conditions_loan_amount" value="<%=rate_adjustments['rate_adjustments_conditions_loan_amount']%>">
+                        </td>
+                        <td>
+                          <div style="width: 120px">
+                            <select name="rate_adjustments_conditions_loan_term">
+                              <option value="" <%=rate_adjustments['rate_adjustments_conditions_loan_term']==""?'selected':'' %> ></option>
+                              <% var loan_terms = lists['loan_term'];
+                              if(loan_terms && loan_terms.length != 0){
+                                _.each(loan_terms, function (loan_term) { %>
+                                  <option value="<%=loan_term['display']%>" <%=rate_adjustments['rate_adjustments_conditions_loan_term']==loan_term['display']?'selected':'' %>><%=loan_term['display']%></option>
+                                <% })
+                              }
+                              %>
+                            </select>
+                          </div>
+                        </td>
+                        <td>
+                          <div style="width: 100px">
+                            <select name="rate_adjustments_conditions_atm_term">
+                              <option value="" <%=rate_adjustments['rate_adjustments_conditions_atm_term']==""?'selected':'' %> ></option>
+                              <% var atm_terms = lists['atm_term'];
+                              if(atm_terms && atm_terms.length != 0){
+                                _.each(atm_terms, function (atm_term) { %>
+                                  <option value="<%=atm_term['atm_term']%>" <%=rate_adjustments['rate_adjustments_conditions_atm_term']==atm_term['atm_term']?'selected':'' %> ><%=atm_term['atm_term']%></option>
+                                <% })
+                              }
+                              %>
+                            </select>
+                          </div>
+                        </td>
+                        <td>
+                          <select name="rate_adjustments_conditions_teir">
+                            <option value="" <%=rate_adjustments['rate_adjustments_conditions_teir']==""?'selected':'' %> ></option>
+                            <% var tiers = lists['tier'];
+                            if(tiers && tiers.length != 0){
+                              _.each(tiers, function (tier) { %>
+                                <option value="<%=tier['tier']%>" <%=rate_adjustments['rate_adjustments_conditions_teir']==tier['tier']?'selected':'' %> ><%=tier['tier']%></option>
+                              <% })
+                            }
+                            %>
+                          </select>
+                        </td>
+                        <td>
+                          <div style="width: 160px">
+                            <select name="rate_adjustments_conditions_occupancy">
+                              <option value="" <%=rate_adjustments['rate_adjustments_conditions_occupancy']==""?'selected':'' %> ></option>
+                              <% var occupancys = lists['occupancy'];
+                              if(occupancys && occupancys.length != 0){
+                                _.each(occupancys, function (occupancy) { %>
+                                  <option value="<%=occupancy['occupancy']%>" <%=rate_adjustments['rate_adjustments_conditions_occupancy']==occupancy['occupancy']?'selected':'' %> ><%=occupancy['occupancy']%></option>
+                                <% })
+                              }
+                              %>
+                            </select>
+                          </div>
+                        </td>
+                        <td>
+                          <div style="width: 160px">
+                            <select name="rate_adjustments_conditions_documentation">
+                              <option value="" <%=rate_adjustments['rate_adjustments_conditions_documentation']==""?'selected':'' %> ></option>
+                              <% var documentations = lists['documentation'];
+                              if(documentations && documentations.length != 0){
+                                _.each(documentations, function (documentation) { %>
+                                  <option value="<%=documentation['documentation']%>" <%=rate_adjustments['rate_adjustments_conditions_documentation']==documentation['documentation']?'selected':'' %> ><%=documentation['documentation']%></option>
+                                <% })
+                              }
+                              %>
+                            </select>
+                          </div>
+                        </td>
+                        <td>
+                          <div style="width: 180px">
+                            <select name="rate_adjustments_conditions_purpose">
+                              <option value="" <%=rate_adjustments['rate_adjustments_conditions_purpose']==""?'selected':'' %> ></option>
+                              <% var purposes = lists['purpose'];
+                              if(purposes && purposes.length != 0){
+                                _.each(purposes, function (purpose) { %>
+                                  <option value="<%=purpose['purpose']%>" <%=rate_adjustments['rate_adjustments_conditions_purpose']==purpose['purpose']?'selected':'' %> ><%=purpose['purpose']%></option>
+                                <% })
+                              }
+                              %>
+                            </select>
+                          </div>
+                        </td>
+                        <td>
+                          <select name="rate_adjustments_conditions_credit_score_operation">
+                            <option value="" <%=rate_adjustments['rate_adjustments_conditions_credit_score_operation']==""?'selected':'' %> ></option>
+                            <option value="greater_than" <%=rate_adjustments['rate_adjustments_conditions_credit_score_operation']=="greater_than"?'selected':'' %> >&gt;</option>
+                            <option value="greater_than_or_equal" <%=rate_adjustments['rate_adjustments_conditions_credit_score_operation']=="greater_than_or_equal"?'selected':'' %> >&gt;=</option>
+                            <option value="equal" <%=rate_adjustments['rate_adjustments_conditions_credit_score_operation']=="equal"?'selected':'' %> >=</option>
+                            <option value="less_than" <%=rate_adjustments['rate_adjustments_conditions_credit_score_operation']=="less_than"?'selected':'' %> >&lt;</option>
+                            <option value="less_than_or_equal" <%=rate_adjustments['rate_adjustments_conditions_credit_score_operation']=="less_than_or_equal"?'selected':'' %> >&lt;=</option>
+                          </select>
+                        </td>
+                        <td>
+                          <div style="width: 80px">
+                            <select name="rate_adjustments_conditions_credit_score">
+                              <option value="" <%=rate_adjustments['rate_adjustments_conditions_credit_score']==""?'selected':'' %> ></option>
+                              <% var credits = lists['credit'];
+                              if(credits && credits.length != 0){
+                                _.each(credits, function (credit) { %>
+                                  <option value="<%=credit['min']%>" <%=rate_adjustments['rate_adjustments_conditions_credit_score']==credit['min']?'selected':'' %> ><%=credit['min']%></option>
+                                <% })
+                              }
+                              %>
+                            </select>
+                          </div>
+                        </td>
+                        <td>
+                          <div style="width: 240px">
+                            <select name="rate_adjustments_conditions_prepay_buydown">
+                              <option value="" <%=rate_adjustments['rate_adjustments_conditions_prepay_buydown']==""?'selected':'' %> ></option>
+                              <% var prepays = lists['prepay'];
+                              if(prepays && prepays.length != 0){
+                                _.each(prepays, function (prepay) { %>
+                                  <option value="<%=prepay['prepay']%>" <%=rate_adjustments['rate_adjustments_conditions_prepay_buydown']==prepay['prepay']?'selected':'' %>><%=prepay['prepay']%></option>
+                                <% })
+                              }
+                              %>
+                            </select>
+                          </div>
+                        </td>
+                        <td>
+                          <input placeholder="Rate Adjustment" type="number" step="0.00001" style="min-width: 30px;" name="rate_adjustments_rate_adjustment" value="<%=rate_adjustments['rate_adjustments_rate_adjustment']%>">
+                        </td>
+                        <td class="center-text"><span class="rate-adjustment-remove-btn remove">remove</span></td>
+                      </tr>
+                    <% })
+                  }
+                  %>
+              </tbody>
+            </table>
+        </div>
+      </div>
+      <div class="row flex-row">
+        <div class="col-sm-6">
+          <div class="form-group">
+            <label for="ltv_value">Min Loan Rate</label>
+            <input id="min_loan_rate" name="min_loan_rate" type="text" class="form-control number-format" value="<%= rateAdjustments['min_loan_rate'] ? rateAdjustments['min_loan_rate']: ''%>">
+            <label id="ltv_error" class="error"></label>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="form-group">
+            <label for="ltv_value">Min Loan Amount</label>
+            <input id="min_loan_amount" name="min_loan_amount" type="text" class="form-control number-format" value="<%= rateAdjustments['min_loan_amount'] ? rateAdjustments['min_loan_amount']: ''%>">
+            <label id="ltv_error" class="error"></label>
+          </div>
+        </div>
+      </div>
+      <div class="row flex-row">
+        <div class="col-sm-6">
+          <div class="form-group">
+            <label for="ltv_value">Max Loan Amount</label>
+            <input id="max_loan_amount" name="max_loan_amount" type="text" class="form-control number-format" value="<%= rateAdjustments['max_loan_amount'] ? rateAdjustments['max_loan_amount']: ''%>">
+            <label id="ltv_error" class="error"></label>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="form-group">
+            <label for="ltv_value">YSP Selected</label>
+            <input id="ysp_selected" name="ysp_selected" type="text" class="form-control number-format" value="<%= rateAdjustments['ysp_selected'] ? rateAdjustments['ysp_selected']: ''%>">
+            <label id="ltv_error" class="error"></label>
+          </div>
+        </div>
+      </div>
+      <div class="row flex-row">
+        <div class="col-sm-6">
+          <div class="form-group">
+            <label for="ltv_value">Rate Buydown Selected</label>
+            <input id="rate_buydown_selected" name="rate_buydown_selected" type="text" class="form-control number-format" value="<%= rateAdjustments['rate_buydown_selected'] ? rateAdjustments['rate_buydown_selected']: ''%>">
+            <label id="ltv_error" class="error"></label>
+          </div>
+        </div>
+      </div>
+      
+      <div class="form-group">
+        <label for="ltv_value">Monthly Rate Equation</label>
+        <input type="text" class="form-control number-format" readonly value="((($rate * 365.25) / 360) / 12)">
+        <label id="ltv_error" class="error"></label>
+      </div>
+      <div class="form-group">
+        <label for="ltv_value">PMT Equation</label>
+        <input type="text" class="form-control number-format" readonly value="$monthly_rate * -$loan * pow((1 + $monthly_rate), $months) / (1 - pow((1 + $monthly_rate), $months))">
+        <label id="ltv_error" class="error"></label>
+      </div>
+    </div>
+    <div class="button-wrap">
+      <span class="btn btn-outline" id="rate_adjustment_save_btn">Save</span>
+    </div>
+  </form>
+
+</div>
+<div style="display: none">
+  <table>
+    <tbody id="rate_adjustment_tbl_row_template">
+      <tr>
+        <td>
+          <input placeholder="Description" type="text" style="min-width: 250px;" name="rate_adjustments_description" value="">
+        </td>
+        <td>
+          <div style="width: 100px">
+            <select name="rate_adjustments_conditions_ltv">
+              <option value=""></option>
+              <option value="0.00">&gt;= 0%</option>
+              <option value="0.50">&gt;= 50%</option>
+              <option value="0.55">&gt;= 55%</option>
+              <option value="0.60">&gt;= 60%</option>
+              <option value="0.65">&gt;= 65%</option>
+              <option value="0.70">&gt;= 70%</option>
+              <option value="0.75">&gt;= 75%</option>
+              <option value="0.80">&gt;= 80%</option>
+            </select>
+          </div>
+        </td>
+        <td>
+          <select name="rate_adjustments_conditions_loan_amount_operation">
+            <option value=""></option>
+            <option value="greater_than">&gt;</option>
+            <option value="greater_than_or_equal">&gt;=</option>
+            <option value="equal">=</option>
+            <option value="less_than">&lt;</option>
+            <option value="less_than_or_equal">&lt;=</option>
+          </select>
+        </td>
+        <td>
+          <input placeholder="Loan Amount" type="number" step="0.00001" style="min-width: 80px;" name="rate_adjustments_conditions_loan_amount" value="">
+        </td>
+        <td>
+          <div style="width: 120px">
+            <select name="rate_adjustments_conditions_loan_term">
+              <option value=""></option>
+              <% var loan_terms = lists['loan_term'];
+              if(loan_terms && loan_terms.length != 0){
+                _.each(loan_terms, function (loan_term) { %>
+                  <option value="<%=loan_term['display']%>"><%=loan_term['display']%></option>
+                <% })
+              }
+              %>
+            </select>
+          </div>
+        </td>
+        <td>
+          <div style="width: 100px">
+            <select name="rate_adjustments_conditions_atm_term">
+              <option value=""></option>
+              <% var atm_terms = lists['atm_term'];
+              if(atm_terms && atm_terms.length != 0){
+                _.each(atm_terms, function (atm_term) { %>
+                  <option value="<%=atm_term['atm_term']%>"><%=atm_term['atm_term']%></option>
+                <% })
+              }
+              %>
+            </select>
+          </div>
+        </td>
+        <td>
+          <select name="rate_adjustments_conditions_teir">
+            <option value=""></option>
+            <% var tiers = lists['tier'];
+            if(tiers && tiers.length != 0){
+              _.each(tiers, function (tier) { %>
+                <option value="<%=tier['tier']%>"><%=tier['tier']%></option>
+              <% })
+            }
+            %>
+          </select>
+        </td>
+        <td>
+          <div style="width: 160px">
+            <select name="rate_adjustments_conditions_occupancy">
+              <option value=""></option>
+              <% var occupancys = lists['occupancy'];
+              if(occupancys && occupancys.length != 0){
+                _.each(occupancys, function (occupancy) { %>
+                  <option value="<%=occupancy['occupancy']%>"><%=occupancy['occupancy']%></option>
+                <% })
+              }
+              %>
+            </select>
+          </div>
+        </td>
+        <td>
+          <div style="width: 160px">
+            <select name="rate_adjustments_conditions_documentation">
+              <option value=""></option>
+              <% var documentations = lists['documentation'];
+              if(documentations && documentations.length != 0){
+                _.each(documentations, function (documentation) { %>
+                  <option value="<%=documentation['documentation']%>"><%=documentation['documentation']%></option>
+                <% })
+              }
+              %>
+            </select>
+          </div>
+        </td>
+        <td>
+          <div style="width: 180px">
+            <select name="rate_adjustments_conditions_purpose">
+              <option value=""></option>
+              <% var purposes = lists['purpose'];
+              if(purposes && purposes.length != 0){
+                _.each(purposes, function (purpose) { %>
+                  <option value="<%=purpose['purpose']%>"><%=purpose['purpose']%></option>
+                <% })
+              }
+              %>
+            </select>
+          </div>
+        </td>
+        <td>
+          <select name="rate_adjustments_conditions_credit_score_operation">
+            <option value=""></option>
+            <option value="greater_than">&gt;</option>
+            <option value="greater_than_or_equal">&gt;=</option>
+            <option value="equal">=</option>
+            <option value="less_than">&lt;</option>
+            <option value="less_than_or_equal">&lt;=</option>
+          </select>
+        </td>
+        <td>
+          <div style="width: 80px">
+            <select name="rate_adjustments_conditions_credit_score">
+              <option value=""></option>
+              <% var credits = lists['credit'];
+              if(credits && credits.length != 0){
+                _.each(credits, function (credit) { %>
+                  <option value="<%=credit['min']%>"><%=credit['min']%></option>
+                <% })
+              }
+              %>
+            </select>
+          </div>
+        </td>
+        <td>
+          <div style="width: 240px">
+            <select name="rate_adjustments_conditions_prepay_buydown">
+              <option value=""></option>
+              <% var prepays = lists['prepay'];
+              if(prepays && prepays.length != 0){
+                _.each(prepays, function (prepay) { %>
+                  <option value="<%=prepay['prepay']%>"><%=prepay['prepay']%></option>
+                <% })
+              }
+              %>
+            </select>
+          </div>
+        </td>
+        <td>
+          <input placeholder="Rate Adjustment" type="number" step="0.00001" style="min-width: 30px;" name="rate_adjustments_rate_adjustment" value="">
+        </td>
+        <td class="center-text"><span class="rate-adjustment-remove-btn remove">remove</span></td>
+      </tr>
+    </tbody>
+  </table>
+</div>

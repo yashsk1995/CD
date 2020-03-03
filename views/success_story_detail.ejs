@@ -1,0 +1,60 @@
+<main id="main">
+  <div class="inner-banner">
+    <div class="bg-cover">
+      <img src="/images/frontend/img31.jpg" alt="image description">
+    </div>
+    <div class="container text-center">
+      <h1><%= story.title %></h1>
+    </div>
+  </div>
+  <div class="container">
+    <ol class="breadcrumb">
+      <li><a href="/showcase" nav-link>Showcase</a></li>
+      <li class="active">Story</li>
+    </ol>
+  </div>
+  <div class="showcase-story-container">
+    <div class="container">
+      <div class="showcase-story-detail">
+        <div class="row">
+          <div class="col-sm-8">
+            <div class="img-holder">
+              <img src="<%= story.previewImageUrl || '' %>" height="378" width="700">
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <div class="detail-text">
+              <address><%= story.title || '' %></address>
+              <h2>Details</h2>
+              <%- story.detailHTML || '' %>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="challenges-solution-block">
+        <div class="row">
+          <%- story.bodyHTML || '' %>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="success-stories-block">
+    <div class="container">
+      <h2>Other Success Stories</h2>
+      <div class="row flex-row">
+        <% _.each(otherStories, function(successStory) { %>
+
+        <div class="col-sm-4">
+          <div class="showcase-item">
+            <div class="img-wrap">
+              <a href="/showcase/<%= successStory.id %>" nav-link><img src="<%= successStory.previewImageUrl || '' %>"
+                                                              height="172" width="340"></a>
+            </div>
+            <strong class="name"><a href="/showcase/<%= successStory.id %>" nav-link><%= successStory.title %></a></strong>
+          </div>
+        </div>
+        <% }) %>
+      </div>
+    </div>
+  </div>
+</main>

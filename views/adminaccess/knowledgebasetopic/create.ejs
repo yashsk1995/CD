@@ -1,0 +1,13 @@
+<form method="POST" class="form" id="createForm" action="/adminaccess/knowledgebasetopic/create">
+  <a href="/adminaccess/knowledgebasetopics" class="back-link">Back to All Topics&raquo;</a>
+  <h1 class="page-title">New Topic</h1>
+  <div class="form-row">
+    <label for="post_title">Topic Title</label>
+    <input type="text" id="post_title" name="name" value="<%= topic.name || '' %>">
+    <p><%= error.name || '' %></p>
+    <input type="hidden" name="author" value="<%= req.user.id %>"/>
+  </div>
+  <div class="button-wrap">
+    <button type="submit" class="btn">Save</button>
+  </div>
+</form>

@@ -1,0 +1,77 @@
+<div class="application-content">
+  <div class="application-header">
+    <h2>10. General Authorization</h2>
+    <p>(It will take 3 minutes to complete)</p>
+  </div>
+
+
+  <p style="display:none" id="successMessage">Document has been already been signed.</p>
+  <div class="embed-responsive embed-responsive-16by9">
+    <iframe id="docusignFrame" class="embed-responsive-item col-lg-12 col-md-12 col-sm-12" name="docusignFrame" src="" width="100%" height="500px"
+    ></iframe>
+
+  </div>
+
+  <form id="generalAuthForm" action="/application/general-authorization" method="post" enctype="multipart/form-data"
+        class="result-form">
+
+
+    <div class="recalculate-button" style="display:none" id="submitSection">
+      <div class="row">
+        <div class="col-xs-12 col-sm-6">
+          <a href="/application/business-declarations" class="btn btn-outline">Back</a>
+        </div>
+        <div class="col-xs-12 col-sm-6">
+          <input type="hidden" value="true" id="hiddenStatus" name="isSubmitted"/>
+          <input type="hidden" name="progress" value="<%= progress %>"/>
+          <button type="submit" class="btn btn-default">Save and Continue</button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<script>
+
+  function onDocumentSigned() {
+    $("#successMessage").show();
+    $("#pleasewait").css('display', 'block');
+    $("#generalAuthForm").submit();
+  }
+
+  window.onload = function (e) {
+
+    $("#pleasewait").css('display', 'block');
+
+    $.ajax({
+      url: '/docusign/signingUrl',
+      type: 'GET',
+      success: function (response) {
+        $("#pleasewait").css('display', 'none');
+        if (response.status == 'success') {
+          if (response.data.isSigned) {
+            $("#successMessage").show();
+            $("#submitSection").show();
+            $("#docusignFrame").hide();
+          } else {
+            $("#docusignFrame").attr("src", response.data.docusignUrl);
+          }
+        } else {
+          alert(response.error);
+        }
+      },
+      error: function (err) {
+        $("#pleasewait").css('display', 'none');
+        alert(err);
+      }
+    });
+
+    $("#generalAuthForm").validate({
+      submitHandler: function (form) {
+        form.submit();
+        $("#pleasewait").css('display', 'block');
+      }
+    });
+
+  }
+</script>
+

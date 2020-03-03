@@ -1,0 +1,163 @@
+<h1 class="page-title">Knowledge Base Topic</h1>
+<div class="content-modification">
+  <form action="/adminaccess/knowledgebasetopics" method="get" class="search-form">
+    <input type="search" id="search" name="search" value="<%= search || '' %>">
+    <button type="submit" class="btn btn-outline btn-search">Search</button>
+  </form>
+  <a href="javascript:void();" id="deleteBtn" class="btn btn-outline disable btn-delete">Delete</a>
+  <a href="/adminaccess/knowledgebasetopic/create" class="btn btn-add">New Topic</a>
+</div>
+<div class="table-holder">
+  <table class="data-table">
+    <colgroup>
+      <col class="col-1">
+      <col class="col-2">
+      <col class="col-3">
+      <col class="col-4">
+    </colgroup>
+    <thead>
+    <tr>
+      <th>&nbsp;</th>
+      <th onclick="handleSort('name')">
+        <span class="<%= sort.startsWith("name") ? 'sort' : '' %>">Topic Title
+          <% if(sort.startsWith('name')){ %>
+          <i class="icon-holder <%= sort == "name" ? 'icon-arrow-down' : 'icon-arrow-up' %> "></i>
+          <% } %>
+        </span>
+      </th>
+      <th onclick="handleSort('author')">
+        <span class="<%= sort.startsWith("author") ? 'sort' : '' %>">Author
+          <% if(sort.startsWith('author')){ %>
+          <i class="icon-holder <%= sort == "author" ? 'icon-arrow-down' : 'icon-arrow-up' %> "></i>
+          <% } %>
+        </span>
+      </th>
+      <th onclick="handleSort('createdAt')">
+        <span class="<%= sort.startsWith("createdAt") ? 'sort' : '' %>">Created
+          <% if(sort.startsWith('createdAt')){ %>
+          <i class="icon-holder <%= sort == "createdAt" ? 'icon-arrow-down' : 'icon-arrow-up' %> "></i>
+          <% } %>
+        </span>
+      </th>
+      <th><span>Action</span></th>
+    </tr>
+    </thead>
+    <tbody>
+
+    <% _.each(topics, function(topic) { %>
+
+    <tr id="row_<%= topic.id %>">
+      <td><input type="checkbox" onclick="onCheckChange(this, '<%= topic.id %>')"></td>
+      <td>
+        <span class="title"><%= topic.name %></span>
+      </td>
+      <td><%= topic.author ? topic.author.name : '' %></td>
+      <td> <%=: topic.createdAt | formatDate %></td>
+      <td>
+        <a href="/adminaccess/knowledgebasetopic/edit/<%= topic.id %>">Edit</a>
+        <a href="javascript:deleteRecord('<%= topic.id %>')">Delete</a>
+
+      </td>
+    </tr>
+    <% }) %>
+    </tbody>
+  </table>
+</div>
+
+
+<% include ../pagination.ejs %>
+
+<script>
+
+  var selectedIds = [];
+  var sort = '<%- sort %>';
+
+  onCheckChange = function (cb, id) {
+    if (cb.checked) {
+      $('#row_' + id).addClass("selected");
+      selectedIds.push(id);
+    } else {
+      $('#row_' + id).removeClass("selected");
+      var index = selectedIds.indexOf(id);
+      selectedIds.splice(index, 1);
+    }
+
+    if (selectedIds.length > 0) {
+      $("#deleteBtn").removeClass("disable");
+      $("#deleteBtn").bind('click', onDeleteClick);
+    } else {
+      $("#deleteBtn").addClass("disable");
+      $("#deleteBtn").unbind('click');
+    }
+
+  }
+
+  onDeleteClick = function (e) {
+    e.preventDefault();
+    if (window.confirm('Are you sure you want to delete?')) {
+      handleAction("delete")
+    }
+  }
+
+  onPublishClick = function () {
+    e.preventDefault();
+    handleAction("publish");
+  }
+
+  handleAction = function (action) {
+    var newLocation = "/adminaccess/knowledgebasetopic/" + action + "?";
+
+    if (selectedIds.length > 0) {
+      var searchText = $('#search').val();
+      if (searchText) {
+        newLocation += 'search=' + searchText;
+      }
+
+      selectedIds.forEach(function (ids) {
+        newLocation += "&id=" + ids;
+      })
+      window.location = newLocation;
+    }
+  }
+
+  handlePageChange = function (event, pageNo) {
+    event.preventDefault();
+    console.log("Page Changed")
+    console.log(pageNo)
+    var newLocation = "/adminaccess/knowledgebasetopics?";
+
+    var searchText = $('#search').val();
+    if (searchText) {
+      newLocation += 'search=' + searchText + "&";
+    }
+    newLocation += "page=" + pageNo;
+    window.location = newLocation;
+  }
+
+  handleSort = function (newSort) {
+    var newLocation = "/adminaccess/knowledgebasetopics?";
+    var searchText = $('#search').val();
+    if (searchText) {
+      newLocation += 'search=' + searchText + "&";
+    }
+    newLocation += "sort=" + newSort;
+    if (newSort == sort) {
+      newLocation += " desc";
+    }
+    window.location = newLocation;
+  }
+
+  deleteRecord = function (id) {
+    if (window.confirm('Are you sure you want to delete?')) {
+      var url = '/adminaccess/knowledgebasetopic/delete?';
+      var search = '<%- search %>';
+      if (search) {
+        url += 'search=' + search + '&';
+      }
+      url += 'id=' + id;
+      window.location = url;
+    }
+  }
+
+
+</script>

@@ -1,0 +1,106 @@
+<main id="main">
+  <div class="inner-banner">
+    <div class="bg-cover">
+      <img src="/images/frontend/img06.jpg" alt="image description">
+    </div>
+    <div class="container text-center">
+      <h1><%= article.term %></h1>
+    </div>
+  </div>
+  <div class="container">
+    <ol class="breadcrumb">
+      <li><a href="/learn" nav-link>Learn</a></li>
+      <li><a href="/knowledge" nav-link>Knowledge Base</a></li>
+      <li class="active"><%- article.term %></li>
+    </ol>
+  </div>
+  <div class="knowledge-base-container">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-8">
+          <form action="/knowledge" method="get" class="content-search-form article-page hidden-sm hidden-md hidden-lg">
+            <input type="search" name="search" class="form-control">
+            <button type="submit" class="btn btn-default"><span class="hidden-xs">Search</span><span
+                class="hidden-sm hidden-md hidden-lg"><span class="icon-search"></span></span></button>
+          </form>
+          <div class="knowledge-article-detail">
+            <%- article.description %>
+            <div class="feedback-box">
+              <span>Was that helpful?</span><a id="helpfulBtn"><i class="icon-like"></i></a><a
+                id="notHelpfulBtn"><i
+                  class="icon-dislike"></i></a>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <form action="/knowledge" method="get" class="sidebar-search-form hidden-xs">
+            <input type="search" name="search" class="form-control">
+            <button type="submit" class="btn btn-default">Search</button>
+          </form>
+          <div class="popular-article-box">
+            <h2>Related Articles</h2>
+            <ul class="articles-list">
+              <% _.each(relatedArticles, function(articles) { %>
+              <li><a href="/knowledge/<%=: topic | urlEncode %>/<%=:  articles.term | urlEncode   %>" nav-link><%= articles.term %> </a></li>
+              <% }) %>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <form action="#" class="newsletter-subscribe-form center">
+        <strong class="form-title">Subscribe to our newsletter &amp; webinars</strong>
+        <label for="email">Your Email</label>
+        <div class="input-wrap">
+          <input type="email" id="email" class="form-control" placeholder="customer@email.com">
+          <button class="btn btn-default" type="submit">Subscribe</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</main>
+
+
+<script>
+
+  window.onload = function (e) {
+
+    $(function () {
+      $("#helpfulBtn").click(function (e) {
+        e.preventDefault(); // if desired...
+        saveFeedback(true, '<%= article.id %>');
+        $("#notHelpfulBtn").removeClass("active");
+        $("#helpfulBtn").addClass("active");
+      });
+    });
+
+    $(function () {
+      $("#notHelpfulBtn").click(function (e) {
+        e.preventDefault(); // if desired...
+        saveFeedback(false, '<%= article.id %>');
+        $("#helpfulBtn").removeClass("active");
+        $("#notHelpfulBtn").addClass("active");
+      });
+    });
+  }
+
+
+  function saveFeedback(helpful, articleId) {
+    console.log(helpful, articleId)
+    $.ajax({
+      url: '/knowledge/feedback',
+      type: 'POST',
+      data: {
+        helpful: helpful,
+        articleId: articleId
+      },
+      success: function (response) {
+        console.log("Success", response);
+      },
+      error: function (err) {
+        console.log("Error", err);
+      }
+    });
+  }
+
+</script>
+

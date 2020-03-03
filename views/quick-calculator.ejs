@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <% if (settings.env === 'production') { %>
+  <!-- Google Tag Manager -->
+  <script>(function (w, d, s, l, i) {
+      w[l] = w[l] || [];
+      w[l].push({
+        'gtm.start': new Date().getTime(),
+        event: 'gtm.js'
+      });
+      var f = d.getElementsByTagName(s)[0],
+        j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : '';
+      j.async = true;
+      j.src =
+        'https://www.googletagmanager.com/gtm.js?id=' + i + dl + '&gtm_auth=ZkSR3eqIInvr2DcuJ6dsAA&gtm_preview=env-2&gtm_cookies_win=x';
+      f.parentNode.insertBefore(j, f);
+    })(window, document, 'script', 'dataLayer', 'GTM-MGCW997');</script>
+  <!-- End Google Tag Manager -->
+  <% } %>
+
+  <title>  <%=  locals.pageTitle  || "Commercial Direct" %>  </title>
+  <!-- Viewport mobile tag for sensible mobile support -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <!--
+      Stylesheets and Preprocessors
+      ==============================
+
+      You can always bring in CSS files manually with `<link>` tags, or asynchronously
+      using a solution like AMD (RequireJS).  Or, if you like, you can take advantage
+      of Sails' conventional asset pipeline (boilerplate Gruntfile).
+
+      By default, stylesheets from your `assets/styles` folder are included
+      here automatically (between STYLES and STYLES END). Both CSS (.css) and LESS (.less)
+      are supported. In production, your styles will be minified and concatenated into
+      a single file.
+
+      To customize any part of the built-in behavior, just edit `tasks/pipeline.js`.
+      For example, here are a few things you could do:
+
+          + Change the order of your CSS files
+          + Import stylesheets from other directories
+          + Use a different or additional preprocessor, like SASS, SCSS or Stylus
+  -->
+  <link rel="canonical" href="<%=: req.path | appendAppUrl %>"/>
+  <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:300,300i,400,400i,600,600i,700,700i,800,800i,900"
+        rel="stylesheet">
+
+  <link rel="stylesheet" href="/styles/frontend/bootstrap.min.css">
+  <link rel="stylesheet" href="/styles/frontend/main.css?x=1">
+  <% if (settings.env === 'production') { %>
+  <script type="application/ld+json">
+      {
+        "@context": "http://schema.org",
+        "@type": "Organization",
+        "name": "Commercial Direct",
+        "url": "https://commercialdirect.com",
+          "logo": "https://commercialdirect.com/images/admin/cd-logo.png",
+        "contactPoint": [{
+          "@type": "ContactPoint",
+          "telephone": "+1-844-346-2913",
+          "contactType": "customer service"
+        }],
+        "sameAs": [
+          "https://www.facebook.com/CommercialDirectLending/",
+          "https://twitter.com/CommDirectLoans",
+          "https://www.youtube.com/channel/UCzXoV851O4pxDnuWQ7KGfug"
+        ]
+      }
+    </script>
+  <% } %>
+</head>
+
+<body class="home">
+<%- partial('./quickCalculator/quickCalc.ejs') %>
+
+<script src="/js/jquery-1.11.2.min.js"></script>
+<script src="/js/jquery-ui.min.js"></script>
+<script src="/js/jquery.form.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/autoNumeric.min.js"></script>
+<script src="/js/frontend/jquery.main.js"></script>
+<script src="/js/jquery-mask.js"></script>
+
+
+</body>
+</html>

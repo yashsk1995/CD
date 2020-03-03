@@ -1,0 +1,145 @@
+<script src="/js/ckeditor/ckeditor.js"></script>
+
+<form method="POST" class="form" id="createForm" enctype="multipart/form-data"
+      action="/adminaccess/successstory/edit/<%= successStory.id %>">
+  <a href="/adminaccess/successstories" class="back-link">Back to All Stories &raquo;</a>
+  <h1 class="page-title">Edit Story</h1>
+  <div class="form-row">
+    <label for="post_title">Post Title</label>
+    <input type="text" id="title" name="title" value="<%= successStory.title || '' %>">
+  </div>
+  <div class="form-row">
+    <label for="slug">Slug</label>
+    <input type="text" id="slug" name="slug" value="<%= successStory.slug || '' %>">
+  </div>
+  <div class="text-editor">
+    <div class="tearea-wrap">
+      <label for="detail_text">Detail</label>
+      <textarea id="detail_text" name="detailHTML"><%= successStory.detailHTML || '' %></textarea>
+    </div>
+    <script>
+      CKEDITOR.replace('detail_text');
+    </script>
+  </div>
+  <div class="text-editor">
+    <div class="tearea-wrap">
+      <label for="detail_text">Body</label>
+      <textarea id="body_text" name="bodyHTML"><%= successStory.bodyHTML || '' %></textarea>
+    </div>
+    <script>
+      CKEDITOR.replace('body_text');
+    </script>
+  </div>
+
+  <div class="row">
+    <div class="col-6">
+      <div class="form-row">
+        <label for="seo-page-title">SEO: Page Title</label>
+        <input type="text" id="seo-page-title" name="pageTitle" value="<%= successStory.pageTitle || '' %>">
+      </div>
+    </div>
+    <div class="col-6">
+      <div class="form-row">
+        <label for="tags">SEO: Keywords</label>
+        <div class="tag-input">
+          <input type="text" class="tagsInput" id="tags" name="metaTags" value="<%= successStory.metaTags || '' %>">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-6">
+      <div class="form-row">
+        <div class="form-row">
+          <label for="purpose-tags">Purpose Tags</label>
+          <div class="tag-input">
+            <input type="text" class="tagsInput" id="purpose-tags" name="purposeTags"
+                   value="<%= successStory.purposeTags || '' %>">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-6">
+      <div class="form-row">
+        <label for="tags">Property Type Tags</label>
+        <div class="tag-input">
+          <input type="text" class="tagsInput" id="tags" name="propertyTypeTags"
+                 value="<%= successStory.propertyTypeTags || '' %>">
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-6">
+      <div class="form-row">
+        <label for="tags">Location Tags</label>
+        <div class="tag-input">
+          <input type="text" class="tagsInput" id="tags" name="locationTags"
+                 value="<%= successStory.locationTags || '' %>">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-6">
+      <div class="form-row">
+        <label for="keyword">SEO: Keywords</label>
+        <div class="tag-input">
+          <input type="text" class="tagsInput" id="keyword" name="keywords" value="<%= successStory.keywords || '' %>">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-row">
+    <div class="row">
+      <div class="col-6">
+        <label for="preview_image">Preview Image</label>
+        <input type="file" id="preview_image" name="previewImage" accept="image/*"
+               data-jcf='{"buttonText": "Choose", "placeholderText": "Choose a 1060x394 pixels photo"}'>
+      </div>
+      <div class="col-6">
+        <div class="form-row">
+          <div class="img-wrap">
+            <img src="<%= successStory.previewImageUrl %>" height="164" width="434" alt="image description">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <input type="hidden" id="status" name="status" value="Draft"/>
+  <input type="hidden" name="previewImageUrl" value="<%= successStory.previewImageUrl %>"/>
+
+  <div class="button-wrap">
+    <button type="submit" class="btn btn-outline">Save as Draft</button>
+    <a href="#" class="btn" id="publishBtn">Publish Story</a>
+  </div>
+</form>
+
+<script>
+  window.onload = function (e) {
+
+    $(function () {
+      $("#publishBtn").click(function (e) {
+        e.preventDefault();
+        handlePublish();
+      });
+    });
+  }
+  handlePublish = function () {
+    $('#status').val('Published');
+    $('<input />').attr('type', 'hidden')
+      .attr('name', 'publishedAt')
+      .attr('value', new Date())
+      .prependTo('#createForm');
+    $('#createForm').submit();
+  }
+
+</script>
+
+
+
+

@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="Mocha Tests" time="11.184999999999999" tests="66" failures="0">
+  <testsuite name="Root Suite" timestamp="2017-06-01T21:37:47" tests="0" failures="0" time="0">
+  </testsuite>
+  <testsuite name="Blog Categories Controller" timestamp="2017-06-01T21:37:51" tests="0" file="/Users/jonatan/Dev/apps/cd.com/test/integration/controllers/adminaccess/BlogCategoriesController.test.js" failures="0" time="0">
+  </testsuite>
+  <testsuite name="New Blog Category" timestamp="2017-06-01T21:37:51" tests="2" file="/Users/jonatan/Dev/apps/cd.com/test/integration/controllers/adminaccess/BlogCategoriesController.test.js" failures="0" time="0.062">
+    <testcase name="Blog Categories Controller New Blog Category should render new blog category page" time="0.049" classname="should render new blog category page">
+    </testcase>
+    <testcase name="Blog Categories Controller New Blog Category should create a blog category" time="0.013" classname="should create a blog category">
+    </testcase>
+  </testsuite>
+  <testsuite name="Edit Blog Category" timestamp="2017-06-01T21:37:51" tests="2" file="/Users/jonatan/Dev/apps/cd.com/test/integration/controllers/adminaccess/BlogCategoriesController.test.js" failures="0" time="0.039">
+    <testcase name="Blog Categories Controller Edit Blog Category should render edit blog category page" time="0.023" classname="should render edit blog category page">
+    </testcase>
+    <testcase name="Blog Categories Controller Edit Blog Category should edit existing blog category" time="0.016" classname="should edit existing blog category">
+    </testcase>
+  </testsuite>
+  <testsuite name="List Blog Categories" timestamp="2017-06-01T21:37:52" tests="2" file="/Users/jonatan/Dev/apps/cd.com/test/integration/controllers/adminaccess/BlogCategoriesController.test.js" failures="0" time="0.068">
+    <testcase name="Blog Categories Controller List Blog Categories should list all the blog categories" time="0.053" classname="should list all the blog categories">
+    </testcase>
+    <testcase name="Blog Categories Controller List Blog Categories should delete blog category" time="0.015" classname="should delete blog category">
+    </testcase>
+  </testsuite>
+  <testsuite name="Blog Post Controller" timestamp="2017-06-01T21:37:52" tests="0" file="/Users/jonatan/Dev/apps/cd.com/test/integration/controllers/adminaccess/BlogPostController.test.js" failures="0" time="0">
+  </testsuite>
+  <testsuite name="Create Blog Post" timestamp="2017-06-01T21:37:52" tests="2" file="/Users/jonatan/Dev/apps/cd.com/test/integration/controllers/adminaccess/BlogPostController.test.js" failures="0" time="2.564">
+    <testcase name="Blog Post Controller Create Blog Post should render new blog post page" time="0.015" classname="should render new blog post page">
+    </testcase>
+    <testcase name="Blog Post Controller Create Blog Post should create a blog post" time="2.549" classname="should create a blog post">
+    </testcase>
+  </testsuite>
+  <testsuite name="Edit Blog Post" timestamp="2017-06-01T21:37:55" tests="2" file="/Users/jonatan/Dev/apps/cd.com/test/integration/controllers/adminaccess/BlogPostController.test.js" failures="0" time="0.059">
+    <testcase name="Blog Post Controller Edit Blog Post should render edit blog post page" time="0.022" classname="should render edit blog post page">
+    </testcase>
+    <testcase name="Blog Post Controller Edit Blog Post should edit existing blog category" time="0.037" classname="should edit existing blog category">
+    </testcase>
+  </testsuite>
+  <testsuite name="List Blog Categories" timestamp="2017-06-01T21:37:55" tests="2" file="/Users/jonatan/Dev/apps/cd.com/test/integration/controllers/adminaccess/BlogPostController.test.js" failures="0" time="0.031">
+    <testcase name="Blog Post Controller List Blog Categories should list all the blog categories" time="0.02" classname="should list all the blog categories">
+    </testcase>
+    <testcase name="Blog Post Controller List Blog Categories should delete blog category" time="0.011" classname="should delete blog category">
+    </testcase>
+  </testsuite>
+  <testsuite name="FAQ Controller" timestamp="2017-06-01T21:37:55" tests="0" file="/Users/jonatan/Dev/apps/cd.com/test/integration/controllers/adminaccess/FrequentlyAskedQuestionController.test.js" failures="0" time="0">
+  </testsuite>
+  <testsuite name="New FAQ Page" timestamp="2017-06-01T21:37:55" tests="2" file="/Users/jonatan/Dev/apps/cd.com/test/integration/controllers/adminaccess/FrequentlyAskedQuestionController.test.js" failures="0" time="0.063">
+    <testcase name="FAQ Controller New FAQ Page should render new FAQ page" time="0.01" classname="should render new FAQ page">
+    </testcase>
+    <testcase name="FAQ Controller New FAQ Page should create a faq" time="0.053" classname="should create a faq">
+    </testcase>
+  </testsuite>
+  <testsuite name="Edit FAQ Page" timestamp="2017-06-01T21:37:55" tests="2" file="/Users/jonatan/Dev/apps/cd.com/test/integration/controllers/adminaccess/FrequentlyAskedQuestionController.test.js" failures="0" time="0.17300000000000001">
+    <testcase name="FAQ Controller Edit FAQ Page should render edit FAQ page" time="0.011" classname="should render edit FAQ page">
+    </testcase>
+    <testcase name="FAQ Controller Edit FAQ Page should edit a FAQ" time="0.162" classname="should edit a FAQ">
+    </testcase>
+  </testsuite>
+  <testsuite name="List FAQs" timestamp="2017-06-01T21:37:56" tests="3" file="/Users/jonatan/Dev/apps/cd.com/test/integration/controllers/adminaccess/FrequentlyAskedQuestionController.test.js" failures="0" time="0.221">
+    <testcase name="FAQ Controller List FAQs should list all FAQs" time="0.019" classname="should list all FAQs">
+    </testcase>
+    <testcase name="FAQ Controller List FAQs should publish faqs" time="0.163" classname="should publish faqs">
+    </testcase>
+    <testcase name="FAQ Controller List FAQs should delete faqs" time="0.039" classname="should delete faqs">
+    </testcase>
+  </testsuite>
+  <testsuite name="Knowledge Base Topic Controller" timestamp="2017-06-01T21:37:56" tests="0" file="/Users/jonatan/Dev/apps/cd.com/test/integration/controllers/adminaccess/KnowledgeBaseArticleController.test.js" failures="0" time="0">
+  </testsuite>
+  <testsuite name="New Knowledge Base Article" timestamp="2017-06-01T21:37:56" tests="2" file="/Users/jonatan/Dev/apps/cd.com/test/integration/controllers/adminaccess/KnowledgeBaseArticleController.test.js" failures="0" time="0.059000000000000004">
+    <testcase name="Knowledge Base Topic Controller New Knowledge Base Article should render new article page" time="0.017" classname="should render new article page">
+    </testcase>
+    <testcase name="Knowledge Base Topic Controller New Knowledge Base Article should create new article" time="0.042" classname="should create new article">
+    </testcase>
+  </testsuite>
+  <testsuite name="Edit Knowledge Base Article" timestamp="2017-06-01T21:37:57" tests="2" file="/Users/jonatan/Dev/apps/cd.com/test/integration/controllers/adminaccess/KnowledgeBaseArticleController.test.js" failures="0" time="0.076">
+    <testcase name="Knowledge Base Topic Controller Edit Knowledge Base Article should render edit article page" time="0.032" classname="should render edit article page">
+    </testcase>
+    <testcase name="Knowledge Base Topic Controller Edit Knowledge Base Article should edit an article" time="0.044" classname="should edit an article">
+    </testcase>
+  </testsuite>
+  <testsuite name="List Knowledge Base Articles" timestamp="2017-06-01T21:37:57" tests="3" file="/Users/jonatan/Dev/apps/cd.com/test/integration/controllers/adminaccess/KnowledgeBaseArticleController.test.js" failures="0" time="0.092">
+    <testcase name="Knowledge Base Topic Controller List Knowledge Base Articles should list all articles" time="0.016" classname="should list all articles">
+    </testcase>
+    <testcase name="Knowledge Base Topic Controller List Knowledge Base Articles should publish articles" time="0.034" classname="should publish articles">
+    </testcase>
+    <testcase name="Knowledge Base Topic Controller List Knowledge Base Articles should delete articles" time="0.042" classname="should delete articles">
+    </testcase>
+  </testsuite>
+  <testsuite name="Knowledge Base Topic Controller" timestamp="2017-06-01T21:37:57" tests="0" file="/Users/jonatan/Dev/apps/cd.com/test/integration/controllers/adminaccess/KnowledgeBaseTopicController.test.js" failures="0" time="0">
+  </testsuite>
+  <testsuite name="New Knowledge Base Topic" timestamp="2017-06-01T21:37:57" tests="2" file="/Users/jonatan/Dev/apps/cd.com/test/integration/controllers/adminaccess/KnowledgeBaseTopicController.test.js" failures="0" time="0.019999999999999997">
+    <testcase name="Knowledge Base Topic Controller New Knowledge Base Topic should render new topic page" time="0.009" classname="should render new topic page">
+    </testcase>
+    <testcase name="Knowledge Base Topic Controller New Knowledge Base Topic should create new topic" time="0.011" classname="should create new topic">
+    </testcase>
+  </testsuite>
+  <testsuite name="Edit Knowledge Base Topic" timestamp="2017-06-01T21:37:57" tests="2" file="/Users/jonatan/Dev/apps/cd.com/test/integration/controllers/adminaccess/KnowledgeBaseTopicController.test.js" failures="0" time="0.028999999999999998">
+    <testcase name="Knowledge Base Topic Controller Edit Knowledge Base Topic should render edit topic page" time="0.018" classname="should render edit topic page">
+    </testcase>
+    <testcase name="Knowledge Base Topic Controller Edit Knowledge Base Topic should edit a topic" time="0.011" classname="should edit a topic">
+    </testcase>
+  </testsuite>
+  <testsuite name="List Knowledge Base Topic" timestamp="2017-06-01T21:37:58" tests="2" file="/Users/jonatan/Dev/apps/cd.com/test/integration/controllers/adminaccess/KnowledgeBaseTopicController.test.js" failures="0" time="0.026">
+    <testcase name="Knowledge Base Topic Controller List Knowledge Base Topic should list all topics" time="0.015" classname="should list all topics">
+    </testcase>
+    <testcase name="Knowledge Base Topic Controller List Knowledge Base Topic should delete topic" time="0.011" classname="should delete topic">
+    </testcase>
+  </testsuite>
+  <testsuite name="Landing Page Controller" timestamp="2017-06-01T21:37:58" tests="0" file="/Users/jonatan/Dev/apps/cd.com/test/integration/controllers/adminaccess/LandingPageController.test.js" failures="0" time="0">
+  </testsuite>
+  <testsuite name="New Landing Page" timestamp="2017-06-01T21:37:58" tests="2" file="/Users/jonatan/Dev/apps/cd.com/test/integration/controllers/adminaccess/LandingPageController.test.js" failures="0" time="2.408">
+    <testcase name="Landing Page Controller New Landing Page should render new landing page" time="0.011" classname="should render new landing page">
+    </testcase>
+    <testcase name="Landing Page Controller New Landing Page should create a new landing page" time="2.397" classname="should create a new landing page">
+    </testcase>
+  </testsuite>
+  <testsuite name="Edit Landing Page" timestamp="2017-06-01T21:38:00" tests="2" file="/Users/jonatan/Dev/apps/cd.com/test/integration/controllers/adminaccess/LandingPageController.test.js" failures="0" time="2.151">
+    <testcase name="Landing Page Controller Edit Landing Page should render edit landing page" time="0.014" classname="should render edit landing page">
+    </testcase>
+    <testcase name="Landing Page Controller Edit Landing Page should edit a landing page" time="2.137" classname="should edit a landing page">
+    </testcase>
+  </testsuite>
+  <testsuite name="List Landing Page" timestamp="2017-06-01T21:38:03" tests="2" file="/Users/jonatan/Dev/apps/cd.com/test/integration/controllers/adminaccess/LandingPageController.test.js" failures="0" time="0.028999999999999998">
+    <testcase name="Landing Page Controller List Landing Page should list all landing page" time="0.016" classname="should list all landing page">
+    </testcase>
+    <testcase name="Landing Page Controller List Landing Page should delete landing page" time="0.013" classname="should delete landing page">
+    </testcase>
+  </testsuite>
+  <testsuite name="LoginController" timestamp="2017-06-01T21:38:03" tests="0" file="/Users/jonatan/Dev/apps/cd.com/test/integration/controllers/adminaccess/LoginController.test.js" failures="0" time="0">
+  </testsuite>
+  <testsuite name="Login" timestamp="2017-06-01T21:38:03" tests="1" file="/Users/jonatan/Dev/apps/cd.com/test/integration/controllers/adminaccess/LoginController.test.js" failures="0" time="0.104">
+    <testcase name="LoginController Login should login user and redirect to blogcategories" time="0.104" classname="should login user and redirect to blogcategories">
+    </testcase>
+  </testsuite>
+  <testsuite name="Forgot Password" timestamp="2017-06-01T21:38:03" tests="1" file="/Users/jonatan/Dev/apps/cd.com/test/integration/controllers/adminaccess/LoginController.test.js" failures="0" time="0.01">
+    <testcase name="LoginController Forgot Password should render forgot password page" time="0.01" classname="should render forgot password page">
+    </testcase>
+  </testsuite>
+  <testsuite name="Unauthorized Access" timestamp="2017-06-01T21:38:03" tests="9" file="/Users/jonatan/Dev/apps/cd.com/test/integration/controllers/adminaccess/LoginController.test.js" failures="0" time="0.044">
+    <testcase name="LoginController Unauthorized Access should redirect to login page from /adminaccess/blogcategories" time="0.004" classname="should redirect to login page from /adminaccess/blogcategories">
+    </testcase>
+    <testcase name="LoginController Unauthorized Access should redirect to login page from /adminaccess/blogposts" time="0.004" classname="should redirect to login page from /adminaccess/blogposts">
+    </testcase>
+    <testcase name="LoginController Unauthorized Access should redirect to login page from /adminaccess/faqs" time="0.005" classname="should redirect to login page from /adminaccess/faqs">
+    </testcase>
+    <testcase name="LoginController Unauthorized Access should redirect to login page from /adminaccess/knowledgebasetopics" time="0.004" classname="should redirect to login page from /adminaccess/knowledgebasetopics">
+    </testcase>
+    <testcase name="LoginController Unauthorized Access should redirect to login page from /adminaccess/knowledgebasearticles" time="0.004" classname="should redirect to login page from /adminaccess/knowledgebasearticles">
+    </testcase>
+    <testcase name="LoginController Unauthorized Access should redirect to login page from /adminaccess/landingpages" time="0.004" classname="should redirect to login page from /adminaccess/landingpages">
+    </testcase>
+    <testcase name="LoginController Unauthorized Access should redirect to login page from /adminaccess/successstories" time="0.01" classname="should redirect to login page from /adminaccess/successstories">
+    </testcase>
+    <testcase name="LoginController Unauthorized Access should redirect to login page from /adminaccess/users" time="0.005" classname="should redirect to login page from /adminaccess/users">
+    </testcase>
+    <testcase name="LoginController Unauthorized Access should redirect to login page from /adminaccess/whitelistedips" time="0.004" classname="should redirect to login page from /adminaccess/whitelistedips">
+    </testcase>
+  </testsuite>
+  <testsuite name="Success Story Controller" timestamp="2017-06-01T21:38:03" tests="0" file="/Users/jonatan/Dev/apps/cd.com/test/integration/controllers/adminaccess/SuccessStoryController.test.js" failures="0" time="0">
+  </testsuite>
+  <testsuite name="New Success Story" timestamp="2017-06-01T21:38:03" tests="2" file="/Users/jonatan/Dev/apps/cd.com/test/integration/controllers/adminaccess/SuccessStoryController.test.js" failures="0" time="1.232">
+    <testcase name="Success Story Controller New Success Story should render new success story page" time="0.018" classname="should render new success story page">
+    </testcase>
+    <testcase name="Success Story Controller New Success Story should create a new success story " time="1.214" classname="should create a new success story ">
+    </testcase>
+  </testsuite>
+  <testsuite name="Edit Success Story" timestamp="2017-06-01T21:38:05" tests="2" file="/Users/jonatan/Dev/apps/cd.com/test/integration/controllers/adminaccess/SuccessStoryController.test.js" failures="0" time="1.231">
+    <testcase name="Success Story Controller Edit Success Story should render edit success story page" time="0.01" classname="should render edit success story page">
+    </testcase>
+    <testcase name="Success Story Controller Edit Success Story should edit a success story" time="1.221" classname="should edit a success story">
+    </testcase>
+  </testsuite>
+  <testsuite name="List Success Stories" timestamp="2017-06-01T21:38:06" tests="3" file="/Users/jonatan/Dev/apps/cd.com/test/integration/controllers/adminaccess/SuccessStoryController.test.js" failures="0" time="0.10400000000000001">
+    <testcase name="Success Story Controller List Success Stories should list all success stories" time="0.016" classname="should list all success stories">
+    </testcase>
+    <testcase name="Success Story Controller List Success Stories should publish success stories" time="0.05" classname="should publish success stories">
+    </testcase>
+    <testcase name="Success Story Controller List Success Stories should delete success stories" time="0.038" classname="should delete success stories">
+    </testcase>
+  </testsuite>
+  <testsuite name="User Controller" timestamp="2017-06-01T21:38:06" tests="0" file="/Users/jonatan/Dev/apps/cd.com/test/integration/controllers/adminaccess/UserController.test.js" failures="0" time="0">
+  </testsuite>
+  <testsuite name="New User" timestamp="2017-06-01T21:38:06" tests="2" file="/Users/jonatan/Dev/apps/cd.com/test/integration/controllers/adminaccess/UserController.test.js" failures="0" time="0.105">
+    <testcase name="User Controller New User should render new user page" time="0.01" classname="should render new user page">
+    </testcase>
+    <testcase name="User Controller New User should create a new user" time="0.095" classname="should create a new user">
+    </testcase>
+  </testsuite>
+  <testsuite name="Edit User" timestamp="2017-06-01T21:38:07" tests="2" file="/Users/jonatan/Dev/apps/cd.com/test/integration/controllers/adminaccess/UserController.test.js" failures="0" time="0.11499999999999999">
+    <testcase name="User Controller Edit User should render edit user page" time="0.011" classname="should render edit user page">
+    </testcase>
+    <testcase name="User Controller Edit User should edit a user" time="0.104" classname="should edit a user">
+    </testcase>
+  </testsuite>
+  <testsuite name="List Users" timestamp="2017-06-01T21:38:07" tests="2" file="/Users/jonatan/Dev/apps/cd.com/test/integration/controllers/adminaccess/UserController.test.js" failures="0" time="0.025">
+    <testcase name="User Controller List Users should list all users" time="0.013" classname="should list all users">
+    </testcase>
+    <testcase name="User Controller List Users should delete user" time="0.012" classname="should delete user">
+    </testcase>
+  </testsuite>
+  <testsuite name="Whitelisted IP Controller" timestamp="2017-06-01T21:38:07" tests="0" file="/Users/jonatan/Dev/apps/cd.com/test/integration/controllers/adminaccess/WhitelistedIPController.test.js" failures="0" time="0">
+  </testsuite>
+  <testsuite name="New Whitelisted IP" timestamp="2017-06-01T21:38:07" tests="2" file="/Users/jonatan/Dev/apps/cd.com/test/integration/controllers/adminaccess/WhitelistedIPController.test.js" failures="0" time="0.020999999999999998">
+    <testcase name="Whitelisted IP Controller New Whitelisted IP should render new whitelisted IP page" time="0.011" classname="should render new whitelisted IP page">
+    </testcase>
+    <testcase name="Whitelisted IP Controller New Whitelisted IP should create a new whitelisted IP" time="0.01" classname="should create a new whitelisted IP">
+    </testcase>
+  </testsuite>
+  <testsuite name="List Whitelisted IP" timestamp="2017-06-01T21:38:08" tests="2" file="/Users/jonatan/Dev/apps/cd.com/test/integration/controllers/adminaccess/WhitelistedIPController.test.js" failures="0" time="0.024">
+    <testcase name="Whitelisted IP Controller List Whitelisted IP should list all whitelisted IPs" time="0.015" classname="should list all whitelisted IPs">
+    </testcase>
+    <testcase name="Whitelisted IP Controller List Whitelisted IP should delete whitelisted IP" time="0.009" classname="should delete whitelisted IP">
+    </testcase>
+  </testsuite>
+</testsuites>

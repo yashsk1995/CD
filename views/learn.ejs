@@ -1,0 +1,96 @@
+<main id="main">
+  <div class="inner-banner">
+    <div class="bg-cover">
+      <img src="/images/frontend/img03.jpg" alt="image description">
+    </div>
+    <div class="container text-center">
+      <h1>Learn</h1>
+      <nav id="nav-in-hero">
+        <ul>
+          <li>
+            <a href="/blog" nav-link>Our Blog</a>
+          </li>
+          <li>
+            <a href="/knowledge" nav-link>Knowledge Base</a>
+          </li>
+          <li>
+            <a href="/faq" nav-link>FAQ</a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+  <div class="container">
+    <form class="content-search-form" method="get" action="/search">
+      <input type="search" name="q" class="form-control">
+      <button type="submit" class="btn btn-default"><span class="hidden-xs">Search</span><span class="hidden-sm hidden-md hidden-lg"><span class="icon-search"></span></span></button>
+    </form>
+  </div>
+
+  <section class="blog-section">
+    <div class="container">
+      <div class="text-holder">
+        <h2 class="h1">Property Types</h2>
+        <div id="propertyTypesLearn"> <%- property_types %> </div>
+      </div>
+    </div>
+  </section>
+  <section class="why-choose-section blog-section">
+      <div class="bg-image bg-cover">
+          <img src="/images/frontend/img01.jpg" alt="image description">
+      </div>
+    <div class="container" style="color:white;">
+      <div class="text-holder">
+        <h2 class="h1">Programs</h2>
+        <div id="programsLearn" style="color:white"> <%- programs %> </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="blog-section article">
+    <div class="container">
+      <div class="text-holder">
+        <h2 class="h1">Our Process</h2>
+        <div id="newSection"> <%- new_section %> </div>
+         <a href="<%- new_section_link %>" nav-link class="btn btn-outline">Learn More</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="why-choose-section dark">
+      <div class="bg-image bg-cover">
+        <img src="/images/frontend/img06.jpg" alt="image description">
+      </div>
+      <div class="container">
+        <div class="text-holder">
+          <h2 class="h1">Articles</h2>
+          <!-- <p>Commercial mortgage terminology made simple.</p> -->
+          <div id="knowledgeBaseLearn"> <%- articles %> </div>
+          <a href="/blog" nav-link class="btn btn-outline">Check Our Blog</a>
+        </div>
+      </div>
+    </section>
+
+  <section class="blog-section faq">
+      <div class="container">
+          <div class="text-holder rights">
+            <h2 class="h1">Knowledge Base</h2>
+            <!-- <p>Commercial mortgage terminology made simple.</p> -->
+            <div id="knowledgeBaseLearn"> <%- knowledge_base %> </div>
+            <a href="/knowledge" nav-link class="btn btn-outline">Check Our Knowledge Base</a>
+          </div>
+        </div>
+    </section>
+
+  <section class="blog-section faq">
+    <div class="container">
+      <div class="text-holder">
+        <h2 class="h1">Frequently Asked Questions</h2>
+        <!-- <p>Helpful answers to your most pressing questions.</p> -->
+        <div id="faqsLearn"> <%- frequently_asked_questions %> </div>
+        <a href="/faq" nav-link class="btn btn-outline">Check Our FAQ</a>
+      </div>
+    </div>
+  </section>
+
+</main>

@@ -1,0 +1,169 @@
+<div class="loan-calculator-holder">
+  <form class="basic-loan-calculator" id="basic-loan-calculator" name="quickCal" method="POST"
+        action="/quick-calculator/calculate" target="_parent">
+    <input type="text" name="keyword" value="<%= urlParams.keyword || '' %>" class="hidden"/>
+    <input type="text" name="adpos" value="<%= urlParams.adpos || '' %>" class="hidden"/>
+    <input type="text" name="utm_content" value="<%= urlParams.utm_content || '' %>" class="hidden"/>
+    <input type="text" name="utm_source" value="<%= urlParams.utm_source || '' %>" class="hidden"/>
+    <input type="text" name="utm_medium" value="<%= urlParams.utm_medium || '' %>" class="hidden"/>
+    <input type="text" name="utm_campaign" value="<%= urlParams.utm_campaign || '' %>" class="hidden"/>
+    <input type="text" name="campaignid" value="<%= urlParams.campaignid || '' %>" class="hidden"/>
+    <fieldset class="step-section">
+      <div class="form-row">
+        <label for="worth" class="inline-text">I would like to borrow </label>
+        <div class="input-wrap input-wrap-price">
+          <label class="hide-labels">Loan Amount</label>
+          <input type="text" aria-labelledby="Loan Amount" class="form-control number-format" id="loan_amount" name="loanAmount">
+        </div>
+        <label for="loan" class="inline-text">to</label>
+        <div class="select-wrap">
+          <select id="loan" aria-labelledby="Loan Purpose" class="calculator" name="loanType">
+            <option value="" class="hidden">do what</option>
+            <% _.each(loanTypes, function(type) { %>
+            <option value="<%= type.name %>"><%= type.name %></option>
+            <% }) %>
+          </select>
+        </div>
+      </div>
+      <div class="form-row">
+        <label for="property_type" class="inline-text"> a </label>
+        <div class="select-wrap">
+          <label class="hide-labels">Property Type</label>
+          <select id="property_type" aria-labelledby="Property Type" class="calculator" name="propertyType" required>
+            <option value="" class="hidden">property type</option>
+            <% _.each(propertyTypes, function(type) { %>
+            <option value="<%= type.value %>"><%= type.name %></option>
+            <% }) %>
+          </select>
+        </div>
+        <label for="property_price" class="inline-text">that is worth </label>
+        <div class="input-wrap input-wrap-price">
+          <label class="hide-labels">Property Price</label>
+          <input type="text" aria-labelledby="Property Price" class="form-control number-format" id="property_price" name="propertyPrice"
+                 placeholder="estimates">
+        </div>
+        <span class="inline-text"> <a href="#"
+                                      title="Enter the property's value or purchase price?"
+                                      class="tooltip-link">?</a></span>
+      </div>
+    </fieldset>
+    <fieldset class="step-section">
+      <div class="form-row">
+        <label for="loan" class="inline-text">The property is in</label>
+        <div class="input-wrap">
+          <label class="hide-labels">Property City</label>
+          <input type="text" aria-labelledby="Property City" class="form-control" id="city" name="propertyCity" placeholder="city">
+        </div>
+        <div class="select-wrap state">
+          <label class="hide-labels">Property State</label>
+          <select id="state" aria-labelledby="Property State" class="calculator" name="propertyState">
+            <option value="" class="hidden">state</option>
+            <% _.each(states, function(state) { %>
+            <option value="<%= state.key %>"><%= state.name %></option>
+            <% }) %>
+          </select>
+        </div>
+      </div>
+      <div class="form-row">
+        <span class="inline-text">and is: </span>
+        <div class="select-wrap occupied">
+          <label class="hide-labels">Property Type</label>
+          <select id="occupied" aria-labelledby="Property Type" class="calculator" name="propertyOccupancy">
+            <option value="" disabled class="hidden">choose</option>
+            <option value="owner_occupied">Owner occupied</option>
+            <option value="rented">Rented to tenants (all or part)</option>
+            <!-- <option value="vacant">vacant</option> -->
+
+          </select>
+        </div>
+        <span class="inline-text"> <a href="#"
+                                      title="Is this an investment loan?"
+                                      class="tooltip-link">?</a></span>
+      </div>
+    </fieldset>
+    <fieldset class="step-section">
+      <div class="form-row">
+        <label for="loan" class="inline-text">I need to close within</label>
+        <div class="select-wrap source">
+          <label class="hide-labels">Close Within</label>
+          <select id="close_within" aria-labelledby="Loan Processing Time" class="calculator" name="closeWithin">
+            <option value="" class="hidden">#days</option>
+            <% _.each(chooseWithin, function(item) { %>
+            <option value="<%= item %>"><%= item %></option>
+            <% }) %>
+          </select>
+        </div>
+      </div>
+      <div class="form-row">
+        <label for="loan" class="inline-text">and my credit score is</label>
+        <div class="select-wrap score">
+          <label class="hide-labels">Credit Score</label>
+          <select id="credit_score" aria-labelledby="Credit Score" class="calculator" name="creditScore">
+            <option value="" class="hidden">choose range</option>
+            <% _.each(creditScores, function(score) { %>
+            <option value="<%= score.value %>"><%= score.key %></option>
+            <% }) %>
+          </select>
+        </div>
+        <a href="#"
+           title="Estimate your FICO credit score."
+           class="tooltip-link">?</a>
+      </div>
+    </fieldset>
+  </form>
+  <div class="loan-customizer-link text-center">
+    <a href="/advance-calculator" target="_parent">Also, check our Loan Customizer &raquo;</a>
+  </div>
+
+  <div id="specialPTypeModal" class="modal"
+       style="display:none">
+    <div class="content">
+      <div class="header">
+        <span id="closePropModalLink" class="close">&times;</span>
+        <h3>Important Information</h3>
+      </div>
+      <div class="body">
+        <div class="text">
+          <p>
+            Please contact us over the phone at 1-844-346-2913 or at info@shf-commercialdirect.com to discuss your loan options
+          </p>
+        </div>
+        <div class="form-row no-indent">
+          <button id="closePropModalBtn" class="btn">OK</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  window.onload = function (e) {
+    initPropModal();
+  }
+  // It has been defined as a function because it needs to be called from homepage aswell
+  function initPropModal() {
+    var loanLookup = JSON.parse('<%- JSON.stringify(loanLookup || {})%>')
+    setLoanLookup(loanLookup)
+
+    $("#closePropModalBtn").click(function (e) {
+      e.preventDefault(); // if desired...
+      $("#specialPTypeModal").css('display', 'none');
+    });
+
+    $("#closePropModalLink").click(function (e) {
+      e.preventDefault(); // if desired...
+      $("#specialPTypeModal").css('display', 'none');
+    });
+
+    $("#property_type").change(function (e) {
+      var val = $("#property_type").val();
+      if (val == "2 To 4 Family" || val == "Single Family" || val == "Residential Condo") {
+        $("#specialPTypeModal").css('display', 'block');
+        $("#property_type").val("");
+        var countrySelect = document.getElementById('property_type');
+        var customFormInstance = jcf.getInstance(countrySelect);
+        customFormInstance.refresh();
+      }
+    });
+  }
+
+</script>

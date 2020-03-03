@@ -1,0 +1,72 @@
+<header id="header">
+    <div class="container">
+      <div class="logo">
+        <div class="app">
+          <a href="/" nav-link>
+            <img src="/images/frontend/CD_web-1.jpg" class="normal" alt="Commercial Direct Logo">
+            <img src="/images/frontend/mobile-logo.jpg" class="mobile-logo" alt="Commercial Direct Logo">
+          </a>
+        </div>
+      </div>
+      <a href="#" class="nav-opener"><span>menu</span></a>
+      <nav id="nav">
+        <ul>
+         <li class="dropdown">
+            <a href="" class="dropdown-toggle" data-toggle="dropdown">
+              Start Here
+              <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu">
+              <li><a href="https://commercialdirect.com/about/" nav-link> About </a></li>
+              <li><a href="/category/success-stories" nav-link>Success Stories </a></li>
+              <li><a href="/knowledgeBase/forms-you-may-need" nav-link> Forms You May Need </a></li>
+            </ul>
+          </li>
+          
+          <li class="dropdown">
+            <a href="" class="dropdown-toggle" data-toggle="dropdown">
+              Shop Loans
+              <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu">
+              <li><a href="/commercial-mortgage-refinance" nav-link> Refinance </a></li>
+              <li><a href="/commercial-mortgage-purchase" nav-link> Purchase </a></li>            
+            </ul>
+          </li>
+          <li class="dropdown">
+            <a href="" class="dropdown-toggle" data-toggle="dropdown">
+              Content Binge
+              <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu">
+              <li><a href="/videos" nav-link> Videos </a></li>
+              <li><a href="/category/blog" nav-link> Blog </a></li>            
+            </ul>
+          </li>       
+          <li><a href="/">Customize &amp; Apply</a></li>
+         
+        </ul>
+        <ul class="header-info-menu">
+          
+          <%
+          if(typeof req.session.authenticated == 'undefined' || !req.session.authenticated){
+              %>
+              <li><a class="header-login-btn" href="/login">Log In</a></li>
+              <%
+          }
+          else {
+              %>
+              <li><a class="header-login-btn" id="logout_btn">Log Out</a></li>
+              <%
+          }
+          %>
+      </ul>
+      </nav>
+      <div class="contact-detail" style="text-align: right;">
+          Call Us Today:
+        <a href="tel:18443462913"> 1-844-346-2913</a>
+      </div>
+    </div>
+    
+  </header>
+  

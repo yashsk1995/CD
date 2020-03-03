@@ -1,0 +1,110 @@
+<script src="/js/ckeditor/ckeditor.js"></script>
+
+<h1 class="page-title"><%= title %></h1>
+<div class="content-modification">
+  <form method="POST" class="form" id="createForm" action="/adminaccess/staticcontent-learn">
+
+    <div class="form-row">
+        <div class="text-editor">
+          <div class="tearea-wrap">
+            <label for="property_types">Property Types</label>
+            <textarea id="property_types" name="propertyTypes"><%= content.propertyTypes || '' %></textarea>
+          </div>
+          <script>
+            CKEDITOR.replace('property_types');
+          </script>
+        </div>
+    </div>
+
+    <div class="form-row">
+        <div class="text-editor">
+          <div class="tearea-wrap">
+            <label for="programs">Programs</label>
+            <textarea id="programs" name="programs"><%= content.programs || '' %></textarea>
+          </div>
+          <script>
+            CKEDITOR.replace('programs');
+          </script>
+        </div>
+    </div>
+
+    <div class="form-row">
+      <div class="text-editor">
+        <div class="tearea-wrap">
+          <label for="new_section">Our Process</label>
+          <textarea id="new_section" name="newSection"><%= content.newSection || '' %></textarea>
+        </div>
+        <script>
+          CKEDITOR.replace('new_section');
+        </script>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="text-editor">
+        <div class="tearea-wrap">
+          <label for="new_section_link">Our Process - Link</label>
+          <input type="text" id="new_section_link" name="newSectionLink" value="<%= content.newSectionLink || '' %>"/>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-row">
+        <div class="text-editor">
+          <div class="tearea-wrap">
+            <label for="articles">Articles</label>
+            <textarea id="articles" name="articles"><%= content.articles || '' %></textarea>
+          </div>
+          <script>
+            CKEDITOR.replace('articles');
+          </script>
+        </div>
+    </div>
+
+    <div class="form-row">
+        <div class="text-editor">
+          <div class="tearea-wrap">
+            <label for="knowledge_base">Knowledge Base</label>
+            <textarea id="knowledge_base" name="knowledgeBase"><%= content.knowledgeBase || '' %></textarea>
+          </div>
+          <script>
+            CKEDITOR.replace('knowledge_base');
+          </script>
+        </div>
+    </div>
+
+    <div class="form-row">
+        <div class="text-editor">
+          <div class="tearea-wrap">
+            <label for="frequently_asked_questions">Frequently Asked Questions</label>
+            <textarea id="frequently_asked_questions" name="frequentlyAskedQuestions"><%= content.frequentlyAskedQuestions || '' %></textarea>
+          </div>
+          <script>
+            CKEDITOR.replace('frequently_asked_questions');
+          </script>
+        </div>
+    </div>
+
+    <div class="button-wrap">
+      <button type="submit" class="btn btn-outline">Save</button>
+    </div>
+  </form>
+
+</div>
+
+<% if(message) { %>
+<script>
+  window.onload = function (e) {
+    window.alert('<%= message %>')
+  }
+</script>
+<% } %>
+
+<% if(title == "Static Content" || title == "Static Content - Learn") { %>
+  <script>
+    window.onload = function (e) {
+      
+      $(".collapse").collapse('show');
+    }
+  </script>
+  <% } %>

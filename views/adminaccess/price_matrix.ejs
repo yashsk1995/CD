@@ -1,0 +1,53 @@
+
+<h1 class="page-title">Pricing Matrix</h1>
+<div class="content-modification" id="price_matrix_section">
+  <form method="POST" class="form" id="price_matrix_form" action="/adminaccess/pricematrix">
+    <div class="price-matrix">
+      <% var tiers = loanLookupKeys['tiers'];
+      var tindex = 0;
+      _.each(tiers, function (tier) { %>
+      <h2><%= tier %></h2>
+      <table>
+        <tr>
+          <th></th>
+          <th>LTV</th>
+          <th colspan="<%= (loanLookupKeys['ltvs'].length - 1) %>"></th>
+        </tr>
+
+        <% var creditScoreKeys = loanLookupKeys['creditScores']; %>
+        <% var ltvKeys = loanLookupKeys['ltvs']%>
+        <tr>
+          <th>FICO</th>
+          <% _.each(ltvKeys, function (ltvKey) { %>
+          <th><%= ltvKey %>%</th>
+          <%}) %>
+        </tr>
+		 <% _.each(creditScoreKeys, function (crKey,index) { %>
+        
+        <tr>
+          <th>
+            <%= creditScoreKeys[index]%>
+          </th>
+         <%_.each(ltvKeys, function (ltvKey) { %>
+          <% var ltvKey_val = loanLookupKeys['ltvs_vals'][ltvKey]%>
+          <td>
+            <input class="price_input" type="number" step="any" name="<%='ltv_matrix[' + tindex + '][rates][' + ltvKey_val + '][' + crKey + ']'%>" value="<%=loanLookup && loanLookup['ltv_matrix'] ? loanLookup['ltv_matrix'][tindex]['rates'][ltvKey_val][crKey] || '' : ''%>">
+          </td>
+          <%})%>
+        </tr>
+        <%})%>
+      </table>
+      <br/><br/>
+      <% 
+      tindex++;
+      }) %>
+    </div>
+    <div class="button-wrap">
+      <span class="btn btn-outline" id="price_matrix_save_btn">Save</span>
+    </div>
+  </form>
+
+</div>
+
+
+

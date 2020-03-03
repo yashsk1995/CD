@@ -1,0 +1,134 @@
+<script src="/js/ckeditor/ckeditor.js"></script>
+
+<form method="POST" class="form" id="createForm" enctype="multipart/form-data" action="/adminaccess/blogpost/create">
+  <a href="/adminaccess/blogposts" class="back-link">Back to All Posts &raquo;</a>
+  <h1 class="page-title">New Post</h1>
+  <div class="form-row">
+    <label for="post_title">Post Title</label>
+    <input type="text" id="title" name="title" value="<%= blogPost.title || '' %>">
+    <p><%= error.title || '' %></p>
+  </div>
+  <div class="form-row">
+    <label for="slug">Slug</label>
+    <input type="text" id="slug" name="slug" value="<%= blogPost.slug || '' %>">
+    <p><%= error.slug || '' %></p>
+  </div>
+  <div class="text-editor">
+    <div class="tearea-wrap">
+      <label for="body_text">Body HTML</label>
+      <textarea id="body_text" name="bodyHTML"><%= blogPost.bodyHTML || '' %></textarea>
+    </div>
+    <script>
+      CKEDITOR.replace('body_text');
+    </script>
+  </div>
+  <div class="row">
+    <div class="col-5">
+      <div class="form-row">
+        <label for="author">Author</label>
+        <input type="text" id="author" name="authorName" value="<%= blogPost.authorName || '' %>">
+      </div>
+    </div>
+    <div class="col-7">
+      <div class="form-row">
+        <label for="seo-page-title">SEO: Page Title</label>
+        <input type="text" id="seo-page-title" name="pageTitle" value="<%= blogPost.pageTitle || '' %>">
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-5">
+      <div class="form-row">
+        <label for="tags">Tags</label>
+        <div class="tag-input">
+          <input type="text" class="tagsInput" id="tags" name="metaTags" value="<%= blogPost.metaTags || '' %>">
+        </div>
+      </div>
+    </div>
+    <div class="col-7">
+      <div class="form-row">
+        <label for="keyword">SEO: Keywords</label>
+        <div class="tag-input">
+          <input type="text" class="tagsInput" id="keyword" name="keywords" value="<%= blogPost.keywords || '' %>">
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-5">
+      <div class="form-row">
+        <label for="category">Category</label>
+        <select id="category" name="category">
+          <option value="" class="hidden">Choose Category</option>
+          <% _.each(blogCategories, function(category) { %>
+          <option <%= blogPost.category == category.name ? 'selected' : '' %>
+            name="<%= category.name %>"> <%= category.name %></option>
+          <% }) %>
+        </select>
+      </div>
+    </div>
+  </div>
+  <input type="hidden" value="Draft" id="status" name="status"/>
+
+  <div class="form-row">
+    <div class="row">
+      <div class="col-5">
+        <label for="preview_image">Preview Image</label>
+        <input type="file" id="preview_image" name="previewImage"
+               data-jcf='{"buttonText": "Choose", "placeholderText": "Choose a 1060x394 pixels photo"}'>
+      </div>
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="row">
+      <div class="col-5">
+        <label for="preview_image">Preview Image Alt Text</label>
+        <input type="text" id="preview_image_alt" name="previewImageAlt" placeholder="Alt text for preview image">
+      </div>
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="row">
+      <div class="col-5">
+        <label for="header_image">Header Image</label>
+        <input type="file" id="header_image" name="headerImage"
+               data-jcf='{"buttonText": "Choose", "placeholderText": "Choose a 1060x394 pixels photo"}'>
+      </div>
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="row">
+      <div class="col-5">
+        <label for="header_image">Header Image Alt Text</label>
+        <input type="text" id="header_image_alt" name="headerImageAlt" placeholder="Alt text for header image">
+      </div>
+    </div>
+  </div>
+
+
+  <div class="button-wrap">
+    <button type="submit" class="btn btn-outline">Save as Draft</button>
+    <a href="#" class="btn" id="publishBtn">Publish Post</a>
+  </div>
+</form>
+
+<script>
+  window.onload = function (e) {
+
+    $(function () {
+      $("#publishBtn").click(function (e) {
+        e.preventDefault();
+        handlePublish();
+      });
+    });
+  }
+  handlePublish = function () {
+    $('#status').val('Published');
+    $('<input />').attr('type', 'hidden')
+      .attr('name', 'publishedAt')
+      .attr('value', new Date())
+      .prependTo('#createForm');
+    $('#createForm').submit();
+  }
+
+</script>

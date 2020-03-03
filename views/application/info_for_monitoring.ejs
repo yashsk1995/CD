@@ -1,0 +1,296 @@
+<div class="application-content">
+  <div class="application-header">
+    <h2>11. Information For Government Monitoring Purposes</h2>
+    <p>(It will take 3 minutes to complete)</p>
+    <p>The following information is requested by the Federal Government for certain types of loans related to a dwelling
+      in order to monitor the lender’s compliance with equal credit opportunity, fair housing and home mortgage
+      disclosure laws. You are not required to furnish this information, but are encouraged to do so. The law provides
+      that a lender may not discriminate either on the basis of this information, or on whether you choose to furnish
+      it. If you furnish this information, please provide both ethnicity and race. For race, you may check more than one
+      designation. If you do not furnish ethnicity, race, or sex, under Federal regulations, this lender is required to
+      note the information on the basis of visual observation and surname if you have made this application in person.
+      If you do not wish to furnish the information, please check the box below. (Lender must review the above material
+      to assure that the disclosures satisfy all requirements to which the lender is subject under applicable state law
+      for the particular type of loan applied for.)</p>
+  </div>
+  <form id="monitoringInfoForm" action="/application/info-for-monitoring" method="post" class="result-form">
+    <h3>Borrower</h3>
+    <input type="hidden" value=true id="hiddenStatus" name="isSubmitted" />
+    <div class="row flex-row">
+      <div class="col-xs-12">
+        <div class="form-group">
+                        <span class="property-info block">
+                          <input type="radio" id="applicantNotProvidingInfo" name="applicantNotProvidingInfo"
+                                 value="Yes"
+                            <%= application.applicantNotProvidingInfo == 'Yes' ? 'checked' : '' %>>
+                          <label for="applicantNotProvidingInfo">I do not wish to furnish this information.</label>
+                        </span>
+        </div>
+      </div>
+      <div class="col-xs-12 col-sm-6">
+        <div class="form-group">
+          <label for="applicantEthnicity">Ethnicity</label>
+          <div class="select-wrap">
+            <select name="applicantEthnicity" id="applicantEthnicity">
+              <option value="" class="hidden">Choose</option>
+              <option <%= application.applicantEthnicity == 'Hispanic or Latino' ? 'selected' : '' %>>Hispanic or
+                Latino
+              </option>
+              <option <%= application.applicantEthnicity == 'Not Hispanic or Latino' ? 'selected' : '' %>>Not Hispanic
+                or Latino
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="col-xs-12 col-sm-6">
+        <div class="form-group">
+          <label for="applicantRace">Race</label>
+          <div class="select-wrap">
+            <select name="applicantRace" id="applicantRace">
+              <option value="" class="hidden">Choose</option>
+              <option <%= application.applicantRace == 'American Indian or Alaska Native' ? 'selected' : '' %>>American
+                Indian or Alaska Native
+              </option>
+              <option <%= application.applicantRace == 'Black or African American' ? 'selected' : '' %>>Black or African
+                American
+              </option>
+              <option <%= application.applicantRace == 'White' ? 'selected' : '' %>>White</option>
+              <option <%= application.applicantRace == 'Asian' ? 'selected' : '' %>>Asian</option>
+              <option <%= application.applicantRace == 'Native Hawaiian or Other Pacific Islander' ? 'selected' : '' %>>
+                Native Hawaiian or Other Pacific Islander
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="col-xs-12 col-sm-6">
+        <div class="form-group">
+          <label for="applicantSex">Sex</label>
+          <div class="select-wrap">
+            <select name="applicantSex" id="applicantSex">
+              <option value="" class="hidden">Choose</option>
+              <option <%= application.applicantSex == 'Male' ? 'selected' : '' %>>Male</option>
+              <option <%= application.applicantSex == 'Female' ? 'selected' : '' %>>Female</option>
+            </select>
+
+          </div>
+        </div>
+      </div>
+
+      <% if(noOfCoBorrowers && noOfCoBorrowers > 0 ){ %>
+      <% for (var i = 1; i <= noOfCoBorrowers; i++){ %>
+      <div class="col-xs-12">
+        <div class="form-seperator">
+          <h3>Co-Borrower <%= i > 1 ? i : '' %></h3>
+          <div class="row flex-row">
+            <div class="col-xs-12">
+              <div class="form-group">
+                              <span class="property-info block">
+                                <input type="radio" id="coBorrower<%= i %>NotProvidingInfo"
+                                       name="coBorrower<%= i %>NotProvidingInfo"
+                                       value="Yes" <%= application['coBorrower' + i + 'NotProvidingInfo'] == 'Yes' ? 'checked' : '' %>>
+                                <label for="coBorrower<%= i %>NotProvidingInfo">I do not wish to furnish this information.</label>
+                              </span>
+              </div>
+            </div>
+            <div class="col-xs-12 col-sm-6">
+              <div class="form-group">
+                <label for="coBorrower<%= i %>Ethnicity">Ethnicity</label>
+                <div class="select-wrap">
+                  <select name="coBorrower<%= i %>Ethnicity" id="coBorrower<%= i %>Ethnicity">
+                    <option value="" class="hidden">Choose</option>
+                    <option <%= application['coBorrower' + i + 'Ethnicity'] == 'Hispanic or Latino' ? 'selected' : '' %>>
+                      Hispanic
+                      or
+                      Latino
+                    </option>
+                    <option <%= application['coBorrower' + i + 'Ethnicity'] == 'Not Hispanic or Latino' ? 'selected' : '' %>>
+                      Not
+                      Hispanic or Latino
+                    </option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="col-xs-12 col-sm-6">
+              <div class="form-group">
+                <label for="coBorrower<%= i %>Race">Race</label>
+                <div class="select-wrap">
+                  <select name="coBorrower<%= i %>Race" id="coBorrower<%= i %>Race">
+                    <option value="" class="hidden">Choose</option>
+                    <option <%= application['coBorrower' + i + 'Race'] == 'American Indian or Alaska Native' ? 'selected' : '' %>>
+                      American Indian or Alaska Native
+                    </option>
+                    <option <%= application['coBorrower' + i + 'Race'] == 'Black or African American' ? 'selected' : '' %>>
+                      Black
+                      or
+                      African American
+                    </option>
+                    <option <%= application['coBorrower' + i + 'Race'] == 'White' ? 'selected' : '' %>>White</option>
+                    <option <%= application['coBorrower' + i + 'Race'] == 'Asian' ? 'selected' : '' %>>Asian</option>
+                    <option <%= application['coBorrower' + i + 'Race'] == 'Native Hawaiian or Other Pacific Islander' ? 'selected' : '' %>>
+                      Native Hawaiian or Other Pacific Islander
+                    </option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="col-xs-12 col-sm-6">
+              <div class="form-group">
+                <label for="coBorrower<%= i %>Sex">Sex</label>
+                <div class="select-wrap">
+                  <select name="coBorrower<%= i %>Sex" id="coBorrower<%= i %>Sex">
+                    <option value="" class="hidden">Choose</option>
+                    <option <%= application['coBorrower' + i + 'Sex'] == 'Male' ? 'selected' : '' %>>Male</option>
+                    <option <%= application['coBorrower' + i + 'Sex'] == 'Female' ? 'selected' : '' %>>Female</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <% } %>
+      <% } %>
+
+      <div class="col-xs-12">
+        <div class="row flex-row">
+          <div class="col-xs-12">
+            <div class="form-group">
+              <div class="text-box">
+                <div class="jcf-scrollable">
+                  <p>Closing Notes: (1) IRS Form 4506T to be signed prior to underwriting for all borrowers and
+                    businesses related to the transaction. (2) Signatures on all tax returns may be completed at
+                    losing. This application is for a business purpose loan secured by commercial real estate. The
+                    undersigned specifically acknowledge and agree that (1) the loan requested by this application
+                    will be secured by a first mortgage or deed of trust on the property described herein; (2) the
+                    property will not be used for any illegal or prohibited purposes or use; (3) all statements made
+                    in this application are made for the purpose of obtaining the loan indicated herein; (4)
+                    occupation of the property will be as indicated above; (5) verification or reverification of any
+                    information contained in the application may be made at any time by the Lender, its agents,
+                    successors and assigns, either directly or through a credit reporting</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-xs-12">
+            <div class="col-sm-6 col-xs-12">
+              <div class="form-group">
+                <span class="property-info block">
+                <input type="radio" name="applicantTOS"
+                       value="Accepted" <%= application.applicantTOS == 'Accepted' ? 'checked' : '' %> id="rad08"
+                       required>
+                  <label for="rad08">Applicant’s Agree with the terms</label>
+                </span>
+              </div>
+            </div>
+
+            <% if(noOfCoBorrowers && noOfCoBorrowers > 0 ){ %>
+            <% for (var i = 1; i <= noOfCoBorrowers; i++){ %>
+            <div class="col-sm-6 col-xs-12">
+              <div class="form-group">
+                <span class="property-info block">
+                  <input type="radio" name="coApplicant<%= i %>TOS"
+                         value="Accepted" <%= application['coApplicant' + i + 'TOS'] == 'Accepted' ? 'checked' : '' %>
+                         id="rad09<%= i %>" required>
+                  <label for="rad09<%= i %>">Co-Applicant <%= i > 1 ? i : '' %>Agree with the terms</label>
+                </span>
+              </div>
+            </div>
+            <% } %>
+            <% } %>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="recalculate-button">
+      <input type="hidden" name="progress" value="<%= progress %>"/>
+      <input type="hidden" name="noOfCoBorrowers" value="<%= noOfCoBorrowers %>"/>
+      <button type="submit" class="btn btn-default">Review the Application</button>
+    </div>
+  </form>
+</div>
+
+<script>
+
+
+  clearApplicantCheck = function (event) {
+    event.preventDefault();
+    if (event.originalEvent !== undefined) {
+      $('#applicantNotProvidingInfo').prop('checked', false);
+      jcf.refreshAll();
+    }
+  }
+
+  clearCoBorrowerCheck = function (event) {
+    event.preventDefault()
+    console.log("clearCoBorrowerCheck ")
+    if (event.originalEvent !== undefined) {
+      $('#coBorrower' + this.index + 'NotProvidingInfo').prop('checked', false);
+      jcf.refreshAll();
+    }
+  }
+
+  clearCoBorrowerFields = function (event) {
+    console.log("clearCoBorrowerFields" + this.index);
+    if (event.originalEvent !== undefined) {
+      $('#coBorrower' + this.index + 'Ethnicity').val('').change();
+      $('#coBorrower' + this.index + 'Race').val('').change();
+      $('#coBorrower' + this.index + 'Sex').val('').change();
+    }
+  }
+
+
+  window.onload = function (e) {
+
+    $("#applicantEthnicity").change(clearApplicantCheck);
+    $("#applicantRace").change(clearApplicantCheck);
+    $("#applicantSex").change(clearApplicantCheck);
+
+    $('#applicantNotProvidingInfo').click(function (event) {
+      $("#applicantEthnicity").val('').change();
+      $("#applicantRace").val('').change();
+      $("#applicantSex").val('').change();
+    });
+
+    var noOfCoBorrowers = parseInt('<%= noOfCoBorrowers %>');
+
+    for (var i = 1; i <= noOfCoBorrowers; i++) {
+      $("#coBorrower" + i + "Ethnicity").change(clearCoBorrowerCheck.bind({index: i}));
+      $("#coBorrower" + i + "Race").change(clearCoBorrowerCheck.bind({index: i}));
+      $("#coBorrower" + i + "Sex").change(clearCoBorrowerCheck.bind({index: i}));
+
+      $('#coBorrower' + i + 'NotProvidingInfo').click(clearCoBorrowerFields.bind({index: i}));
+    }
+
+
+    $("#monitoringInfoForm").validate({
+      errorPlacement: function (error, element) {
+        if ($(element).is('select')) {
+          element.next().after(error); // special placement for select elements
+        }
+        else if ($(element).is('radio')) {
+          error.insertAfter(element);
+        }
+        else {
+          error.insertAfter(element);  // default placement for everything else
+        }
+      },
+      // Make sure the form is submitted to the destination defined
+      // in the "action" attribute of the form when valid
+      submitHandler: function (form) {
+        form.submit();
+        $("#pleasewait").css('display', 'block');
+      }
+    });
+
+  }
+
+
+</script>

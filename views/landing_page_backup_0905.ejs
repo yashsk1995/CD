@@ -1,0 +1,487 @@
+<main id="main">
+  <div id="pleasewait" class="modal" style="display:none">
+    <div class="content">
+      <div class="header">
+      </div>
+      <div class="body">
+        <img src="/images/frontend/loading.gif" alt="Loading ..." height="130px" width="120px">
+      </div>
+    </div>
+  </div>
+
+  <div class="inner-banner">
+    <div class="bg-cover">
+      <img src="<%= landingPage.headerImageUrl %>" alt="image description">
+    </div>
+    <div class="container text-center">
+      <h1><%= landingPage.title %></h1>
+    </div>
+  </div>
+  <div class="container">
+    <div class="foryou-top-text">
+      <p><%= landingPage.subtitle %></p>
+    </div>
+  </div>
+  <div class="opportunity-box">
+    <div class="container">
+      <div class="row">
+        <div class="col-xs-12 col-sm-6">
+          <div class="row flex-row">
+            <div class="opportunity-detail">
+              <%- landingPage.body || '' %>
+              <a id="contacUsBtn" class="btn btn-outline" style="display:none">Contact Us</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-xs-12 col-sm-6">
+          <% if(landingPage.calculatorType == 'simple') { %>
+          <form class="result-form" id="miniapp-loan-simple" method="POST" action="/miniapp-simple/save">
+            <input type="text" name="keyword" value="<%= urlParams.keyword || '' %>" class="hidden"/>
+            <input type="text" name="adpos" value="<%= urlParams.adpos || '' %>" class="hidden"/>
+            <input type="text" name="utm_content" value="<%= urlParams.utm_content || '' %>" class="hidden"/>
+            <input type="text" name="utm_source" value="<%= urlParams.utm_source || '' %>" class="hidden"/>
+            <input type="text" name="utm_medium" value="<%= urlParams.utm_medium || '' %>" class="hidden"/>
+            <input type="text" name="utm_campaign" value="<%= urlParams.utm_campaign || '' %>" class="hidden"/>
+            <input type="text" name="campaignid" value="<%= urlParams.campaignid || '' %>" class="hidden"/>
+            <input id="sourceUrl" name="sourceUrl" type="hidden" value="<%= sourceUrl %>">
+            <input type="hidden" name="page" value="<%= landingPage.title %>" >
+            <div class="col-xs-12 col-sm-12 col-md-6">
+              <div class="form-group">
+                <label for="firstname">First Name</label>
+                <input id="firstname" name="firstName" type="text" required class="form-control " required>
+              </div>
+            </div>
+
+            <div class="col-xs-12 col-sm-12 col-md-6">
+              <div class="form-group">
+                <label for="lastName">Last Name</label>
+                <input id="lastName" name="lastName" required type="text" class="form-control" required>
+              </div>
+            </div>
+
+            <div class="col-xs-12 col-sm-12 col-md-6">
+              <div class="form-group">
+                <label for="email">Email</label>
+                <input id="email" name="email" required type="text" class="form-control" required>
+              </div>
+            </div>
+
+            <div class="col-xs-12 col-sm-12 col-md-6">
+              <div class="form-group">
+                <label for="phoneNumber">Phone</label>
+                <input id="phoneNumber" name="phoneNumber" placeholder="Optional" type="text" class="form-control">
+              </div>
+            </div>
+
+            <div class="col-xs-12 col-sm-12 col-md-12">
+              <div class="col-xs-12" style="text-align: center; margin-top: 15px;">
+                <button type="submit" id="contacUsBtn" class="btn btn-success btn-outline">Get your free guide</button>
+              </div>
+            </div>
+          </form>
+          <% } else { %>
+          <form class="result-form" id="miniapp-loan-calculator" method="POST" action="/miniapp/save">
+            <input type="text" name="keyword" value="<%= urlParams.keyword || '' %>" class="hidden"/>
+            <input type="text" name="adpos" value="<%= urlParams.adpos || '' %>" class="hidden"/>
+            <input type="text" name="utm_content" value="<%= urlParams.utm_content || '' %>" class="hidden"/>
+            <input type="text" name="utm_source" value="<%= urlParams.utm_source || '' %>" class="hidden"/>
+            <input type="text" name="utm_medium" value="<%= urlParams.utm_medium || '' %>" class="hidden"/>
+            <input type="text" name="utm_campaign" value="<%= urlParams.utm_campaign || '' %>" class="hidden"/>
+            <input type="text" name="campaignid" value="<%= urlParams.campaignid || '' %>" class="hidden"/>
+            <div class="row flex-row">
+              <div class="col-xs-12 col-sm-12 col-md-6">
+                <div class="form-group">
+                  <label for="firstname">First Name</label>
+                  <input id="firstname" name="firstName" type="text" required class="form-control " required>
+                </div>
+              </div>
+
+              <div class="col-xs-12 col-sm-12 col-md-6">
+                <div class="form-group">
+                  <label for="lastName">Last Name</label>
+                  <input id="lastName" name="lastName" required type="text" class="form-control" required>
+                </div>
+              </div>
+
+              <div class="col-xs-12 col-sm-12 col-md-6">
+                <div class="form-group">
+                  <label for="email">Email</label>
+                  <input id="email" name="email" required type="text" class="form-control" required>
+                </div>
+              </div>
+
+              <div class="col-xs-12 col-sm-12 col-md-6">
+                <div class="form-group">
+                  <label for="phoneNumber">Phone</label>
+                  <input id="phoneNumber" name="phoneNumber" required type="text" class="form-control" required>
+                </div>
+              </div>
+
+              <div class="col-xs-12 col-sm-12 col-md-6">
+                <div class="form-group">
+                  <label for="loan_type">Loan Type</label>
+                  <div class="select-wrap">
+                    <select name="loanType" id="loan_type" required>
+                      <option value="" class="hidden">Choose</option>
+                      <% _.each(loanTypes, function(type) { %>
+                      <option <%= type.name == "loan.loanType" ? 'selected' : '' %>
+                        value="<%= type.name %>"><%= type.name %></option>
+                      <% }) %>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xs-12 col-sm-12 col-md-6">
+                <div class="form-group">
+                  <label for="property_type">Property Type</label>
+                  <div class="select-wrap">
+                    <select name="propertyType" id="property_type" required>
+                      <option value="" class="hidden">Choose</option>
+                      <% if ( landingPage.title === '1-4-Unit Investments On Your Own Terms' || landingPage.slug === '1-4-unit-investment-loans') { %>
+                      <% _.each(propertyTypesOneToFour, function(type) { %>
+                      <option <%= type.name == "loan.propertyTypes" ? 'selected' : '' %>
+                        value="<%= type.value %>"><%= type.name %></option>
+                      <% }) %>
+                      <% } else if (landingPage.title === 'Short-Term Solutions for your Long-Term Financial Goals' || landingPage.slug === 'commercial-bridge-loan') { %>
+                      <% _.each(propertyTypesCommercialBridgeLoan, function(type) { %>
+                      <option <%= type.name == "loan.propertyTypes" ? 'selected' : '' %>
+                        value="<%= type.value %>"><%= type.name %></option>
+                      <% }) %>
+                      <% } else { %>
+                      <% _.each(propertyTypes, function(type) { %>
+                      <option <%= type.name == "loan.propertyTypes" ? 'selected' : '' %>
+                        value="<%= type.value %>"><%= type.name %></option>
+                      <% }) %>
+                      <% } %>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-xs-12 col-sm-12 col-md-6">
+                <div class="form-group">
+                  <label for="property_price">Purchase Price/Property Value</label>
+                  <input id="property_price" name="propertyPrice" type="text" class="form-control number-format"
+                         placeholder="$" required>
+                </div>
+              </div>
+
+              <div class="col-xs-12 col-sm-12 col-md-6">
+                <div class="form-group">
+                  <label for="property_price">Loan Required</label>
+                  <% if (landingPage.title === '1-4-Unit Investments On Your Own Terms' || landingPage.slug === '1-4-unit-investment-loans') { %>
+                  <input id="loan_amount" name="loanAmountOneToFour" type="text" class="form-control number-format"
+                         placeholder="$" required>
+                  <% } else if (landingPage.title === 'Short-Term Solutions for your Long-Term Financial Goals' || landingPage.slug === 'commercial-bridge-loan') { %>
+                  <input id="loan_amount" name="loanAmountCommercialBridge" type="text" class="form-control number-format"
+                         placeholder="$" required>
+                  <% } else { %>
+                  <input id="loan_amount" name="loanAmount" type="text" class="form-control number-format"
+                         placeholder="$" required>
+                  <% } %>
+                </div>
+              </div>
+
+              <div class="col-xs-12 col-sm-12 col-md-6">
+                <div class="form-group">
+                  <label for="state">Property State</label>
+                  <div class="select-wrap">
+                    <select id="state" name="propertyState" required>
+                      <% _.each(states, function(state) { %>
+                      <option <%= state.key == "loan.propertyState" ? 'selected' : '' %>
+                        value="<%= state.key %>"><%= state.key %></option>
+                      <% }) %>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-xs-12 col-sm-12 col-md-6">
+                <div class="form-group">
+                  <label for="credit_score">Credit Score</label>
+                  <div class="select-wrap">
+                    <select id="credit_score" name="creditScore"  required>
+                      <option value="" class="hidden">Choose</option>
+                      <% if ( landingPage.title === '1-4-Unit Investments On Your Own Terms' || landingPage.slug === '1-4-unit-investment-loans'
+                        ||  landingPage.title === 'Short-Term Solutions for your Long-Term Financial Goals' || landingPage.slug === 'commercial-bridge-loan') { %>
+                      <% _.each(creditScoreCustom, function(score) { %>
+                      <option <%= score.value == "loan.creditScoreCustom" ? 'selected' : '' %>
+                        value="<%= score.value %>"><%= score.key %></option>
+                      <% }) %>
+                      <% } else { %>
+                      <% _.each(creditScores, function(score) { %>
+                      <option <%= score.value == "loan.creditScore" ? 'selected' : '' %>
+                        value="<%= score.value %>"><%= score.key %></option>
+                      <% }) %>
+                      <% } %>
+                      <option value="Don't know">Don't know</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xs-12 col-sm-12 col-md-6">
+                <div class="form-group">
+                  <label for="credit_score">Time To Close (Optional)</label>
+                  <div class="select-wrap">
+                    <select name="closeWithin" id="close_within" name="creditScore">
+                      <option value="" class="hidden">#days</option>
+                      <% _.each(chooseWithin, function(item) { %>
+                      <option value="<%= item %>"><%= item %></option>
+                      <% }) %>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-xs-12 col-sm-12 col-md-6">
+                <div class="form-group">
+                  <label for="credit_score">Occupancy</label>
+                  <div class="select-wrap">
+                    <select id="occupied" name="propertyOccupancy" required>
+                      <option value="" disabled class="hidden">choose</option>
+                      <option value="owner_occupied">Owner occupied</option>
+                      <option value="rented">Rented to tenants (all or part)</option>
+                      <option value="vacant">Vacant</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <input id="sourceUrl" name="sourceUrl" type="hidden" value="<%= sourceUrl %>">
+
+            <div class="row">
+              <div class="col-xs-12" style="text-align: center; margin-top: 15px;">
+                <button type="submit" id="contacUsBtn" class="btn btn-success btn-outline">Submit</button>
+              </div>
+            </div>
+          </form>
+          <% } %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <section class="why-choose-section">
+    <div class="bg-image bg-cover">
+      <img src="/images/frontend/img01.jpg" alt="image description">
+    </div>
+    <div class="container">
+      <div class="text-holder">
+        <h2 class="h1" style="text-align: center;">Flexibility Beyond Bank Financing</h2>
+        <div class="row">
+          <div class="col-sm-2"></div>
+          <div class="col-sm-8">
+            <iframe width="100%" height="350"
+                    src="https://www.youtube.com/embed/XvnKhlKX5Ek">
+            </iframe>
+            <br>
+            <p> Commercial Direct provides alternative lending solutions that make sense for your unique
+              business or
+              investment needs. Don’t settle for restrictive bank financing – work alongside our experts to create a
+              mortgage that truly works for you.</p>
+            <a href="/showcase" nav-link class="btn btn-white" style="display: block; margin: auto; width: 40%;">Check Our Success Stories</a>
+          </div>
+        </div>
+
+
+      </div>
+    </div>
+  </section>
+
+  <section class="what-wedo-section">
+    <div class="container">
+      <h2 class="h1">What We Do</h2>
+      <div class="row flex-row">
+        <div class="col-xs-12 col-sm-6">
+          <div class="do-step-box">
+            <h3>Customize Your Loan</h3>
+            <p>Use our Loan Customizer to select the terms & options that work best for you</p>
+          </div>
+        </div>
+        <div class="col-xs-12 col-sm-6">
+          <div class="do-step-box">
+            <h3>Get Pre-Approved in Minutes</h3>
+            <p>Complete the Quick App. If your deal qualifies, you will receive immediate online
+              pre-approval.</p>
+          </div>
+        </div>
+        <div class="col-xs-12 col-sm-6">
+          <div class="do-step-box">
+            <h3>Receive Support from Start to Finish</h3>
+            <p>Dedicated Loan Specialist facilitates the entire underway process.</p>
+          </div>
+        </div>
+        <div class="col-xs-12 col-sm-6">
+          <div class="do-step-box">
+            <h3>Close on Schedule</h3>
+            <p>Our process is consistent + reliable. Close within 30 days with the terms you selected.</p>
+          </div>
+        </div>
+      </div>
+      <div class="btn-wrap text-center">
+        <a href="/knowledge" nav-link class="btn btn-outline">Check Our Knowledge Base</a>
+      </div>
+    </div>
+  </section>
+  <div class="big-quote-block">
+    <div class="container">
+      <div class="big-blockquote">
+        <div class="bg-cover">
+          <img src="/images/frontend/img29.jpg" alt="image description">
+        </div>
+        <%- content.sampleTestimonial || '' %>
+        <a href="/showcase" nav-link class="link-chowcase">Showcase &raquo;</a>
+      </div>
+    </div>
+  </div>
+
+  <div id="contactUsModal" class="sign-in-modal" style="display:none">
+    <div class="content">
+      <div class="header">
+        <span id="closeBtn" class="close">&times;</span>
+        <h3>Contact Us</h3>
+      </div>
+      <div class="body">
+        <form class="form login-form" id="contactForm" method="POST" action="/contactUsLanding">
+          <div class="form-row">
+            <label for="user-name">Name</label>
+            <input class="form-control" type="text" name="name"
+                   placeholder="Enter your name" required>
+            <p id="loginErrorMsg"></p>
+          </div>
+          <div class="form-row">
+            <label for="user-name">Email</label>
+            <input class="form-control" type="email" name="email"
+                   placeholder="youremail@commercialdirect.com" required>
+            <p id="loginErrorMsg"></p>
+          </div>
+          <div class="form-row alter-sapce">
+            <label for="phone_number">Phone</label>
+            <input class="form-control" id="phone_number" type="tel" name="phone" placeholder="XXXXXXXXX">
+          </div>
+
+
+          <div class="form-row no-indent">
+            <button type="submit" class="btn">Submit</button>
+          </div>
+        </form>
+
+
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<div id="miniAppErrorModal" class="sign-in-modal" style="display:none">
+  <div class="content">
+    <div class="header">
+      <span id="closeBtnMiniApp" class="close">&times;</span>
+      <h3 id="title">Thanks for submitting your request</h3>
+    </div>
+    <div class="modal-body">
+      <p id="miniAppError"></p>
+      <div class="form-row no-indent" id="modalFooter" style="display:none; text-align:center">
+        <button class="btn btn-primary continue" id="modalContinueBtn"> Customize my loan </button>
+        <button class="btn btn-success" id="simplemodalLearnMoreBtn"> Learn More</button>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+<div id="simpleModal" class="sign-in-modal" style="display:none">
+  <div class="content">
+    <div class="header">
+      <span id="closeBtnSimpleApp" class="close">&times;</span>
+      <h3 id="title">Thank you!</h3>
+    </div>
+    <div class="modal-body">
+      <p id="miniAppErrorSimple"></p>
+      <div class="form-row no-indent" id="simpleModalFooter" style="text-align:center">
+        <a href="<%= landingPage.fileUrl %>" download> <button class="btn btn-primary continue" id="fileDownloaded"> Download File </button> </a>
+        <button class="btn btn-success" id="modalLearnMoreBtn"> Visit Blog</button>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+<script>
+  window.onload = function (e) {
+    $("#closeBtnMiniApp").click(function (e) {
+      e.preventDefault(); // if desired...
+      $("#miniAppErrorModal").css('display', 'none');
+    });
+
+    $("#closeBtnSimpleApp").click(function (e) {
+      e.preventDefault(); // if desired...
+      document.getElementById("miniapp-loan-simple").reset();
+      $("#simpleModal").css('display', 'none');
+    });
+
+    $("#modalContinueBtn").click(function (e) {
+      window.location.href = '/advance-calculator';
+    });
+
+    $("#simplemodalLearnMoreBtn").click(function (e) {
+      window.location.href = '/learn';
+    });
+
+    $("#modalLearnMoreBtn").click(function (e) {
+      window.location.href = '/blog';
+    });
+
+    $("#property_type").change(function (e) {
+      var val = $("#property_type").val();
+      if (val == "Single Family" || val == "2 To 4 Family" || val == "Residential Condo" || val == "Mixed-Use Tier 1 (>=50% res)" || val == "Multi-Family" || val == "Mobile Home Park") {
+        if ($("#occupied").val() == 'owner_occupied') {
+          $("#occupied").val("");
+          $("option[value='owner_occupied']").attr("disabled", "disabled");
+          var countrySelect = document.getElementById('occupied');
+          var customFormInstance = jcf.getInstance(countrySelect);
+          customFormInstance.refresh();
+        }
+      }
+      else {
+        $("option[value='owner_occupied']").removeAttr("disabled");
+      }
+
+    });
+
+
+    function clearForm() {
+      $(':checkbox, :radio').prop('checked', false);
+    }
+
+    //initPropModal();
+    $(function () {
+      $("#contacUsBtn").click(function (e) {
+        e.preventDefault(); // if desired...
+        $("#contactUsModal").css('display', 'block');
+      });
+
+      $("#closeBtn").click(function (e) {
+        e.preventDefault(); // if desired...
+        $("#contactUsModal").css('display', 'none');
+      });
+
+      $('#contactForm').ajaxForm({
+        success: function (response) {
+          if (response.status == 'success') {
+            $("#contactUsModal").css('display', 'none');
+          } else {
+            $('#loginErrorMsg').text(response.error.message);
+          }
+        },
+        error: function (response) {
+          $('#loginErrorMsg').text('Unable to send request');
+        }
+      });
+    });
+  }
+
+</script>

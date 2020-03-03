@@ -1,0 +1,87 @@
+
+<h1 class="page-title">Sales Reps</h1>
+<div class="options-container" id="sales_reps_section">
+  <div class="rate-adjustment-btn-container">
+    <span class="btn btn-outline" id="sales_reps_add_btn">Add</span>
+  </div>
+  <table class="options-table">
+    <thead>
+      <tr>
+        <th>State</th>
+        <th>Sales Rep</th>
+        <th>Rep Email</th>
+        <th>Rep Phone</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody id="sales_reps_tbl">
+      <% 
+      if(sales_reps && sales_reps.length != 0){
+        _.each(sales_reps, function (sales_rep) { %>
+          <tr>
+            <td>
+              <select name="state">
+                <option value="">Select State</option>
+                <% 
+                if(states && states.length != 0){
+                  _.each(states, function (state) { %>
+                    <option value="<%=state['state']%>" <%=sales_rep['state']==state['state']?'selected':'' %> ><%=state['state']%></option>
+                  <% })
+                }
+                %>
+              </select>
+            </td>
+            <td>
+              <input type="text" name="sales_rep" value="<%=sales_rep['sales_rep']%>">
+            </td>
+            <td>
+              <input type="text" name="rep_email" value="<%=sales_rep['rep_email']%>">
+            </td>
+            <td>
+              <input type="text" name="rep_phone" value="<%=sales_rep['rep_phone']%>">
+            </td>
+            <td>
+              <span class="sales-rep-remove-btn remove-btn remove">remove</span>
+            </td>
+          </tr>
+        <% })
+      }
+      %>
+    </tbody>
+  </table>
+  <div style="display: none">
+    <table>
+      <tbody id="sales_reps_tbl_row_template">
+        <tr>
+          <td>
+            <select name="state">
+              <option value="">Select State</option>
+              <% 
+              if(states && states.length != 0){
+                _.each(states, function (state) { %>
+                  <option value="<%=state['state']%>"><%=state['state']%></option>
+                <% })
+              }
+              %>
+            </select>
+          </td>
+          <td>
+            <input type="text" name="sales_rep" value="">
+          </td>
+          <td>
+            <input type="text" name="rep_email" value="">
+          </td>
+          <td>
+            <input type="text" name="rep_phone" value="">
+          </td>
+          <td>
+            <span class="sales-rep-remove-btn remove-btn remove">remove</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="button-wrap">
+    <span  class="btn btn-outline" id="sales_reps_save_btn">Save</span>
+  </div>
+</div>

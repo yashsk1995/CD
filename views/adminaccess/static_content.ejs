@@ -1,0 +1,37 @@
+<script src="/js/ckeditor/ckeditor.js"></script>
+
+<h1 class="page-title"><%= title %></h1>
+<div class="content-modification">
+  <form method="POST" class="form" id="createForm" action="/adminaccess/staticcontent">
+    
+    <div class="form-row" >
+      <div class="text-editor">
+        <div class="tearea-wrap">
+          <label for="content_editor"><%= subTitle  %></label>
+          <textarea id="content_editor" name="<%= key %>"><%= value || '' %></textarea>
+        </div>
+        <script>
+          CKEDITOR.replace('content_editor');
+        </script>
+      </div>
+    </div>
+    <input type="hidden" name="subTitle" value="<%= subTitle  %>"/>
+      <div class="button-wrap">
+        <button type="submit" class="btn btn-outline">Save</button>
+      </div>
+  </form>
+
+</div>
+
+
+<script>
+  var errorMessage = '<%= message %>';
+  window.onload = function (e) {
+    if(errorMessage && errorMessage != ''){
+      window.alert(errorMessage)
+    }
+    $(".collapse").collapse('show');
+  }
+</script>
+
+

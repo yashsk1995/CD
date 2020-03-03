@@ -1,0 +1,280 @@
+<div class="application-content">
+  <div class="application-header">
+    <h2>3. Subject Property Information</h2>
+    <p>(It will take 3 minutes to complete)</p>
+  </div>
+  <form action="/application/property-info" id="propertyInfoForm" method="post" enctype="multipart/form-data"
+        class="result-form">
+        <input type="hidden" value=true id="hiddenStatus" name="isSubmitted" />
+    <div class="row flex-row">
+      <div class="col-xs-12">
+        <div class="form-group">
+          <label for="subject_prpoerty_address">Subject Property Address</label>
+          <input id="subject_prpoerty_address" name="propertyAddress"
+                 value="<%= application.propertyAddress || loanApplication.propertyAddress || '' %>" type="text"
+                 class="form-control" required>
+        </div>
+      </div>
+      <div class="col-xs-12 col-sm-4">
+        <div class="form-group">
+          <label for="city_name">City</label>
+          <input id="city_name" name="propertyCity"
+                 value="<%= application.propertyCity || loanApplication.propertyCity || '' %>" type="tel"
+                 class="form-control" required>
+        </div>
+      </div>
+      <div class="col-xs-12 col-sm-2">
+        <div class="form-group">
+          <label for="state_name">State</label>
+          <div class="select-wrap">
+            <select name="propertyState" id="state_name" required>
+              <% _.each(lendingStates, function(state) { %>
+              <option <%= (application.proeprtyState == state.key) || (!application.state && loanApplication.propertyState == state.key) ? 'selected' : '' %>
+                value="<%= state.key %>"><%= state.key %></option>
+              <% }) %>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="col-xs-12 col-sm-6">
+        <div class="form-group">
+          <label for="zip_code">Zip Code</label>
+          <input id="zip_code" name="propertyZipCode" value="<%= application.propertyZipCode || loanApplication.propertyZipCode || '' %>" type="tel"
+                 class="form-control" required>
+        </div>
+      </div>
+      <div class="col-xs-12 col-sm-6">
+        <div class="form-group">
+          <label for="year_build">Year Built</label>
+          <input id="year_build" name="yearBuild" value="<%= application.yearBuild || '' %>" type="text"
+                 class="form-control" required>
+        </div>
+      </div>
+      <div class="col-xs-12">
+        <div class="form-group">
+          <label for="explain">Description of Subject Property </label>
+          <textarea id="explain" name="propertyDescription" cols="30" rows="10"
+                    class="form-control" required><%= application.propertyDescription || '' %></textarea>
+        </div>
+      </div>
+      <div class="col-xs-12 col-sm-6">
+        <div class="form-group">
+          <label for="file">Attach file</label>
+          <input type="file" id="file" name="propertyFile"
+                 data-jcf="{&quot;buttonText&quot;: &quot;Upload&quot;, &quot;placeholderText&quot;: &quot;&quot;}">
+
+          <input type="hidden" name="propertyFileUrl" value="<%= application.propertyFileUrl || '' %>"/>
+        </div>
+      </div>
+      <div class="col-xs-12">
+        <div class="form-seperator">
+          <div class="row">
+            <div class="col-xs-12 col-sm-6">
+              <div class="form-group">
+                <label for="commercial_type">Commercial Property Type</label>
+                <div class="select-wrap">
+                  <select name="commercialType" id="commercial_type" required>
+                    <option value="" class="hidden">Choose</option>
+                    <% _.each(propertyTypes, function(type) { %>
+                    <option <%= type.name == application.commercialType || (!application.commercialType && loanApplication.propertyType == type.name) ? 'selected' : '' %>
+                      value="<%= type.value %>"><%= type.name %></option>
+                    <% }) %>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="col-xs-12 col-sm-6">
+              <div class="form-group">
+                <label for="does_have">Does the property have?</label>
+                <div class="select-wrap" id="does_haves">
+                  <select name="doesHave" multiple id="does_have" required data-jcf='{"multipleCompactStyle": true}' multiple>
+                    <option value="" class="hidden">Choose</option>
+                    <% _.each(propertyFacilities, function(facility) { %>
+                    <option <%= _.contains(application.doesHave, facility) ? 'selected' : '' %>
+                      value="<%= facility %>"><%= facility %></option>
+                    <% }) %>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="col-xs-12 col-sm-6">
+              <div class="form-group">
+                <label for="est_estate">Estimated Value of Real Estate</label>
+                <input id="est_estate" name="estimatedValue"
+                       value="<%= application.estimatedValue || loanApplication.propertyPrice || '' %>" type="text"
+                       class="form-control" required>
+              </div>
+            </div>
+            <div class="col-xs-12 col-sm-6">
+              <div class="form-group">
+                <label for="source_value">Source of Value Estimate</label>
+                <div class="select-wrap">
+                  <select name="estimateSource" id="source_value" required>
+                      <option <%= application.estimateSource == 'Appraisal' ? 'selected' : '' %>>Appraisal</option>
+                    <option <%= application.estimateSource == 'Sales Price (if purchase)' ? 'selected' : '' %>>Sales
+                      Price (if purchase)
+
+                    <option <%= application.estimateSource == 'Estimate' ? 'selected' : '' %>>Estimate</option>
+                    </option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="row row-no-margin">
+              <div class="col-xs-12 col-sm-6">
+                <div class="form-group">
+                  <label for="owner_occupied">Owner Occupied</label>
+                  <div class="select-wrap">
+                    <select name="ownerOccupied" id="owner_occupied">
+                      <option value="" class="hidden">Choose</option>
+                      <option <%= application.ownerOccupied == 'Yes' || (!application.ownerOccupied && loanApplication.propertyOccupancy == 'occupied') ? 'selected' : '' %>>
+                        Yes
+                      </option>
+                      <option <%= application.ownerOccupied == 'No' || (!application.ownerOccupied && loanApplication.propertyOccupancy == 'not_occupied') ? 'selected' : '' %>>
+                        No
+                      </option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xs-12 col-sm-6">
+                <div class="form-group" id="owner_occupancy_container"
+                     style="display: <%= application.ownerOccupied == 'Yes' || (!application.ownerOccupied && loanApplication.propertyOccupancy == 'occupied') ? 'block' : 'none' %>">
+                  <label for="owner_percentage">Owner Occupancy</label>
+                  <input id="owner_percentage" name="ownerPercentage" value="<%= application.ownerPercentage || '' %>"
+                         type="number" class="form-control" required placeholder="%">
+                </div>
+              </div>
+            </div>
+            <div class="col-xs-12 col-sm-6">
+              <div class="form-group">
+                <label for="yrs_experience">Yrs. of Investor Experience</label>
+                <input id="yrs_experience" name="yrsExperience" value="<%= application.yrsExperience || '' %>"
+                       type="text" class="form-control" required>
+              </div>
+            </div>
+            <div class="col-xs-12 col-sm-6">
+              <div class="form-group">
+                <label for="num_units">Number of Units</label>
+                <input id="num_units" name="numOfUnits" value="<%= application.numOfUnits || '' %>" type="text"
+                       class="form-control" required>
+              </div>
+            </div>
+            <div class="col-xs-12 col-sm-6">
+              <div class="form-group">
+                <label for="unit_occupied">Number of Units Occupied</label>
+                <input id="unit_occupied" name="numOfUnitsOccupied" value="<%= application.numOfUnitsOccupied || '' %>"
+                       type="text" class="form-control" required>
+              </div>
+            </div>
+            <div class="col-xs-12 col-sm-6">
+              <div class="form-group">
+                <label for="num_building">Number of Buildings</label>
+                <input id="num_building" name="numOfBuildings" value="<%= application.numOfBuildings || '' %>"
+                       type="text" class="form-control" required>
+              </div>
+            </div>
+            <div class="col-xs-12 col-sm-6">
+              <div class="form-group">
+                <label for="build_sq_footage">Building Sq. Footage</label>
+                <input id="build_sq_footage" name="buildSquareFeet" value="<%= application.buildSquareFeet || '' %>"
+                       type="text" class="form-control" required>
+              </div>
+            </div>
+            <div class="col-xs-12 col-sm-6">
+              <div class="form-group">
+                <label for="land_sq_footage">Land Sq. Footage</label>
+                <input id="land_sq_footage" name="landSquareFeet" value="<%= application.landSquareFeet || '' %>"
+                       type="text" class="form-control" required>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="recalculate-button">
+      <div class="row">
+        <div class="col-xs-12 col-sm-6">
+          <a href="/application/loan-request" class="btn btn-outline">Back</a>
+        </div>
+        <div class="col-xs-12 col-sm-6">
+          <input type="hidden" name="progress" value="<%= progress %>"/>
+          <button type="submit" class="btn btn-default">Save and Continue</button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+
+
+<script>
+  $("#zip_code").mask("99999", {autoclear:false});
+  $("#year_build").mask("9999", {autoclear:false});
+
+  $("#yrs_experience").mask("99", {autoclear:false, placeholder: ""});
+  $("#num_units").mask("9999", {autoclear:false, placeholder: ""});
+  $("#unit_occupied").mask("9999", {autoclear:false, placeholder: ""});
+  $("#num_building").mask("99", {autoclear:false, placeholder: ""});
+  $("#build_sq_footage").mask("999999", {autoclear:false, placeholder: ""});
+  $("#land_sq_footage").mask("99999999", {autoclear:false, placeholder: ""});
+
+
+  window.onload = function (e) {
+
+
+    $('#owner_occupied').on('change', function (event) {
+      if ($("#owner_occupied").val() == "Yes") {
+        $('#owner_occupancy_container').show();
+      } else {
+        $('#owner_occupancy_container').hide();
+        $('#owner_percentage').val('');
+      }
+    });
+
+    $("#propertyInfoForm").validate({
+      rules: {
+        originalPurchaseDate: {
+          required: true
+        },
+        ownerPercentage: {
+          required: function (element) {
+            return $("#owner_occupied").val() == "Yes";
+          }
+        }
+      },
+
+      messages: {
+        ownerPercentage: "",
+        propertyAddress: "",
+        propertyZipCode: "",
+        yearBuild: "",
+        estimatedValue: "",
+        yrsExperience: "",
+        numOfUnits: "",
+        numOfUnitsOccupied: "",
+        numOfBuildings: "",
+        buildSquareFeet: "",
+        landSquareFeet: "",
+        estimateSource: ""
+      },
+      errorPlacement: function (error, element) {
+//        if ($(element).is('select')) {
+//          element.next().after(error); // special placement for select elements
+//        }
+//        else if ($(element).is('radio')) {
+//          error.insertAfter(element);
+//        }
+//        else {
+//          error.insertAfter(element);  // default placement for everything else
+//        }
+      },
+      // Make sure the form is submitted to the destination defined
+      // in the "action" attribute of the form when valid
+      submitHandler: function (form) {
+        form.submit();
+        $("#pleasewait").css('display', 'block');
+      }
+    });
+  }
+</script>
+

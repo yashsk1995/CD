@@ -1,0 +1,25 @@
+<main id="main">
+  <div class="inner-banner">
+    <div class="bg-cover">
+      <img src="/images/frontend/img26.jpg" alt="image description">
+    </div>
+    <div class="container text-center">
+      <h1><%= blogPost.title %></h1>
+    </div>
+  </div>
+  <div class="container">
+    <ol class="breadcrumb">
+      <li><a href="/blog" nav-link>Blog</a></li>
+      <li class="active"><%- blogPost.title %></li>
+    </ol>
+  </div>
+  <div class="blog-detail-container">
+    <div class="container">
+      <div class="feature-image">
+        <img src="<%= blogPost.headerImageUrl || '' %>" alt="<%= blogPost.headerImageAlt || '' %>" height="394" width="1060">
+      </div>
+      <div class="text-holder">
+        <%- blogPost.bodyHTML %>
+      </div>
+    </div>
+</main>

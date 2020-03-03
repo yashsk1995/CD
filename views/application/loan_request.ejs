@@ -1,0 +1,421 @@
+<div class="application-content">
+  <div class="application-header">
+    <h2>2. Loan Request</h2>
+    <p>(It will take 3 minutes to complete)</p>
+  </div>
+  <form id="loanRequestForm" action="/application/loan-request" method="post" class="result-form">
+    <div class="row flex-row">
+      <input type="hidden" value=true id="hiddenStatus" name="isSubmitted"/>
+      <div class="col-xs-12">
+        <div class="form-group">
+          <label for="mortage_type">Commercial Mortgage Type Applied For</label>
+          <div class="select-wrap">
+            <select name="mortgageType" id="mortage_type" required>
+              <option value="" class="hidden">Choose</option>
+              <% _.each(commercialMortgageTypes, function(type) { %>
+              <option <%= type.value == application.mortgageType ||(!application.mortgageType && loanApplication.propertyOccupancy)? 'selected' : '' %>
+                value="<%= type.value %>"><%= type.value %></option>
+              <% }) %>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="col-xs-12 col-sm-6">
+        <div class="form-group">
+          <label for="loan_purpose">Loan Purpose</label>
+          <div class="select-wrap">
+            <select name="loanPurpose" id="loan_purpose" required>
+              <option value="" class="hidden">Choose</option>
+              <% _.each(loanTypes, function(type) { %>
+              <option
+                <% if (application.loanPurpose && type.name == application.loanPurpose) { %>
+                selected
+                <% } else if(!application.loanPurpose && type.name == loanApplication.loanType ) { %>
+                selected
+                <% } %>
+              ><%= type.name %></option>
+              <% }) %>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="col-xs-12 col-sm-6">
+        <div class="form-group">
+          <label for="amortization">Amortization</label>
+          <div class="select-wrap">
+            <select name="amortization" id="amortization" required>
+              <option value="" class="hidden">Choose</option>
+              <% _.each(amortizations, function(amortization) { %>
+              <option
+                <% if (application.amortization && amortization == application.amortization) { %>
+                selected
+                <% } else if(!application.amortization && amortization == loanApplication.amortizationTerm ) { %>
+                selected
+                <% } %>
+              ><%= amortization %>  </option>
+              <% }) %>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="col-xs-12 col-sm-6">
+        <div class="form-group">
+          <label for="request_loan_amount">Requested Loan Amount</label>
+          <input id="request_loan_amount" name="loanAmount"
+                 value="<%= application.LoanAmount || loanApplication.loanAmount || '' %>" type="text"
+                 class="form-control" required placeholder="$">
+        </div>
+      </div>
+
+      <div class="col-xs-12 col-sm-6">
+        <div class="form-group">
+          <label for="loan_program">Fixed Rate Period</label>
+          <div class="select-wrap">
+            <select name="loanProgram" id="loanProgram">
+              <option value="" class="hidden">Choose</option>
+              <% _.each(loanPrograms, function(program) { %>
+              <option <%= (application.loanProgram && application.loanProgram == program) || (!application.loanProgram && loanApplication.program == program) ? 'selected' : '' %>
+                value="<%= program %>"><%= program %> Year(s)
+              </option>
+              <% }) %>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="col-xs-12 col-sm-6">
+        <div class="form-group">
+          <label for="prepayment_type">Prepayment Type </label>
+          <div class="select-wrap">
+            <select name="prepaymentType" id="prepayment_type" required>
+              <option value="" class="hidden">Choose</option>
+
+              <% _.each(prePaymentFees, function(type) { %>
+              <option <%= type == application.prepaymentType  || (!application.prepaymentType && type == loanApplication.prepayPenalty) ? 'selected' : '' %>
+                value="<%= type %>">5% for <%= type %> years
+              </option>
+              <% }) %>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="col-xs-12" id="purchaseContent"
+           style="display: <%= application.loanPurpose == 'Purchase' || (!application.loanPurpose && loanApplication.loanType == 'Purchase') ? 'block' : 'none' %>;">
+        <div class="form-seperator">
+          <h3> Purchase </h3>
+          <div class="row">
+            <div class="col-xs-12 col-sm-6">
+              <div class="form-group">
+                <label for="purchase_contract">Purchase Contract Expires</label>
+                <input id="purchase_contract" name="purchaseContract" value="<%= application.purchaseContract || '' %>"
+                       type="text" class="form-control" readonly="true">
+              </div>
+            </div>
+            <div class="col-xs-12 col-sm-6">
+              <div class="form-group">
+                <label for="purchase_price">Purchase Price</label>
+                <input id="purchase_price" name="purchasePrice"
+                       value="<%= application.purchasePrice || loanApplication.propertyPrice || '' %>"
+                       type="text" class="form-control " placeholder="$">
+              </div>
+            </div>
+            <div class="col-xs-12 col-sm-6">
+              <div class="form-group">
+                <label for="down_payment">Amount of Down Payment</label>
+                <input id="down_payment" name="downPayment"
+                       value="<%= application.downPayment || (application.purchasePrice - application.LoanAmount) || (loanApplication.propertyPrice - loanApplication.loanAmount) || '' %>"
+                       type="text"
+                       class="form-control" placeholder="$" readonly>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xs-12" id="refinanceContent"
+           style="display: <%= (application.loanPurpose && application.loanPurpose.indexOf('Refinance') !== -1) || (!application.loanPurpose && (loanApplication.loanType && loanApplication.loanType.indexOf('Refinance') !== -1)) ? 'block' : 'none' %>;">
+        <div class="form-seperator">
+          <h3> Refinance </h3>
+          <div class="row">
+
+            <div class="col-xs-12 col-sm-12">
+              <div class="form-group">
+                <label>Does the property currently have a mortage?</label>
+                <div class="radio-wrap">
+                                  <span class="property-info">
+                                    <input type="radio" id="rad01" value="Yes"
+                                           name="isMortage" <%= application.isMortage == 'Yes' ? 'checked' : '' %>
+                                           required>
+                                    <label for="rad01">Yes</label>
+                                  </span>
+                  <span class="property-info">
+                                    <input type="radio" id="rad02" value="No"
+                                           name="isMortage" <%= application.isMortage == 'No' ? 'checked' : '' %>
+                                           required>
+                                    <label for="rad02">No</label>
+                                  </span>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-xs-12 col-sm-6">
+              <div class="form-group">
+                <label for="org_purchase_date">Original Purchase Date</label>
+                <input id="org_purchase_date" name="originalPurchaseDate"
+                       value="<%= application.originalPurchaseDate || '' %>" type="text" class="form-control"
+                       readonly="true">
+              </div>
+            </div>
+            <div class="col-xs-12 col-sm-6">
+              <div class="form-group">
+                <label for="org_purchase_price">Original Purchase Price</label>
+                <input id="org_purchase_price" name="originalPurchasePrice"
+                       value="<%= application.originalPurchasePrice || loanApplication.propertyPrice || '' %>"
+                       type="text" class="form-control" placeholder="$">
+              </div>
+            </div>
+            <div class="col-xs-12 col-sm-6">
+              <div class="form-group">
+                <label for="cost_improvement">Cost of Improvements Made</label> <a href="#"
+                                                                                   title="Please enter 0 if none made"
+                                                                                   class="tooltip-link">?</a>
+                <input id="cost_improvement" name="improvementCost" value="<%= application.improvementCost || '' %>"
+                       type="text" class="form-control" placeholder="Please enter 0 if none made">
+              </div>
+            </div>
+            <div class="col-xs-12 col-sm-6">
+              <div class="form-group">
+                <label for="current_lender">Current Lender</label>
+                <input id="current_lender" name="currentLender" value="<%= application.currentLender || '' %>"
+                       type="text" class="form-control">
+              </div>
+            </div>
+            <div class="col-xs-12 col-sm-6">
+              <div class="form-group">
+                <label for="int_rate">Interest Rate %</label>
+                <input id="int_rate" name="interestRate" value="<%= application.interestRate || '' %>" type="text"
+                       class="form-control">
+              </div>
+            </div>
+            <div class="col-xs-12 col-sm-6">
+              <div class="form-group">
+                <label for="mon_payment">Monthly Payment</label>
+                <input id="mon_payment" name="monthlyPayment" value="<%= application.monthlyPayment || '' %>"
+                       type="text" class="form-control" placeholder="$">
+              </div>
+            </div>
+            <div class="col-xs-12 col-sm-6">
+              <div class="form-group">
+                <label for="payoff_mortgage">Pay-Off Mortgage 1</label>
+                <input id="payoff_mortgage" name="payoffMortgage" value="<%= application.payoffMortgage || '' %>"
+                       type="text" class="form-control" placeholder="$">
+              </div>
+            </div>
+            <div class="col-xs-12 col-sm-6">
+              <div class="form-group">
+                <label for="payoff_mortgage_2">Pay-Off Mortgage 2</label>
+                <input id="payoff_mortgage_2" name="payoffMortgage2" value="<%= application.payoffMortgage2 || '' %>"
+                       type="text" class="form-control" placeholder="$">
+              </div>
+            </div>
+            <div class="col-xs-12 col-sm-6">
+              <div class="form-group">
+                <label for="payoff_out">Pay-Off Outstanding Taxes/Others</label>
+                <input id="payoff_out" name="payoffOut" value="<%= application.payoffOut || '' %>" type="text"
+                       class="form-control" placeholder="$">
+              </div>
+            </div>
+            <div class="cash-values">
+              <div class="col-xs-12 col-sm-6">
+                <div class="form-group">
+                  <label for="cash_out">Cash Out</label>
+                  <input id="cash_out" name="cashOut" value="<%= application.cashOut || '' %>" type="text"
+                         class="form-control" placeholder="$">
+                </div>
+              </div>
+              <div class="col-xs-12 col-sm-6">
+                <div class="form-group">
+                  <label for="cash_out_description">Cash Out Description</label>
+                  <input id="cash_out_description" name="cashOutDescription"
+                         value="<%= application.cashOutDescription || '' %>" type="text" class="form-control">
+                </div>
+              </div>
+            </div>
+            <div class="col-xs-12">
+              <strong class="form-title">Is the property subject to any additional liens, encumbrances or
+                restrictions?</strong>
+              <div class="property-info-holder">
+                              <span class="property-info">
+                                <input type="radio" name="additionalLiens" id="property_info"
+                                       value="yes" <%= application.additionalLiens == "yes" ? 'checked' : '' %> >
+                                <label for="property_info">Yes</label>
+                              </span>
+                <span class="property-info">
+                                <input type="radio" name="additionalLiens" id="property_info1"
+                                       value="no" <%= application.additionalLiens == "no" ? 'checked' : '' %> >
+                                <label for="property_info1">No</label>
+                              </span>
+              </div>
+            </div>
+            <div class="col-xs-12">
+              <div class="form-group explain-text" id="explain-liens-text"
+                   style="display: <%= application.additionalLiens == 'yes' ? 'block' : 'none' %>">
+                <label for="explain">If yes, please explain:</label>
+                <textarea id="explain" cols="30" rows="10" name="additionalLiensDescription"
+                          class="form-control"><%= application.additionalLiensDescription || '' %></textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="recalculate-button">
+      <div class="row">
+        <div class="col-xs-12 col-sm-6">
+          <a href="/application/personal-info" class="btn btn-outline">Back</a>
+        </div>
+        <div class="col-xs-12 col-sm-6">
+          <input type="hidden" name="progress" value="<%= progress %>"/>
+          <button type="submit" class="btn btn-default">Save and Continue</button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+
+<script>
+  window.onload = function (e) {
+
+
+    $("#purchase_contract").datepicker({dateFormat: 'yy-mm-dd', changeYear: true, yearRange: '1950:2050'});
+    $("#org_purchase_date").datepicker({dateFormat: 'yy-mm-dd', changeYear: true, yearRange: '-10:+100'});
+
+    $("#loan_purpose").change(function (event) {
+      event.preventDefault(); // if desired...
+      if (this.value.toLowerCase() == 'purchase') {
+        $('#purchaseContent').show();
+        $('#refinanceContent').hide();
+      } else if (this.value.toLowerCase().indexOf('refinance') !== -1) {
+        $('#refinanceContent').show();
+        $('#purchaseContent').hide();
+
+        if ($("#loan_purpose").val() == "Cash Out Refinance") {
+          $(".cash-values").show();
+        }
+        else {
+          $(".cash-values").hide();
+        }
+      } else {
+        $('#purchaseContent').hide();
+        $('#refinanceContent').hide();
+      }
+    });
+
+
+    $('#property_info').on("click", function (event) {
+      $('#explain-liens-text').show();
+      $('#explain').attr("required", true);
+    });
+    $('#property_info1').on("click", function (event) {
+      $('#explain-liens-text').hide();
+      $('#explain').removeAttr('required');
+      $('textarea#explain').val('');
+    });
+
+    $('#rad02').on("click", function (event) {
+
+      $('#org_purchase_price').attr("required", true);
+      $('#org_purchase_date').attr("required", true);
+
+      $('#current_lender').attr("required", false);
+      $('#cost_improvement').attr("required", false);
+      $('#int_rate').attr("required", false);
+      $('#mon_payment').attr("required", false);
+      $('#payoff_mortgage').attr("required", false);
+      $('#payoff_out').attr("required", false);
+      $('#cash_out').attr("required", false);
+      $('#cash_out_description').attr("required", false);
+
+    });
+
+    $('#rad01').on("click", function (event) {
+      console.log("Yes")
+      $('#org_purchase_price').attr("required", true);
+      $('#org_purchase_date').attr("required", true);
+      $('#cost_improvement').attr("required", true);
+      $('#current_lender').attr("required", true);
+
+      $('#int_rate').attr("required", true);
+      $('#mon_payment').attr("required", true);
+      $('#payoff_mortgage').attr("required", true);
+      $('#payoff_out').attr("required", true);
+      $('#cash_out').attr("required", true);
+      $('#cash_out_description').attr("required", true);
+
+    });
+
+
+    $.validator.setDefaults({
+      ignore: ":hidden"
+    });
+
+
+    $("#loanRequestForm").validate({
+      rules: {
+        // originalPurchaseDate: {
+        //   required: true
+        // },
+        // originalPurchasePrice: {
+        //   required: true
+        // },
+        // improvementCost: {
+        //   required: true
+        // },
+        // interestRate: {
+        //   required: function (element) {
+        //     return $("#current_lender").val() != "";
+        //   }
+        // },
+        // monthlyPayment: {
+        //   required: function (element) {
+        //     return $("#current_lender").val() != "";
+        //   }
+        // },
+        // payoffMortgage: {
+        //   required: function (element) {
+        //     return $("#current_lender").val() != "";
+        //   }
+        // },
+
+
+      },
+
+      messages: {
+        interestRate: "",
+        monthlyPayment: "",
+        payoffMortgage: "",
+        improvementCost: "",
+        originalPurchaseDate: ""
+      },
+
+      errorPlacement: function (error, element) {
+        // if ($(element).is('select')) {
+        //   element.next().after(error); // special placement for select elements
+        // }
+        // else if ($(element).is('radio')) {
+        //   error.insertAfter(element);
+        // }
+        // else {
+        //   error.insertAfter(element);  // default placement for everything else
+        // }
+        return true;
+      },
+      // Make sure the form is submitted to the destination defined
+      // in the "action" attribute of the form when valid
+      submitHandler: function (form) {
+
+        form.submit();
+        $("#pleasewait").css('display', 'block');
+      }
+    });
+
+  }
+</script>

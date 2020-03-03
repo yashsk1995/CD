@@ -1,0 +1,63 @@
+<script src="/js/ckeditor/ckeditor.js"></script>
+
+<form class="form" method="POST" id="createForm" action="/adminaccess/knowledgebasearticle/edit/<%= article.id %>">
+  <a href="/adminaccess/knowledgebasearticles" class="back-link">Back to All Articles &raquo;</a>
+  <h1 class="page-title">Edit Article</h1>
+  <div class="form-row">
+    <label for="post_title">Article Term</label>
+    <input type="text" id="post_title" name="term" value="<%= article.term || '' %>">
+    <p><%= error.term || '' %></p>
+  </div>
+  <div class="text-editor">
+    <div class="tearea-wrap">
+      <textarea id="body_text" name="description"><%= article.description || '' %></textarea>
+    </div>
+    <script>
+      CKEDITOR.replace('body_text');
+    </script>
+  </div>
+  <div class="row last-row">
+    <div class="col-5">
+      <div class="form-row">
+        <label for="topic">Topic</label>
+        <select id="topic" name="topic">
+          <option value="" class="hidden">Choose Topic</option>
+          <% _.each(topics, function(topic) { %>
+          <option <%= article.topic == topic.id ? 'selected' : '' %>
+            name="<%= topic.id %>" value="<%= topic.id %>"> <%= topic.name %></option>
+          <% }) %>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <input type="hidden" value="Draft" id="status" name="status"/>
+
+  <div class="button-wrap">
+    <button type="submit" class="btn btn-outline">Save as Draft</button>
+    <a href="#" class="btn" id="publishBtn">Publish Article</a>
+  </div>
+</form>
+
+
+<script>
+  window.onload = function (e) {
+
+    $(function () {
+      $("#publishBtn").click(function (e) {
+        e.preventDefault();
+        handlePublish();
+      });
+    });
+  }
+  handlePublish = function () {
+    $('#status').val('Published');
+    $('<input />').attr('type', 'hidden')
+      .attr('name', 'publishedAt')
+      .attr('value', new Date())
+      .appendTo('#createForm');
+    $('#createForm').submit();
+  }
+
+</script>
+

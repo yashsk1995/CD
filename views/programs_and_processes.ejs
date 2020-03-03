@@ -1,0 +1,121 @@
+<main id="main">
+  <div class="inner-banner">
+    <div class="bg-cover">
+      <img src="/images/frontend/img03.jpg" alt="image description">
+    </div>
+    <div class="container text-center">
+      <h1>Programs </h1>
+      <div id="programsLearn" style="color:white; padding-top:10px"> <%- programs %> </div>
+      </nav>
+    </div>
+  </div>
+  <div class="container padding-50">
+    <section class="program-top-section">
+      <h1> What do you want to do today? </h1>
+    </section>
+    <div class="row padding-50">
+      <% if(articleOne) { %>
+      <div class="col-md-4 centre-align bottom-padding ">
+        <div class="circle-img1 img-circle">
+          <img src="<%= articleOne.headerImageUrl %>" alt="Article Header Image">
+        </div>
+        <!-- <img class="img img-circle programs-image" src="<%= articleOne.headerImageUrl %>" alt="Article Header Image"> -->
+        <h3 class="padding-50 "><%= articleOne.title %> </h3>
+        <a href="/advance-calculator" > <button class="btn btn-success btn-padding"> CUSTOMIZE YOUR LOAN NOW! </button> </a>
+        <p class="more-articles"><a class="learn-more" href="/l/<%= articleOne.slug %>" nav-link> LEARN MORE  </a>  </p>
+      </div>
+      <% } %>
+      <% if(articleTwo) { %>
+      <div class="col-md-4 centre-align bottom-padding ">
+        <div class="circle-img1 img-circle">
+          <img src="<%= articleTwo.headerImageUrl %>" alt="Article Header Image">
+        </div>
+        <!-- <img class="img img-circle programs-image" src="<%= articleTwo.headerImageUrl %>" alt="Article Header Image"> -->
+        <h3 class="padding-50 centre-align"><%= articleTwo.title %>  </h3>
+        <a href="/l/<%= articleTwo.slug %>" nav-link> <button class="btn btn-success btn-padding"> LEARN MORE </button> </a>
+      </div>
+      <% } %>
+      <% if(articleThree) { %>
+      <div class="col-md-4 centre-align bottom-padding">
+        <div class="circle-img1 img-circle">
+          <img src="<%= articleThree.headerImageUrl %>" alt="Article Header Image">
+        </div>
+        <!-- <img class="img img-circle programs-image" src="<%= articleThree.headerImageUrl %>" alt="Article Header Image"> -->
+        <h3 class="padding-50 centre-align"><%= articleThree.title %>    </h3>
+        <a href="/l/<%= articleThree.slug %>" nav-link> <button class="btn btn-success btn-padding"> LEARN MORE </button> </a>
+      </div>
+      <% }%>
+    </div>
+
+  </div>
+
+  <div class="container-fluid padding-50 padding-programs">
+    <section class="program-top-section">
+      <h1>Get the Commercial Direct Point of View</h1>
+    </section>
+
+    <div class="row">
+      <div class="col-md-8">
+        <iframe height="386" id="widget2" src="https://www.youtube.com/embed/XvnKhlKX5Ek?enablejsapi=1" width="100%"></iframe>
+      </div>
+      <div class="col-md-4 blog-section-program">
+        <h3 class="blog-heading"> BLOG </h3>
+        <% if(blogPosts[0]) { %>
+        <div>
+          <h4> <%=: blogPosts[0].createdAt | formatFullDate %>  </h4>
+          <p class="blog-text"> <%= blogPosts[0].title %></p>
+          <a href="/blog/<%= blogPosts[0].slug %>" nav-link class="blog-read"> Read More </a>
+        </div>
+        <% } %>
+        <% if(blogPosts[1]) { %>
+        <hr class="blog-hl">
+        <div>
+          <h4> <%=: blogPosts[1].createdAt | formatFullDate %>  </h4>
+          <p class="blog-text"> <%= blogPosts[1].title %></p>
+          <a href="/blog/<%= blogPosts[1].slug %>" nav-link class="blog-read"> Read More </a>
+        </div>
+        <% } %>
+        <div class="more-articles">
+          <a href="/blog" nav-link> <button class="btn btn-success"> Read More Blog Articles </button> </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container padding-50">
+    <section class="program-top-section">
+      <h1>See Our Solutions for Your Property Type</h1>
+    </section>
+
+    <div class="row programs-ptypes-row">
+      <div class="col-md-4 programs-ptypes-col">
+        <p>Multifamily</p>
+        <p>Self-Storage</p>
+        <p>Duplex</p>
+        <p>Mixed-Use</p>
+        <p>Mobile Home Park</p>
+        <p>Triplex</p>
+      </div>
+
+      <div class="col-md-4 programs-ptypes-col">
+        <p>Office</p>
+        <p>Daycare Center</p>
+        <p>Fourplex</p>
+        <p>Light Industrial</p>
+        <p>Automotive</p>
+        <p>Condominium</p>
+      </div>
+      <div class="col-md-4 programs-ptypes-colLast">
+        <p>Retail</p>
+        <p>Restaurant </p>
+        <p>PUD</p>
+        <p>Warehouse</p>
+        <p>Bar</p>
+      </div>
+    </div>
+
+  </div>
+
+
+
+</main>

@@ -1,0 +1,63 @@
+<main id="main">
+  <div class="inner-banner">
+    <div class="bg-cover">
+      <img src="<%= category.headerImageUrl %>" alt="<%= category.headerImageAlt %>">
+    </div>
+    <div class="container text-center">
+      <h1><%= category.name %></h1>
+      <p> <%= category.tagline %></p>
+    </div>
+  </div>
+  <div class="container">
+    <ol class="breadcrumb">
+      <li><a href="/hidden12345">Videos</a></li>
+      <li class="active"><%= category.name %></li>
+    </ol>
+  </div>
+
+  <div class="container">
+    <%-: category.bodyHTML | getHtmlShortContents %>
+  </div>
+
+  <div class="container">
+    <div class="row">
+      <% _.each(videoPosts, function(vidPost) { %>
+      <div class="col-md-4">
+        <div class="video-item">
+          <a href="/videos/<%= vidPost.slug %>" nav-link>
+            <% if(vidPost.previewImageUrl) {  %>
+            <img class="img img-responsive" style="height:300px" src="<%= vidPost.previewImageUrl %>">
+            <h4 class="vid-title"> <%= vidPost.name %> </h4>
+            <% } else {  %>
+            <iframe id="videoPlay" width="100%" height="300px" frameborder="0" src="<%= vidPost.videoUrl %>"></iframe>
+            <h4 class="vid-title"> <%= vidPost.name %> </h4>
+            <% }  %>
+          </a>
+        </div>
+      </div>
+      <% }) %>
+
+    </div>
+  </div>
+
+  <div class="recent-post-holder">
+    <div class="container">
+      <% include ./adminaccess/pagination.ejs %>
+    </div>
+  </div>
+
+</main>
+
+<script>
+
+  handlePageChange = function (event, pageNo) {
+    event.preventDefault();
+    console.log("Page Changed")
+    console.log(pageNo)
+    var newLocation = "/videos/category/<%= category.slug %>?";
+    newLocation += "page=" + pageNo;
+    window.location = newLocation;
+  }
+</script>
+
+

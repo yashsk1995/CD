@@ -1,0 +1,3 @@
+ALTER TABLE `silver_prod`.`blogpost`
+ADD COLUMN `previewImageAlt` VARCHAR(255) NULL AFTER `updatedAt`,
+ADD COLUMN `headerImageAlt` VARCHAR(255) NULL AFTER `previewImageAlt`;

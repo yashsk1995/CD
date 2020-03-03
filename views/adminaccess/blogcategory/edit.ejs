@@ -1,0 +1,12 @@
+<form method="POST"  class="form" id="createForm" action="/adminaccess/blogcategory/edit/<%= blogCategory.id %>">
+  <a href="/adminaccess/blogcategories" class="back-link">Back to All Categories&raquo;</a>
+  <h1 class="page-title">Edit Category</h1>
+  <div class="form-row">
+    <label for="post_title">Category Title</label>
+    <input type="text" id="post_title" name="name" value="<%= blogCategory.name || '' %>">
+    <p><%= error.name || '' %></p>
+  </div>
+  <div class="button-wrap">
+    <button type="submit" class="btn">Save</button>
+  </div>
+</form>

@@ -1,0 +1,39 @@
+CREATE TABLE `videocategory` (
+  `name` varchar(255) DEFAULT NULL,
+  `tagline` varchar(255) DEFAULT NULL,
+  `bodyHTML` longtext,
+  `slug` varchar(255) DEFAULT NULL,
+  `author` int(11) DEFAULT NULL,
+  `headerImageUrl` varchar(255) DEFAULT NULL,
+  `headerImageAlt` varchar(255) DEFAULT NULL,
+  `previewImageUrl` varchar(255) DEFAULT NULL,
+  `previewImageAlt` varchar(255) DEFAULT NULL,
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `createdAt` datetime DEFAULT NULL,
+  `updatedAt` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `slug` (`slug`)
+);
+CREATE TABLE `videopost` (
+  `publishedAt` datetime DEFAULT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `bodyHTML` longtext,
+  `videoTranscript` longtext,
+  `slug` varchar(255) DEFAULT NULL,
+  `videoUrl` varchar(255) DEFAULT NULL,
+  `pageTitle` varchar(255) DEFAULT NULL,
+  `metaTags` varchar(255) DEFAULT NULL,
+  `keywords` varchar(255) DEFAULT NULL,
+  `status` varchar(255) DEFAULT NULL,
+  `category` varchar(255) DEFAULT NULL,
+  `authorId` int(11) DEFAULT NULL,
+  `authorName` varchar(255) DEFAULT NULL,
+  `previewImageUrl` varchar(255) DEFAULT NULL,
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `createdAt` datetime DEFAULT NULL,
+  `updatedAt` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `name` (`name`),
+  UNIQUE KEY `videoUrl` (`videoUrl`)
+);
+

@@ -1,0 +1,269 @@
+<main id="main">
+  <div class="hero-banner-parent">
+    <div class="hero-banner">
+      <div class="hero-banner-overlay"></div>
+      <div class="top-hero-content">
+        <div class="container">
+          <div class="col-md-6 hero-bg-text no-padding">
+            <h1 style="color:white">Commercial Mortgages<br/>On Your Own Terms</h1>
+            <p>
+              Design the exact loan to fit your needs
+              <br>
+              <span class="small-sub">Custom loans up to $2 million and 80% LTV on all
+              commercial and 1-4 family investment properties.</span>
+            </p>
+            <a href="/application" class="btn btn-default">Customize Now</a>
+            <div class="continue">
+              <a id='continueBtn' class="link" href="">Continue Existing Application</a>
+            </div>
+          </div>
+        </div>
+      </div>  <!-- here bg -->
+    </div>
+  </div>
+  <div class="benefit-row">
+    <div class="container">
+      <div class="row js-mobile-slide">
+        <div class="col-sm-3 slide">
+          <div class="benefit-item">
+            <div class="benefit-img">
+              <span class="benefit-badge">1</span>
+              <img src="/images/frontend/bars.png" alt="Unlimited Cash-Out">
+            </div>
+            <h2>Custom Terms</h2>
+            <p>Design the exact loan you need</p>
+          </div>
+        </div>
+        <div class="col-sm-3 slide">
+          <div class="benefit-item">
+            <div class="benefit-img">
+              <span class="benefit-badge">2</span>
+              <img src="/images/frontend/speed.png" alt="Speed">
+            </div>
+            <h2>Fast Online Process</h2>
+            <p>Close in 30 days</p>
+          </div>
+        </div>
+        <div class="col-sm-3 slide">
+          <div class="benefit-item">
+            <div class="benefit-img">
+              <span class="benefit-badge">3</span>
+              <img src="/images/frontend/infinite.png" alt="Custom Terms">
+            </div>
+            <h2>Unlimited Cash-Out</h2>
+            <p>Get the funds you need</p>
+          </div>
+        </div>
+        <div class="col-sm-3 slide">
+          <div class="benefit-item">
+            <div class="benefit-img">
+              <span class="benefit-badge">4</span>
+              <img src="/images/frontend/no-reload.png" alt="No Re-Trading">
+            </div>
+            <h2>No Re-Trading</h2>
+            <p>We stand behind our initial terms</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- </div> -->
+  <div class="container home-quick-calc">
+    <%- partial('./quickCalculator/quickCalc.ejs') %>
+  </div>
+  <section class="why-choose-section">
+    <div class="bg-image bg-cover">
+      <img src="/images/frontend/img01.jpg" alt="image description">
+    </div>
+    <div class="container">
+      <div class="text-holder">
+        <h2 class="h1" style="text-align: center;">Flexibility Beyond Bank Financing</h2>
+        <div class="row">
+          <div class="col-sm-2"></div>
+          <div class="col-sm-8">
+            <iframe width="100%" height="350"
+                    src="https://www.youtube.com/embed/XvnKhlKX5Ek">
+            </iframe>
+            <br>
+            <p> Commercial Direct provides alternative lending solutions that make sense for your unique
+              business or
+              investment needs. Don’t settle for restrictive bank financing – work alongside our experts to create a
+              mortgage that truly works for you.</p>
+            <a href="/showcase" nav-link class="btn btn-white" style="    display: block;
+          margin: auto;
+          width: 40%;">Check Our Success Stories</a>
+
+          </div>
+        </div>
+
+
+      </div>
+    </div>
+  </section>
+  <section class="what-wedo-section">
+    <div class="container">
+      <h2 class="h1">Working With Us Is Easy </h2>
+      <div class="row flex-row">
+        <div class="col-xs-12 col-sm-6">
+          <div class="do-step-box">
+            <h3>Customize Your Loan</h3>
+            <p>Use our Loan Customizer to select the terms & options that work best for you</p>
+          </div>
+        </div>
+        <div class="col-xs-12 col-sm-6">
+          <div class="do-step-box">
+            <h3>Get Pre-Approved in Minutes</h3>
+            <p>Complete the Quick App. If your deal qualifies, you will receive immediate online
+              pre-approval.</p>
+          </div>
+        </div>
+        <div class="col-xs-12 col-sm-6">
+          <div class="do-step-box">
+            <h3>Receive Support from Start to Finish</h3>
+            <p>One of our dedicated loan specialists will facilitate the entire underwriting process.</p>
+          </div>
+        </div>
+        <div class="col-xs-12 col-sm-6">
+          <div class="do-step-box">
+            <h3>Close on Schedule</h3>
+            <p>Our process is consistent + reliable. Close within 30 days with the terms you selected.</p>
+          </div>
+        </div>
+      </div>
+      <div class="btn-wrap text-center">
+        <a href="/knowledge" nav-link class="btn btn-outline">Check Our Knowledge Base</a>
+      </div>
+    </div>
+  </section>
+  <div class="big-quote-block">
+    <div class="container">
+      <div class="big-blockquote">
+        <div class="bg-cover">
+          <img src="/images/frontend/img02.jpg" alt="image description">
+        </div>
+        <blockquote>
+
+          <q>Closings go smoothly with Commercial Direct. The transaction manager was extremely helpful and patient and
+            made every step crystal clear. Your guidance was impeccable and it was really a very smooth process.
+          </q>
+          <cite>– Mixed-Use borrower in Montauk, New York</cite>
+        </blockquote>
+        <a href="/showcase" nav-link class="link-chowcase">Showcase &raquo;</a>
+      </div>
+    </div>
+  </div>
+
+  <div id="signInModal" class="sign-in-modal" style="display:none">
+    <div class="content">
+      <div class="header">
+        <span id="closeBtn" class="close">&times;</span>
+        <h3>Sign in</h3>
+      </div>
+      <div class="body">
+        <form class="form login-form" id="loginForm" method="POST" action="/login">
+          <div class="form-row">
+            <label for="user-name">Username</label>
+            <input class="form-control" type="email" id="user-name" name="email"
+                   placeholder="youremail@commercialdirect.com" required>
+            <p id="loginErrorMsg"></p>
+          </div>
+          <div class="form-row alter-sapce">
+            <label for="password">Password</label>
+            <input class="form-control" type="password" id="password" name="password" placeholder="Your password">
+          </div>
+
+          <div class="form-row alter-sapce" style="text-align:right;">
+            <a id="forgotPasswordUrl" href="">Forgot password?</a>
+          </div>
+          <div class="form-row no-indent">
+            <button type="submit" class="btn">Login</button>
+          </div>
+        </form>
+
+        <form class="form login-form" id="forgotPasswordForm" method="POST" action="/forgot-password"
+              style="display:none;">
+          <div class="form-row">
+            <p>Please enter you email to reset password</p>
+          </div>
+          <div class="form-row">
+
+            <label for="user-name">Email</label>
+            <input class="form-control" type="email" id="user-name" name="email"
+                   placeholder="youremail@commercialdirect.com" required>
+            <p id="forgot-password-message"></p>
+          </div>
+          <div class="form-row">
+            <p id='forgot-password-result'></p>
+          </div>
+          <div class="form-row no-indent">
+            <button type="submit" class="btn">Submit</button>
+          </div>
+        </form>
+
+      </div>
+    </div>
+  </div>
+</main>
+
+
+<script>
+  window.onload = function (e) {
+    initPropModal();
+
+    function showHideForgotPassword(isShow) {
+      if (isShow) {
+        $('#loginForm').hide();
+        $('#forgotPasswordForm').show();
+      } else {
+        $('#loginForm').show();
+        $('#forgotPasswordForm').hide();
+      }
+    };
+
+    $(function () {
+        $("#continueBtn").click(function (e) {
+          e.preventDefault(); // if desired...
+          $("#signInModal").css('display', 'block');
+        });
+
+        $("#forgotPasswordUrl").click(function (e) {
+          e.preventDefault(); // if desired...
+          showHideForgotPassword(true);
+        });
+
+        $("#closeBtn").click(function (e) {
+          e.preventDefault(); // if desired...
+          showHideForgotPassword(false);
+          $("#signInModal").css('display', 'none');
+        });
+
+        $('#loginForm').ajaxForm({
+          success: function (response) {
+            if (response.status == 'success') {
+              window.location = '/continue';
+            } else {
+              $('#loginErrorMsg').text(response.error.message);
+            }
+          },
+          error: function (response) {
+            $('#loginErrorMsg').text('Unable to send request');
+          }
+        });
+
+        $('#forgotPasswordForm').ajaxForm({
+          success: function (response) {
+            if (response.status == 'success') {
+              $('#forgot-password-message').text(response.message);
+            } else {
+              $('#forgot-password-message').text(response.error.message);
+            }
+          },
+          error: function (response) {
+            $('#forgot-password-message').text('Unable to send request');
+          }
+        });
+      }
+    )
+    ;
+  }
+</script>

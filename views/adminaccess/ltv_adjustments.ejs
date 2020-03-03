@@ -1,0 +1,119 @@
+
+<h1 class="page-title">LTV Adjustments</h1>
+<div class="content-modification" id="ltv_adjustments_section">
+  <form method="POST" class="form" id="ltv_adjustments_form" action="">
+    <div class="price-matrix">
+      <table>
+        <thead>
+          <tr>
+            <th></th>
+            <th>Tier</th>
+            <th>Value</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% var tiers = lists['tier'];
+          var tindex = 0;
+          if(tiers && tiers.length != 0){
+            _.each(tiers, function (tier) { %>              
+              <tr>
+                <% if(tindex == 0){
+                  %>
+                  <td rowspan="2">Max Complete LTV</td>
+                  <%
+                }
+                %>
+                <td><%=tier['tier']%></td>
+                <td><input type="number" name="max_complete_ltv[<%=tier['tier']%>]" value="<%= ltvAdjustments['max_complete_ltv'][tier['tier']] ? ltvAdjustments['max_complete_ltv'][tier['tier']] : ''%>"></td>
+              </tr>
+              <% tindex ++ %>
+            <% })
+          }
+          %>
+
+          <% var tiers = lists['tier'];
+          var tindex = 0;
+          if(tiers && tiers.length != 0){
+            _.each(tiers, function (tier) { %>              
+              <tr>
+                <% if(tindex == 0){
+                  %>
+                  <td rowspan="2">Max 30 Year LTV</td>
+                  <%
+                }
+                %>
+                <td><%=tier['tier']%></td>
+                <td><input type="number" name="max_30year_ltv[<%=tier['tier']%>]" value="<%= ltvAdjustments['max_30year_ltv'][tier['tier']] ? ltvAdjustments['max_30year_ltv'][tier['tier']] : ''%>"></td>
+              </tr>
+              <% tindex ++ %>
+            <% })
+          }
+          %>
+
+          <% var tiers = lists['tier'];
+          var tindex = 0;
+          if(tiers && tiers.length != 0){
+            _.each(tiers, function (tier) { %>              
+              <tr>
+                <% if(tindex == 0){
+                  %>
+                  <td rowspan="2">Max Stated Program LTV</td>
+                  <%
+                }
+                %>
+                <td><%=tier['tier']%></td>
+                <td><input type="number" name="max_bank_statement_program_ltv[<%=tier['tier']%>]" value="<%= ltvAdjustments['max_bank_statement_program_ltv'][tier['tier']] ? ltvAdjustments['max_bank_statement_program_ltv'][tier['tier']] : ''%>"></td>
+              </tr>
+              <% tindex ++ %>
+            <% })
+          }
+          %>
+
+          <% var tiers = lists['tier'];
+          var tindex = 0;
+          if(tiers && tiers.length != 0){
+            _.each(tiers, function (tier) { %>              
+              <tr>
+                <% if(tindex == 0){
+                  %>
+                  <td rowspan="2">Max Lite Doc LTV</td>
+                  <%
+                }
+                %>
+                <td><%=tier['tier']%></td>
+                <td><input type="number" name="max_streamline_ltv[<%=tier['tier']%>]" value="<%= ltvAdjustments['max_streamline_ltv'][tier['tier']] ? ltvAdjustments['max_streamline_ltv'][tier['tier']] : ''%>"></td>
+              </tr>
+              <% tindex ++ %>
+            <% })
+          }
+          %>
+		  <% var tiers = lists['tier'];
+          var tindex = 0;
+          if(tiers && tiers.length != 0){
+            _.each(tiers, function (tier) { %>              
+              <tr>
+                <% if(tindex == 0){
+                  %>
+                  <td rowspan="2">Max No Doc LTV</td>
+                  <%
+                }
+                %>
+                <td><%=tier['tier']%></td>
+                <td><input type="number" name="max_no_doc_ltv[<%=tier['tier']%>]" value="<%= ltvAdjustments['max_no_doc_ltv'][tier['tier']] ? ltvAdjustments['max_no_doc_ltv'][tier['tier']] : ''%>"></td>
+              </tr>
+              <% tindex ++ %>
+            <% })
+          }
+          %>
+        </tbody>
+      </table>
+    </div>
+    <div class="button-wrap">
+      <span  class="btn btn-outline" id="ltv_adjustment_save_btn">Save</span>
+    </div>
+  </form>
+
+</div>
+
+
+

@@ -1,0 +1,38 @@
+<% 
+  if(landingPage.headerImageUrl == '') { 
+    %>
+    <div class="landing-page-header">
+      <h1 class="landing-page-main-title"><%= landingPage.title %></h1>
+    </div>
+    <%
+  }
+  else{
+    %>
+    <div class="landing-page-header landing-page-header--has-img" style="background-image: url(<%= landingPage.headerImageUrl %>)">
+      <img class="landing-page-header__bk-img" src="<%= landingPage.headerImageUrl %>">
+      <div class="landing-page-bk-overlay"></div>
+      <h1 class="landing-page-main-title"><%= landingPage.title %></h1>
+    </div>
+    <%
+  }
+%>
+
+<% 
+  if(landingPage.subtitle != '') { 
+    %>
+    <div class="container">
+        <p class="landing-page-sub-title">
+            <%= landingPage.subtitle %>
+        </p>
+    </div>
+    <%
+  }
+%>
+
+
+
+<div class="container">
+    <div class="landing-page-content">
+        <%- landingPage.body || '' %>
+    </div>
+</div>

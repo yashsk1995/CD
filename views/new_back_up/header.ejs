@@ -1,0 +1,111 @@
+<div class="header">
+    <a href="https://silverhillfunding.com"><img class="header-logo" src="/images/frontend/sh_logo.png"></a>
+    <ul class="header-menu">
+        <li>
+            <div class="header-menu-title">About<i class="fa fa-caret-down"></i></div>
+            <ul class="header-sub-menu">
+                <li><a href="https://silverhillfunding.com/what-we-do/">what we do</a></li>
+                <li><a href="https://silverhillfunding.com/who-we-are/">who we are</a></li>
+                <li><a href="https://silverhillfunding.com/how-it-works/">how it works</a></li>
+            </ul>
+        </li>
+		<li>
+            <div class="header-menu-title">Loans<i class="fa fa-caret-down"></i></div>
+            <ul class="header-sub-menu">
+                <li><a href="https://silverhillfunding.com/full-doc-commercial-loans/">full doc Loans</a></li>
+                <li><a href="https://silverhillfunding.com/lite-doc-commercial-loans/">lite doc Loans</a></li>
+                <li><a href="https://silverhillfunding.com/no-doc-commercial-loans/">no doc Loans</a></li>
+				 <li><a href="https://silverhillfunding.com/1-4-plex-program/">1-4 Program</a></li>
+            </ul>
+        </li>
+        <li>
+            <div class="header-menu-title">Broker Resources<i class="fa fa-caret-down"></i></div>
+            <ul class="header-sub-menu">
+				<%
+                if(typeof req.session.authenticated != 'undefined' && req.session.authenticated){
+                    %>
+                   <li><a href="https://apply.silverhillfunding.com/">Portal Home</a></li>
+                    <%
+                }
+                else{
+                    %>
+				<li><a href="/login">Portal Home</a></li>
+				 <%
+                }
+                %>
+                <%
+                if(typeof req.session.authenticated != 'undefined' && req.session.authenticated){
+                    %>
+                    <li><a href="/silver-qualifier">Mortgage Calculator</a></li>
+                    <%
+                }
+                else{
+                    %>
+                    <li><a href="/login">Mortgage Calculator</a></li>
+                    <%
+                }
+                %>
+                <%
+                if(typeof req.session.authenticated != 'undefined' && req.session.authenticated){
+                    %>
+                    <li><a href="/l/product-sheets">Personalized Collateral</a></li>
+                    <%
+                }
+                else{
+                    %>
+                    <li><a href="/login">Personalized Collateral</a></li>
+                    <%
+                }
+                %>
+                <%
+                if(typeof req.session.authenticated != 'undefined' && req.session.authenticated){
+                    %>
+                    <li><a href="/l/marketing">Downloadable Guides</a></li>                    
+                    <%
+                }
+                else{
+                    %>
+                    <li><a href="/login">Downloadable Guides</a></li>
+                    <%
+                }
+                %>
+                <li><a href="https://silverhillfunding.com/video/">Videos</a></li>
+                <li><a href="https://silverhillfunding.com/blogs/">Blog Posts</a></li>
+                <li><a href="https://silverhillfunding.com/forms-you-may-need/">Forms You May Need</a></li>
+                <li><a href="https://silverhillfunding.com/category-closed-loan/">Success Stories</a></li>
+            </ul>
+        </li>
+        <li>
+            <div class="header-menu-title"><a href="/silver-qualifier">Mortgage Calculator</a></div>
+        </li>
+        <li>
+            <div class="header-menu-title"><a href="https://silverhillfunding.com/contact-us/">Contact</a></div>
+        </li>
+        
+    </ul>
+    <ul class="header-info-menu">
+        <li>
+            <span class="header-menu-nav-btn"><i class="fa fa-bars"></i></span>
+        </li>
+        <%
+        if(typeof req.session.authenticated == 'undefined' || !req.session.authenticated){
+            %>
+            <li><a class="header-login-btn" href="/login">Log In</a></li>
+            <%
+        }
+        else {
+            %>
+            <li><a class="header-login-btn" id="logout_btn">Log Out</a></li>
+            <%
+        }
+        %>
+        
+        <li>
+            <div class="header-info-wrap">
+                <div class="header-info__call">Call Us Today!</div>
+                <div class="header-info__phone"><i class="fa fa-phone"></i>844-641-1035</div>
+            </div>
+        </li>
+    </ul>
+</div>
+

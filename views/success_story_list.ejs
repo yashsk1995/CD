@@ -1,0 +1,85 @@
+<main id="main">
+  <div class="inner-banner">
+    <div class="bg-cover">
+      <img src="/images/frontend/img31.jpg" alt="image description">
+    </div>
+    <div class="container text-center">
+      <h1>Showcase</h1>
+    </div>
+  </div>
+  <div class="chowcase-container">
+    <div class="container">
+      <div class="text-box">
+        <%- content.showcase || '' %>
+      </div>
+      <div class="tags">
+        <h4 style="text-align: center">Purpose</h4>
+        <ul class="tag-list">
+          <% _.each(metaTags.purposeTags, function(metaTag) { %>
+          <li><a class="<%= _.contains(tags, metaTag) ? 'selected' : '' %>"
+                 href="javascript:onTagSelected('<%= metaTag %>')"><%= metaTag %></a></li>
+          <% }) %>
+        </ul>
+        <h4 style="text-align: center">Property Type</h4>
+        <ul class="tag-list">
+          <% _.each(metaTags.propertyTypeTags, function(metaTag) { %>
+          <li><a class="<%= _.contains(tags, metaTag) ? 'selected' : '' %>"
+                 href="javascript:onTagSelected('<%= metaTag %>')"><%= metaTag %></a></li>
+          <% }) %>
+        </ul>
+        <h4 style="text-align: center">Location</h4>
+        <ul class="tag-list">
+          <% _.each(metaTags.locationTags, function(metaTag) { %>
+          <li><a class="<%= _.contains(tags, metaTag) ? 'selected' : '' %>"
+                 href="javascript:onTagSelected('<%= metaTag %>')"><%= metaTag %></a></li>
+          <% }) %>
+        </ul>
+
+      </div>
+
+      <div class="row flex-row">
+        <% _.each(successStories, function(successStory) { %>
+        <div class="col-sm-4">
+          <div class="showcase-item">
+            <div class="img-wrap">
+              <a href="/showcase/<%= successStory.id %>" nav-link>
+                <img src="<%= successStory.previewImageUrl || '' %>" height="172" width="340" alt="image description"></a>
+            </div>
+            <strong class="name"><a href="/showcase/<%= successStory.id %>" nav-link><%= successStory.title %></a></strong>
+          </div>
+        </div>
+        <% }) %>
+      </div>
+    </div>
+  </div>
+</main>
+<script>
+
+  onTagSelected = function (newTag) {
+    var tags = '<%- tags %>';
+    if (tags != "") {
+      tags = tags.split(",")
+    } else {
+      tags = [];
+    }
+
+    if (tags.indexOf(newTag) >= 0) {
+      tags.splice(tags.indexOf(newTag), 1);
+    } else {
+      tags.push(newTag);
+    }
+
+    var newLocation = "/showcase";
+    for (var i = 0; i < tags.length; i++) {
+      if (i == 0) {
+        newLocation += "?"
+      } else {
+        newLocation += "&"
+      }
+      newLocation += "tags=" + tags[i];
+    }
+
+    window.location = newLocation;
+  }
+
+</script>

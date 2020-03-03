@@ -1,0 +1,27 @@
+<main id="main">
+  <div class="inner-banner">
+    <div class="bg-cover">
+      <img src="/images/frontend/img03.jpg" alt="image description">
+    </div>
+    <div class="container text-center">
+      <h1>Contact Us</h1>
+    </div>
+  </div>
+  <section class="contact-section">
+    <div class="container">
+      <%- content.contactUs || ''%>
+    </div>
+  </section>
+
+  <div class="big-quote-block">
+    <div class="container">
+      <div class="big-blockquote light">
+        <div class="bg-cover">
+          <img src="/images/frontend/img04.jpg" alt="image description">
+        </div>
+        <%- content.sampleTestimonial || '' %>
+        <a href="/showcase" nav-link class="link-chowcase">Showcase &raquo;</a>
+      </div>
+    </div>
+  </div>
+</main>

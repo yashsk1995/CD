@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Commercial Direct</title>
+  <link rel="stylesheet" href="/styles/frontend/bootstrap.min.css">
+
+  <style>
+    body {
+      font: 14pt Helvetica, "Helvetica Nueue", sans-serif;
+      background: #fff !important;
+      color: #000;
+      text-align: left;
+      padding-left: 0px;
+      padding-right: 0px;
+      padding-top: 20px;
+    }
+
+    table {
+      margin: 20px auto;
+      width: 70%;
+      border: 1px solid #124549;
+      color: black;
+    }
+
+    td {
+      border: 1px solid #124549;
+      padding: 5px 7px;
+      color: black;
+    }
+
+    h1 {
+      font-size: 24pt;
+    }
+
+    h2, h3, h4 {
+      font-size: 18pt;
+      text-align: left;
+      text-transform: capitalize !important;
+    }
+
+    a {
+      page-break-inside: avoid
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      page-break-after: avoid;
+      page-break-inside: avoid
+    }
+
+    img {
+      page-break-inside: avoid;
+      page-break-after: avoid;
+    }
+
+    table, pre {
+      page-break-inside: avoid
+    }
+
+    ul, ol, dl {
+      page-break-before: avoid
+    }
+
+    th, td {
+      border-collapse: collapse;
+      border: 1px solid black;
+      text-align: left;
+    }
+
+    a:link, a:visited, a {
+      background: transparent;
+      color: #520;
+      font-weight: bold;
+      text-decoration: underline;
+      text-align: left;
+    }
+
+    a {
+      page-break-inside: avoid
+    }
+
+    a[href^=http]:after {
+      content: " <" attr(href) "> ";
+    }
+
+    a:after > img {
+      content: "";
+    }
+
+    p, address, li, dt, dd, blockquote {
+      font-size: 100%
+    }
+
+    ul, ol {
+      list-style: square;
+      margin-left: 18pt;
+      margin-bottom: 40pt;
+    }
+
+    li {
+      line-height: 1.6em;
+    }
+
+  </style>
+</head>
+
+<body class="home">
+<div id="wrapper">
+  <header id="header" style="padding-top: 10px; padding-bottom: 10px;">
+    <div class="container">
+      <div class="logo">
+        <a href="#">
+          <img src="/images/frontend/cd-logo-color.svg" class="normal" alt="Commercial Direct">
+        </a>
+        <div style="text-align: right;">
+          <span> <%=: new Date() | formatFullDate %> </span>
+        </div>
+      </div>
+
+    </div>
+  </header>
+</div>
+<main id="main" style="padding-left: 20px; padding-right: 20px;">
+  <div class="term-sheet">
+    <div class="content">
+      <div>
+        <h2 style="text-align: center;">Conditional Pre-Approval Letter</h2>
+      </div>
+      <p>
+        This summary sheet is a basic outline of the terms and conditions currently being considered based on the
+        initial information provided. This is not a commitment to lend, but merely an expression of our interest in
+        providing the aforementioned financing request. The terms and conditions are subject to change in whole or in
+        part at any time during the process including and up to the time that our due diligence, credit analysis and
+        underwriting is complete.
+      </p>
+      <div style="margin-top: 10px;"><b>Borrower(s):</b> <%= user.name %></div>
+      <div>
+        <table>
+          <tr>
+            <td>
+              COLLATERAL
+            </td>
+            <td>
+              <%= application.propertyType %>, <%= application.city %>, <%= application.state %>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              LOAN AMOUNT
+            </td>
+            <td>
+              $<%=: application.loanAmount | formatCurrency %>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              LOAN TO VALUE
+            </td>
+            <td>
+              <%= Math.ceil(((application.loanAmount * 100) / application.propertyPrice) / 5) * 5 %>%
+            </td>
+          </tr>
+          <tr>
+            <td>
+              TERM
+            </td>
+            <td>
+              <%= application.program || '' %> Years
+            </td>
+          </tr>
+          <tr>
+            <td>
+              AMORTIZATION
+            </td>
+            <td>
+              <%= application.amortizations || '' %> Years
+            </td>
+          </tr>
+          <tr>
+            <td>
+              INTEREST RATE
+            </td>
+            <td>
+              <%= application.resultingRate || '' %>%
+            </td>
+          </tr>
+          <tr>
+            <td>
+              INTEREST ONLY PERIOD
+            </td>
+            <td>
+              <%= application.interestOnlyPeriodMonths || '' %> Month(s)
+            </td>
+          </tr>
+          <tr>
+            <td>
+              ESTIMATED P&I PAYMENT PAYMENT
+            </td>
+            <td>
+              $<%=: application.resultingMonthlyPayment | formatCurrency %>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              BUYDOWN POINTS
+            </td>
+            <td>
+              <%= application.rateBuyDown || '' %> Point(s)
+            </td>
+          </tr>
+          <tr>
+            <td>
+              UNDERWRITING FEE
+            </td>
+            <td>
+              $500.00 Up Front
+            </td>
+          </tr>
+          <tr>
+            <td>
+              PRE-PAYMENT
+            </td>
+            <td>
+              Borrower will incur a 5% prepayment fee if the loan is repaid during the
+              first <%= application.prepayPenalty %> years of the
+              term of the loan
+            </td>
+          </tr>
+          <tr>
+            <td>
+              PURPOSE
+            </td>
+            <td>
+              <%= application.loanType || '' %>
+            </td>
+          </tr>
+        </table>
+      </div>
+
+      <div>
+        <p>
+          Again, this is a Conditional Pre-Approval Letter and not a commitment to lend. These terms and conditions
+          are subject to change. Please note that this outline does not contain all of the terms, conditions, fees and
+          other provisions involved in this transaction that would be more fully described in the definitive legal
+          document(s) for the proposed transaction.</p>
+        <p>
+          Should you wish to request Commercial Direct, a division of Silver Hill Funding, LLC to proceed with issuing
+          a formal Letter of Intent under the general terms and conditions outlined herein in this non-binding term
+          sheet, please submit the underwriting documents requested on the following page within seven (7) calendar
+          days of the effective date of this letter.
+        </p>
+        <p>
+          By submitting the documents below I/we desire to proceed with this transaction to obtain a Letter of Intent
+          for pre-approved terms. I/we understand that I/we must provide additional documentation and information
+          within the prescribed timelines.
+        </p>
+        <p style="margin-top: 20px;">
+          <u>To begin the processing of your loan application, submit the following documents:</u>
+        </p>
+        <ul>
+          <li>
+            Fully completed and signed application. Find our loan application here
+          </li>
+          <li style="margin-top: 5px;">
+            If Purchase, fully executed Purchase and Sale Contract with all Amendments, Schedules, and
+            Signatures.
+          </li>
+        </ul>
+      </div>
+
+      <div style="margin-top: 20px; margin-left: 8px;">Sincerely,</div>
+      <div style="margin-top: 10px;"><img src="/images/frontend/juan_barcelo_sign.png"/></div>
+      <div style="margin-left: 8px; padding-bottom: 10px;">
+        Commercial Direct, a division of Silver Hill Funding, LLC <br/>
+        4425 Ponce De Leon Blvd. Suite 250 <br/>
+        Coral Gables, FL 33146 <br/>
+        Telephone: (305) 631-3784 <br/>
+        Email: info@shf-commercialdirect.com <br/>
+        Web: www.commercialdirect.com <br/>
+      </div>
+    </div>
+  </div>
+</main>
+</body>
+
+</html>
