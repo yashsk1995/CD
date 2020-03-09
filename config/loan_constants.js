@@ -108,7 +108,7 @@ module.exports.loan_constants = {
   },
 
   loanLookupKeys : {
-    tiers : ['Tier I', 'Tier II', 'No Doc Streamline'],
+    tiers : ['Tier I', 'Tier II', 'Interest Only', 'No Doc Streamline'],
     creditScores : ['800', '775', '750', '725', '700', '675', '650'],
     ltvs : ['50', '55', '60', '65', '70', '75', '80'],
     ltvs_vals :  {'50': '0.50', '55': '0.55', '60': '0.60', '65': '0.65', '70': '0.70', '75': '0.75', '80': '0.80'}

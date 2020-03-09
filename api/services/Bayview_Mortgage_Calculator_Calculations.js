@@ -163,7 +163,8 @@ module.exports = {
 					if(loan_term['display']=='30 Year Interest Only') {
                         rate_pct += parseFloat(customrates[credit_score_range['min']][custom_ltv]);
                         // rate_pct += 0.6;
-					}
+                    }
+                    rate_pct += 0.375;
                     //echo $rate_pct;
                     console.log('rate_pct:', rate_pct);
                     /* $min_loan_rate = Bayview_Mortgage_Calculator_Option::get_option('min_loan_rate', 6);
@@ -410,10 +411,14 @@ module.exports = {
         if(property_type_name == 'Townhome' || property_type_name == 'Single Family' || property_type_name == '2-4 Unit') {			
             rate = rate - 0.625;
             console.log('rate2', rate);
-			if(prepay_buydown== '5% for 5 Years' || prepay_buydown== 'Declining 5%, 4%, 3%, 2%, 1%') {
+			if(prepay_buydown== '5% for 5 Years') {
 				rate = rate - 0.250;
 				console.log('rate21', rate);
 			}	
+			if(prepay_buydown== 'Declining 5%, 4%, 3%, 2%, 1%') {
+				rate = rate - 0.125;
+				console.log('rate212', rate);
+			}
         }
         
 		if(property_type_name == 'Restaurant/Bar' || property_type_name == 'Automotive') {

@@ -1,7 +1,7 @@
 /**
- * Development environment settings
+ * Production environment settings
  *
- * This file can include shared settings for a development team,
+ * This file can include shared settings for a production environment,
  * such as API keys or remote database passwords.  If you're using
  * a version control solution for your Sails app, this file will
  * be committed to your repository unless you add it to your .gitignore
@@ -11,83 +11,70 @@
  */
 
 module.exports = {
-  hookTimeout:120000,
+
+  hookTimeout: 30000, // 30 seconds
 
   /***************************************************************************
-   * Set the default database connection for models in the development       *
+   * Set the default database connection for models in the production        *
    * environment (see config/connections.js and config/models.js )           *
    ***************************************************************************/
+
   models: {
-    connection: 'commercialDirectDBLocal',
-    migrate: 'alter'
+    connection: 'commercialDirectDBProduction'
   },
 
-  app_url: 'http://localhost:1337',
+  app_url: process.env.app_url,
 
-  print_url: 'http://localhost:1337',
+  print_url: process.env.print_url,
 
-  homepage_url: '',
+  homepage_url: process.env.homepage_url,
 
   elastic_search: {
-    host: 'localhost:3306',
-    index: 'silver_prod',
-    log: 'error'
+    host: process.env.es_host,
+    index: process.env.es_index,
+    log: process.env.es_log
   },
 
   email: {
-    from: 'jonatan@pllay.co', //'no-reply@commercialdirect.com'
-    contact: 'info@pllay.co',
-    new_lead: 'info@pllay.co'
+    from: process.env.from_email,
+    to: 'info@shf-commercialdirect.com',
+    new_lead: process.env.new_lead_email
   },
 
   aws: {
-    accessKeyId: 'AKIAJFQFD4F3ZJIHC3NA',
-    secretAccessKey: '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',
+    accessKeyId: process.env.ses_key_id,
+    secretAccessKey: process.env.ses_access_key,
     region: 'https://email.us-west-2.amazonaws.com',
-    s3Bucket: 'cd-com-staging'
+    s3Bucket: 'cd-com-production'
   },
 
   sales_force: {
-    url: 'https://test.salesforce.com',
-    username: 'jonatan@pllay.co.pcsandbox',
-    password: 'Password2018!ACLmr3QRkzufHCkRYUWiEYPta',
-    record_type_id: '01237000000Xwl3',
-    company: 'Commercial Direct',
-    status: 'Sales Qualified'
+    url: process.env.sf_url,
+    username: process.env.sf_username,
+    password: process.env.sf_password,
+    record_type_id: process.env.sf_recordtype,
+    company: process.env.sf_company,
+    status: process.env.sf_status
   },
 
   paypal: {
-    mode: 'sandbox', //sandbox or live
-    clientId: 'AZZ4_dXOEwvsvw4cq0tTYz0RzWlA_y3wv0eY_l1c6qlc_QrNDagJrOG5mRAHg79_z1NcE9bbUVyfUgcF',
-    secretKey: 'EOntp2Lc1EvZAgi--6HBFN8ziHSfe2mocKYe9YhzOasOdgi6nBEE4mOovqZTnF--w1zDqx4UOCJP5vID'
+    mode: process.env.pp_mode,
+    clientId: process.env.pp_client_id,
+    secretKey: process.env.pp_secret_key
   },
 
   docusign: {
-    apiUrl: 'https://demo.docusign.net/restapi/v2/login_information',
-    integratorKey: '58e0744f-a49f-425b-9b0f-0611130979d4',
-    email: 'jonatan@pllay.co',                     // Email for your DocuSign Account
-    password: 'Password1!',
-    templateId: '35851f18-64c7-4f45-9a47-d713abd0b3c0',
-    callbackUrl: '/docusign-success',
-    wehhookUrl: '/docusign-update',
-    emailSubject: 'Commercial Direct Agreement',
+    apiUrl: process.env.docusign_api_url, //'https://demo.docusign.net/restapi/v2/login_information',
+    integratorKey: process.env.docusign_integrator_key, //'acad4a62-5ebb-4531-b66d-a74e0490895e',
+    email: process.env.docusign_email, // 'info@pllay.co',                     // Email for your DocuSign Account
+    password: process.env.docusign_password, //'commercial_direct',
+    templateId: process.env.docusign_template_id, // '6329536d-aba1-48d8-8b49-2c7f0de9a9da',
+    callbackUrl: process.env.docusign_callback_url, //'/docusign-success',
+    wehhookUrl: process.env.docusign_webhookUrl,  //'/docusign-update',
+    emailSubject: process.env.docusign_email_subject, //'Commercial Direct Agreement',
     roles: ['Guarantor 1', 'Guarantor 2', 'Guarantor 3', 'Guarantor 4'] // This has to be in sequence from borrower to coborrower 3
   },
 
-  // docusign: {
-  //   apiUrl: 'https://na2.docusign.net/restapi/v2/login_information',
-  //   integratorKey: '58e0744f-a49f-425b-9b0f-0611130979d4',
-  //   email: 'jonatan@pllay.co',                     // Email for your DocuSign Account
-  //   password: 'Password1!',
-  //   templateId: '87C40288-496C-4E73-90E1-DB8FDA048E1C',
-  //   callbackUrl: '/docusign-success',
-  //   wehhookUrl: '/docusign-update',
-  //   emailSubject: 'Commercial Direct Agreement',
-  //   roles: ['Guarantor 1', 'Guarantor 2', 'Guarantor 3', 'Guarantor 4'] // This has to be in sequence from borrower to coborrower 3
-  // },
-
-
-  rollbarToken: 'dd75b283713c483ea330635104a3994d',
-overrideMigrateSetting:false
+  rollbarToken: process.env.rollbar_token
 
 };

@@ -167,7 +167,7 @@ module.exports.app_constants = {
   propertyTypes: [
     {name: 'Multi-Family', value:"Multi-Family", tier: 'Tier I'},
     {name: 'Single Family', value:"Single Family", tier: 'Tier II'},
-    {name: '2-4 Unit', value:"2 To 4 Family", tier: 'Tier II'},
+    {name: 'Two to Four Units', value:"2 To 4 Family", tier: 'Tier II'},
     {name: 'Mixed-Use (>=50% res)', value:"Mixed-Use Tier 1 (>=50% res)", tier: 'Tier I'},
     {name: 'Mixed-Use (>=50% comm)', value:"Mixed-Use Tier 2 (>=50% comm)", tier: 'Tier II'},
     {name: 'Office', value:"Office", tier: 'Tier II'},
@@ -188,7 +188,7 @@ module.exports.app_constants = {
 
   propertyTypesOneToFour: [
     {name: 'Single Family', value:"Single Family", tier: 'Tier II'},
-    {name: '2-4 Unit', value:"2 To 4 Family", tier: 'Tier II'},
+    {name: 'Two to Four Units', value:"2 To 4 Family", tier: 'Tier II'},
     {name: 'Residential Condo', value:"Residential Condo", tier: 'Tier II'}
   ],
 

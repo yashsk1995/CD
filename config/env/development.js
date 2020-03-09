@@ -11,7 +11,6 @@
  */
 
 module.exports = {
-  hookTimeout:120000,
 
   /***************************************************************************
    * Set the default database connection for models in the development       *
@@ -29,8 +28,8 @@ module.exports = {
   homepage_url: '',
 
   elastic_search: {
-    host: 'localhost:3306',
-    index: 'silver_prod',
+    host: 'localhost:9200',
+    index: 'commercial_direct',
     log: 'error'
   },
 
@@ -87,7 +86,7 @@ module.exports = {
   // },
 
 
-  rollbarToken: 'dd75b283713c483ea330635104a3994d',
-overrideMigrateSetting:false
+  rollbarToken: 'dd75b283713c483ea330635104a3994d'
+
 
 };

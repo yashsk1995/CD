@@ -4,6 +4,21 @@
  * @description :: Server-side logic for managing blog posts
  * @help        :: See http://sailsjs.org/#!/documentation/concepts/Controllers
  */
+var mysql = require('mysql');
+
+var con = mysql.createConnection({
+  // Silver_prod
+  host: process.env.loanhost,
+  user: process.env.loanuser,
+  password: process.env.loanpw,
+  database : process.env.loandb,
+
+});
+
+con.connect(function(err) {
+  if (err){ throw err; }
+  console.log("Connected2!");``
+});
 var next = require('co-next');
 
 const loanAppTypes = {
@@ -12,6 +27,33 @@ const loanAppTypes = {
   loanApp: 'loanApp'
 };
 
+
+
+// var lists;
+// con.query('SELECT * FROM config WHERE id=2', function (error, results, fields) {
+//   if (error)
+//       throw error;
+
+//   results.forEach(result => {
+//       // console.log(result.value);
+//       var lists= result.value;
+//       // var json = JSON.parse(list2);
+//       // console.log(json["portals"]);
+//       // lists = json["portals"];
+//     console.log(lists);
+//   });
+// });
+
+
+var final;
+    con.query('SELECT * FROM config', function (error, results, fields) {
+      if (error){
+          throw error;}
+         var lists2=results;
+          var newobJ = JSON.stringify(lists2);
+         final = JSON.parse(newobJ);
+         
+    });
 module.exports = {
   renderCalculator: next(function*(req, res) {
     var source = req.originalUrl;
@@ -265,10 +307,10 @@ module.exports = {
   },
 
   silverQualifier: next(function* (req, res) {
-    var sales_reps = yield ConfigService.getByKey(sails.config.app_constants.configs.salesReps);
-    var lists = yield ConfigService.getByKey(sails.config.app_constants.configs.lists);
-    var ltvAdjustments = yield ConfigService.getByKey(sails.config.app_constants.configs.ltvAdjustments);
-    var rateAdjustments = yield ConfigService.getByKey(sails.config.app_constants.configs.rateAdjustments);
+    // var sales_reps = yield ConfigService.getByKey(sails.config.app_constants.configs.salesReps);
+    // var lists = yield ConfigService.getByKey(sails.config.app_constants.configs.lists);
+    // var ltvAdjustments = yield ConfigService.getByKey(sails.config.app_constants.configs.ltvAdjustments);
+    // var rateAdjustments = yield ConfigService.getByKey(sails.config.app_constants.configs.rateAdjustments);
 
     var allParams = req.allParams();
     if(allParams.hasOwnProperty('prepay_buydown1')){
@@ -278,6 +320,15 @@ module.exports = {
     // allParams['downloadtermsheet'] = 1;
     
     if(req.session.authenticated){
+     console.log(JSON.parse(final[1].value));
+     var lists=JSON.parse(final[1].value);
+    var sales_reps=JSON.parse(final[2].value);
+    var ltvAdjustments=JSON.parse(final[4].value);
+
+    var rateAdjustments=JSON.parse(final[3].value);
+
+    //  console.log(typeof(lists));
+    //  console.log(lists);
       res.locals.layout = 'new/homelayout';
       res.view('new/pages/silverqualifierpage', {
         sales_reps: sales_reps,
@@ -298,6 +349,7 @@ module.exports = {
       });
     }
     else{
+      console.log("asdadadaaad");
       res.redirect('/login');
     }
     
@@ -305,17 +357,36 @@ module.exports = {
 
   silverQualifierCalculate: next(function* (req, res){
 
+    
     if(!req.session.authenticated){
       res.redirect('/login');
       return;
     }
+  
+    // var sales_reps = yield ConfigService.getByKey(sails.config.app_constants.configs.salesReps);
+    // var lists = yield ConfigService.getByKey(sails.config.app_constants.configs.lists);
+    // var ltvAdjustments = yield ConfigService.getByKey(sails.config.app_constants.configs.ltvAdjustments);
+    // var rateAdjustments = yield ConfigService.getByKey(sails.config.app_constants.configs.rateAdjustments);
+    // var loanLookup = yield ConfigService.getByKey(sails.config.app_constants.configs.loanLookup);
+    // var customRate = yield ConfigService.getByKey(sails.config.app_constants.configs.customRate);
 
-    var sales_reps = yield ConfigService.getByKey(sails.config.app_constants.configs.salesReps);
-    var lists = yield ConfigService.getByKey(sails.config.app_constants.configs.lists);
-    var ltvAdjustments = yield ConfigService.getByKey(sails.config.app_constants.configs.ltvAdjustments);
-    var rateAdjustments = yield ConfigService.getByKey(sails.config.app_constants.configs.rateAdjustments);
-    var loanLookup = yield ConfigService.getByKey(sails.config.app_constants.configs.loanLookup);
-    var customRate = yield ConfigService.getByKey(sails.config.app_constants.configs.customRate);
+
+    var lists=JSON.parse(final[1].value);
+    var sales_reps=JSON.parse(final[2].value);
+    var ltvAdjustments=JSON.parse(final[4].value);
+
+    
+
+
+    var rateAdjustments=JSON.parse(final[3].value);
+    
+    console.log(rateAdjustments);
+
+    
+    var loanLookup =JSON.parse(final[0].value);
+    var customRate = JSON.parse(final[5].value);
+
+
 
     var options = {
       sales_reps: sales_reps,
@@ -382,8 +453,8 @@ module.exports = {
         });
       }
 		
-		if(values['loan_amount']>300000 && values['documentation']=='No Doc') {
-			var max_loan_amount_no_doc_error='For No-Doc loan type, loan amount must be $300k or less';
+		if(values['loan_amount']>500000 && values['documentation']=='No Doc') {
+			var max_loan_amount_no_doc_error='For No-Doc loan type, loan amount must be $500k or less';
 			errors.push({
           code: 'max_loan_amount_no_doc_error',
           message: max_loan_amount_no_doc_error
@@ -458,8 +529,7 @@ module.exports = {
 		// Bayview_Mortgage_Calculator::print_pre_with_header( 'VALUES', $values );
 		// Bayview_Mortgage_Calculator::print_pre_with_header( 'ERRORS', Bayview_Mortgage_Calculator_Errors::errors() );
 		// Bayview_Mortgage_Calculator::print_pre_with_header( 'LAST SUBMIT', Bayview_Mortgage_Calculator_Calculator_Submits::last_submit() );
-
-    
+    //
     console.log('results_30:', results_30);
     console.log('results_25:', results_25);
     console.log('results_20:', results_20);

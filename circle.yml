@@ -42,7 +42,7 @@ dependencies:
     - tar -xvf elasticsearch-2.4.5.tar.gz
     - elasticsearch-2.4.5/bin/elasticsearch: {background: true}
     # Make sure that Elasticsearch is up before running tests:
-    - sleep 10 && wget --waitretry=5 --retry-connrefused -v http://127.0.0.1:3306/
+    - sleep 10 && wget --waitretry=5 --retry-connrefused -v http://127.0.0.1:9200/
 
 database:
   override:

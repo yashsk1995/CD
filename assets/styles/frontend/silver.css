@@ -15,6 +15,20 @@ ol,
   list-style: none;
 }
 
+.btn-default:active:hover,
+.btn-default:active:focus,
+.btn-default:active.focus,
+.btn-default.active:hover,
+.btn-default.active:focus,
+.btn-default.active.focus,
+.open > .btn-default.dropdown-toggle:hover,
+.open > .btn-default.dropdown-toggle:focus,
+.open > .btn-default.dropdown-toggle.focus {
+  border-color: #50b649;
+  color: #50b649;
+  background: transparent;
+}
+
 .clearfix:after,
 .content-search-form:after,
 .newsletter-subscribe-form .input-wrap:after,
@@ -328,20 +342,6 @@ a:focus {
 
 .btn-default:hover,
 .btn-default:focus {
-  border-color: #50b649;
-  color: #50b649;
-  background: transparent;
-}
-
-.btn-default:active:hover,
-.btn-default:active:focus,
-.btn-default:active.focus,
-.btn-default.active:hover,
-.btn-default.active:focus,
-.btn-default.active.focus,
-.open > .btn-default.dropdown-toggle:hover,
-.open > .btn-default.dropdown-toggle:focus,
-.open > .btn-default.dropdown-toggle.focus {
   border-color: #50b649;
   color: #50b649;
   background: transparent;

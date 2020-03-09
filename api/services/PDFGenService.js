@@ -15,7 +15,7 @@ var pdfgen = function PDF(sails){
         sails.hooks.views.render(relPath, data, cb);
         return;
       }
-	 console.log('values12:', data);
+  
       fs.readFile(view + '.ejs', function (err, source) {
         if (err) return cb(err);
   

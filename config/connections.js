@@ -42,42 +42,36 @@ module.exports.connections = {
   ***************************************************************************/
   commercialDirectDBLocal: {
     adapter: 'sails-mysql',
-    host: 'localhost',
+    host: '127.0.0.1',
     // user: 'cd.com', //optional
     // password: 'cd_031', //optional
     user: 'root',
-    password: '',
-    database: 'silver_prod' //optional
+    password: 'Darmstadt25',
+    database: 'commercial_direct' //optional
   },
 
   commercialDirectDBTest: {
     adapter: 'sails-mysql',
     host: 'localhost',
-    // user: 'cd.com', //optional
-    // password: 'cd_031', //optional
-    user: 'root',
-    password: '',
-    database: 'silver_prod' //optional
+    user: 'cd.com', //optional
+    password: 'cd_031', //optional
+    database: 'commercial_direct_test' //optional
   },
 
   commercialDirectDBStaging: {
     adapter: 'sails-mysql',
-    host: 'localhost',
-    // user: 'cd.com', //optional
-    // password: 'cd_031', //optional
-    user: 'root',
-    password: '',
-    database: 'silver_prod' //optional
+    host: process.env.dbHost,
+    user: process.env.user, //optional
+    password: process.env.password, //optional
+    database: process.env.database //optional
   },
 
   commercialDirectDBProduction: {
     adapter: 'sails-mysql',
-    host: 'localhost',
-    // user: 'cd.com', //optional
-    // password: 'cd_031', //optional
-    user: 'root',
-    password: '',
-    database: 'silver_prod' //optional
+    host: process.env.dbHost,
+    user: process.env.user, //optional
+    password: process.env.password, //optional
+    database: process.env.database //optional
   },
 
   /***************************************************************************

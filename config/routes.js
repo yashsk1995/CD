@@ -396,8 +396,8 @@ module.exports.routes = {
 
    '/login': 'LoginController.render',
    '/register': 'LoginController.renderRegister',
-   'get /silver-qualifier': 'LoanCalculatorController.silverQualifier',
-   'post /silver-qualifier': 'LoanCalculatorController.silverQualifierCalculate',
+   'get /commercial-qualifier': 'LoanCalculatorController.silverQualifier',
+   'post /commercial-qualifier': 'LoanCalculatorController.silverQualifierCalculate',
    'post /generatetermsheet': 'LoanCalculatorController.generateTermSheet',
    'get /testgeneratetermsheet': 'LoanCalculatorController.testgenerateTermSheet',
    'get /downloadtermsheet': 'LoanCalculatorController.downloadTermSheet',
