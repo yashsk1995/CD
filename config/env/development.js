@@ -39,12 +39,7 @@ module.exports = {
     new_lead: 'info@pllay.co'
   },
 
-  aws: {
-    accessKeyId: 'AKIAJFQFD4F3ZJIHC3NA',
-    secretAccessKey: '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',
-    region: 'https://email.us-west-2.amazonaws.com',
-    s3Bucket: 'cd-com-staging'
-  },
+  
 
   sales_force: {
     url: 'https://test.salesforce.com',
