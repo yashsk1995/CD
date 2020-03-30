@@ -41,12 +41,7 @@ module.exports = {
     new_lead: process.env.new_lead_email
   },
 
-  aws: {
-    accessKeyId: process.env.ses_key_id,
-    secretAccessKey: process.env.ses_access_key,
-    region: 'https://email.us-west-2.amazonaws.com',
-    s3Bucket: 'cd-com-production'
-  },
+ 
 
   sales_force: {
     url: process.env.sf_url,
