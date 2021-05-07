@@ -15,7 +15,7 @@
     "elasticsearch": "^12.1.3",
     "express-mysql-session": "^1.2.2",
     "express-xml-bodyparser": "^0.3.0",
-    "grunt": "1.0.1",
+    "grunt": "1.3.0",
     "grunt-contrib-clean": "1.0.0",
     "grunt-contrib-coffee": "1.0.0",
     "grunt-contrib-concat": "1.0.1",
