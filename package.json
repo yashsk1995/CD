@@ -28,7 +28,7 @@
     "grunt-sails-linker": "~0.10.1",
     "grunt-sync": "0.5.2",
     "include-all": "^1.0.0",
-    "moment": "^2.18.1",
+    "moment": "^2.29.2",
     "node-finance": "0.0.3",
     "node-salesforce": "^0.8.0",
     "node-ses-any-promise": "^0.1.3",
